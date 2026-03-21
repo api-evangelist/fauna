@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fauna.com/schemas/fauna/document.json",
+  "title": "Fauna Document",
+  "description": "Represents a document in a Fauna collection. Documents are the primary data unit in Fauna and consist of fields with values. Each document belongs to a collection and has a unique reference identifier, creation timestamp, and transaction timestamp.",
+  "type": "object",
+  "required": ["id", "coll", "ts"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the document within its collection."
+    },
+    "coll": {
+      "type": "string",
+      "description": "The name of the collection this document belongs to."
+    },
+    "ts": {
+      "type": "integer",
+      "description": "Transaction timestamp in microseconds since the Unix epoch representing the last time this document was modified."
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "The user-defined fields and values stored in this document. Field names and types are defined by the collection schema."
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "DocumentReference": {
+      "type": "object",
+      "description": "A reference to a Fauna document by its collection and ID.",
+      "required": ["id", "coll"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the referenced document."
+        },
+        "coll": {
+          "type": "string",
+          "description": "Collection name of the referenced document."
+        }
+      }
+    },
+    "NamedDocument": {
+      "type": "object",
+      "description": "A system document referenced by name rather than ID, such as collections, indexes, and roles.",
+      "required": ["name", "coll"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The unique name of the system document."
+        },
+        "coll": {
+          "type": "string",
+          "description": "The system collection this document belongs to, such as Collection, Index, or Role."
+        },
+        "ts": {
+          "type": "integer",
+          "description": "Transaction timestamp of the last modification."
+        }
+      }
+    }
+  }
+}

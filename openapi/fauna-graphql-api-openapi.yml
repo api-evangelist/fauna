@@ -1,0 +1,233 @@
+openapi: 3.1.0
+info:
+  title: Fauna GraphQL API
+  description: >-
+    The Fauna GraphQL API allows developers to interact with their Fauna
+    databases using standard GraphQL queries and mutations. By uploading a
+    GraphQL schema, Fauna automatically generates the necessary collections,
+    indexes, and resolvers. This API can be used from any programming language
+    or HTTP client without requiring a dedicated Fauna driver. It provides an
+    alternative to FQL for developers who prefer the GraphQL query paradigm
+    and ecosystem tooling.
+  version: '1'
+  contact:
+    name: Fauna Support
+    url: https://support.fauna.com
+  termsOfService: https://fauna.com/terms
+externalDocs:
+  description: Fauna GraphQL API Documentation
+  url: https://docs.fauna.com/fauna/current/
+servers:
+  - url: https://graphql.fauna.com
+    description: Fauna Global GraphQL Server
+  - url: https://graphql.us.fauna.com
+    description: Fauna US Region GraphQL Server
+tags:
+  - name: GraphQL
+    description: >-
+      Execute GraphQL queries and mutations against a Fauna database.
+  - name: Schema
+    description: >-
+      Import and manage GraphQL schemas. Fauna auto-generates collections,
+      indexes, and resolvers from the uploaded schema.
+security:
+  - bearerAuth: []
+paths:
+  /graphql:
+    post:
+      operationId: executeGraphQLQuery
+      summary: Execute a GraphQL query or mutation
+      description: >-
+        Executes a GraphQL query or mutation against the authenticated Fauna
+        database. The database must have a GraphQL schema imported. Fauna
+        automatically resolves queries and mutations based on the imported
+        schema, creating the necessary collections and indexes. Supports
+        standard GraphQL features including variables and operation names.
+      tags:
+        - GraphQL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GraphQLRequest'
+          application/graphql:
+            schema:
+              type: string
+              description: >-
+                Raw GraphQL query string when using application/graphql
+                content type.
+      responses:
+        '200':
+          description: GraphQL query executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLResponse'
+        '400':
+          description: Bad request due to malformed GraphQL query or syntax error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLErrorResponse'
+        '401':
+          description: Unauthorized due to invalid or missing authentication secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLErrorResponse'
+  /import:
+    post:
+      operationId: importGraphQLSchema
+      summary: Import a GraphQL schema
+      description: >-
+        Imports a GraphQL schema definition into the authenticated Fauna
+        database. Fauna automatically creates collections, indexes, and
+        resolvers based on the schema types and relationships. Use mode
+        parameter to control whether to merge with or replace the existing
+        schema.
+      tags:
+        - Schema
+      parameters:
+        - name: mode
+          in: query
+          description: >-
+            Schema import mode. Use merge to add to the existing schema or
+            replace to overwrite it entirely. Override allows updating
+            existing types.
+          schema:
+            type: string
+            enum:
+              - merge
+              - replace
+              - override
+            default: merge
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              description: >-
+                GraphQL schema definition language (SDL) content.
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                schema:
+                  type: string
+                  format: binary
+                  description: >-
+                    GraphQL schema file to import.
+      responses:
+        '200':
+          description: Schema imported successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: >-
+                      Success message indicating the schema was imported.
+        '400':
+          description: Invalid GraphQL schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLErrorResponse'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Fauna authentication secret passed as a bearer token. Use a server
+        or admin key for schema imports and a server, admin, or client key
+        for queries.
+  schemas:
+    GraphQLRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: >-
+            The GraphQL query or mutation string.
+        variables:
+          type: object
+          additionalProperties: true
+          description: >-
+            Variables to pass to the GraphQL query or mutation.
+        operationName:
+          type: string
+          description: >-
+            The name of the operation to execute if the query document
+            contains multiple operations.
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+          description: >-
+            The query result data matching the shape of the GraphQL query.
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+          description: >-
+            Array of errors encountered during query execution. May be
+            present alongside data for partial success.
+    GraphQLErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+          description: >-
+            Array of errors that prevented query execution.
+    GraphQLError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: >-
+            Human-readable error message.
+        locations:
+          type: array
+          items:
+            type: object
+            properties:
+              line:
+                type: integer
+                description: >-
+                  Line number in the query where the error occurred.
+              column:
+                type: integer
+                description: >-
+                  Column number in the query where the error occurred.
+          description: >-
+            Locations in the query document where the error occurred.
+        path:
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
+          description: >-
+            Path to the field that caused the error in the response data.
+        extensions:
+          type: object
+          additionalProperties: true
+          description: >-
+            Additional error information specific to Fauna.

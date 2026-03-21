@@ -1,0 +1,253 @@
+asyncapi: 2.6.0
+info:
+  title: Fauna Event Streaming
+  description: >-
+    The Fauna Event Streaming API enables real-time change data capture by
+    maintaining an open connection to the Fauna database and pushing events
+    to clients as they occur. Developers can subscribe to document or set
+    changes and receive add, remove, and update events in real time. The API
+    supports reconnection with a start timestamp or cursor to avoid missing
+    events during disconnections. It is accessible via the /stream/1 HTTP
+    endpoint with token-based authentication.
+  version: '1'
+  contact:
+    name: Fauna Support
+    url: https://support.fauna.com
+  license:
+    name: Proprietary
+    url: https://fauna.com/terms
+  externalDocs:
+    description: Fauna Event Streaming Documentation
+    url: https://docs.fauna.com/fauna/current/reference/streaming/
+servers:
+  production:
+    url: https://db.fauna.com
+    protocol: https
+    description: >-
+      Fauna Global Production Server. The /stream/1 endpoint maintains a
+      persistent HTTP connection that pushes events as server-sent data.
+    security:
+      - bearerAuth: []
+channels:
+  /stream/1:
+    description: >-
+      Event stream channel for real-time change data capture. Clients send
+      a POST request with an event source token to open a persistent
+      connection. Fauna pushes events through the open connection as changes
+      occur in the subscribed document or set. The connection remains open
+      until closed by the client or server. If a tracked change occurs, the
+      event source emits a related add, remove, or update event.
+    publish:
+      operationId: receiveStreamEvents
+      summary: Receive real-time change events
+      description: >-
+        Events pushed from Fauna to the client through the open stream
+        connection. Events include document additions, removals, updates,
+        and periodic status heartbeats. Each event includes a transaction
+        timestamp and cursor for reconnection support.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/StatusEvent'
+          - $ref: '#/components/messages/AddEvent'
+          - $ref: '#/components/messages/RemoveEvent'
+          - $ref: '#/components/messages/UpdateEvent'
+    subscribe:
+      operationId: subscribeToStream
+      summary: Subscribe to an event stream
+      description: >-
+        Client sends a subscription request containing an event source token
+        obtained from an FQL query. Optional parameters include start_ts for
+        reconnecting from a specific timestamp and cursor for resuming from
+        a specific event position.
+      message:
+        $ref: '#/components/messages/StreamSubscription'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Fauna authentication secret passed as a bearer token in the
+        Authorization header of the initial HTTP request.
+  messages:
+    StreamSubscription:
+      name: StreamSubscription
+      title: Stream Subscription Request
+      summary: >-
+        Request to open an event stream connection.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/StreamSubscriptionPayload'
+    StatusEvent:
+      name: StatusEvent
+      title: Status Event
+      summary: >-
+        Heartbeat or connection status event sent when the stream is opened
+        or periodically to keep the connection alive.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/StatusEventPayload'
+    AddEvent:
+      name: AddEvent
+      title: Add Event
+      summary: >-
+        Event emitted when a new document is added to the tracked set or
+        a document begins matching the tracked criteria.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AddEventPayload'
+    RemoveEvent:
+      name: RemoveEvent
+      title: Remove Event
+      summary: >-
+        Event emitted when a document is removed from the tracked set or
+        a document stops matching the tracked criteria.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/RemoveEventPayload'
+    UpdateEvent:
+      name: UpdateEvent
+      title: Update Event
+      summary: >-
+        Event emitted when a tracked document is updated.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/UpdateEventPayload'
+  schemas:
+    StreamSubscriptionPayload:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          description: >-
+            Event source token obtained from an FQL query that returns an
+            event source. The token identifies the document or set to track.
+        start_ts:
+          type: integer
+          format: int64
+          description: >-
+            Optional start timestamp in microseconds since the Unix epoch.
+            Fauna will replay events that occurred after this timestamp.
+            The period between stream restart and start_ts cannot exceed
+            the history_days value for the source collection. Mutually
+            exclusive with cursor.
+        cursor:
+          type: string
+          description: >-
+            Optional cursor from a previous event for resuming the stream.
+            Used to restart a stream from a specific event position without
+            missing events. Mutually exclusive with start_ts.
+    StatusEventPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          const: status
+          description: >-
+            Event type identifier.
+        txn_ts:
+          type: integer
+          format: int64
+          description: >-
+            Transaction timestamp in microseconds since the Unix epoch.
+        cursor:
+          type: string
+          description: >-
+            Cursor position for this event, used for reconnection.
+        stats:
+          $ref: '#/components/schemas/StreamStats'
+    AddEventPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          const: add
+          description: >-
+            Event type identifier.
+        txn_ts:
+          type: integer
+          format: int64
+          description: >-
+            Transaction timestamp of the change.
+        cursor:
+          type: string
+          description: >-
+            Cursor position for this event.
+        data:
+          type: object
+          additionalProperties: true
+          description: >-
+            The full document data that was added.
+        stats:
+          $ref: '#/components/schemas/StreamStats'
+    RemoveEventPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          const: remove
+          description: >-
+            Event type identifier.
+        txn_ts:
+          type: integer
+          format: int64
+          description: >-
+            Transaction timestamp of the change.
+        cursor:
+          type: string
+          description: >-
+            Cursor position for this event.
+        data:
+          type: object
+          additionalProperties: true
+          description: >-
+            The document data that was removed.
+        stats:
+          $ref: '#/components/schemas/StreamStats'
+    UpdateEventPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          const: update
+          description: >-
+            Event type identifier.
+        txn_ts:
+          type: integer
+          format: int64
+          description: >-
+            Transaction timestamp of the change.
+        cursor:
+          type: string
+          description: >-
+            Cursor position for this event.
+        data:
+          type: object
+          additionalProperties: true
+          description: >-
+            The updated document data.
+        stats:
+          $ref: '#/components/schemas/StreamStats'
+    StreamStats:
+      type: object
+      description: >-
+        Operational statistics for the event.
+      properties:
+        read_ops:
+          type: integer
+          description: >-
+            Number of Transactional Read Operations consumed.
+        storage_bytes_read:
+          type: integer
+          description: >-
+            Number of bytes read from storage.
+        compute_ops:
+          type: integer
+          description: >-
+            Number of Transactional Compute Operations consumed.
+        processing_time_ms:
+          type: integer
+          description: >-
+            Processing time in milliseconds.

@@ -1,0 +1,147 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "fauna": "https://fauna.com/ns/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Document": {
+      "@id": "fauna:Document",
+      "@context": {
+        "id": "fauna:id",
+        "coll": "fauna:collection",
+        "ts": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:long"
+        },
+        "data": "fauna:data"
+      }
+    },
+
+    "Collection": {
+      "@id": "fauna:Collection",
+      "@context": {
+        "name": "schema:name",
+        "indexes": {
+          "@id": "fauna:indexes",
+          "@container": "@set"
+        },
+        "constraints": {
+          "@id": "fauna:constraints",
+          "@container": "@set"
+        },
+        "history_days": {
+          "@id": "fauna:historyDays",
+          "@type": "xsd:integer"
+        },
+        "document_ttls": {
+          "@id": "fauna:documentTTLs",
+          "@type": "xsd:boolean"
+        }
+      }
+    },
+
+    "Database": {
+      "@id": "fauna:Database",
+      "@context": {
+        "name": "schema:name",
+        "typechecked": {
+          "@id": "fauna:typechecked",
+          "@type": "xsd:boolean"
+        },
+        "priority": {
+          "@id": "fauna:priority",
+          "@type": "xsd:integer"
+        }
+      }
+    },
+
+    "Index": {
+      "@id": "fauna:Index",
+      "@context": {
+        "name": "schema:name",
+        "terms": {
+          "@id": "fauna:terms",
+          "@container": "@list"
+        },
+        "values": {
+          "@id": "fauna:values",
+          "@container": "@list"
+        }
+      }
+    },
+
+    "Role": {
+      "@id": "fauna:Role",
+      "@context": {
+        "name": "schema:name",
+        "privileges": {
+          "@id": "fauna:privileges",
+          "@container": "@set"
+        },
+        "membership": {
+          "@id": "fauna:membership",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "AccessProvider": {
+      "@id": "fauna:AccessProvider",
+      "@context": {
+        "name": "schema:name",
+        "issuer": {
+          "@id": "fauna:issuer",
+          "@type": "@id"
+        },
+        "jwks_uri": {
+          "@id": "fauna:jwksUri",
+          "@type": "@id"
+        },
+        "roles": {
+          "@id": "fauna:roles",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "Event": {
+      "@id": "fauna:Event",
+      "@context": {
+        "type": "fauna:eventType",
+        "txn_ts": {
+          "@id": "fauna:transactionTimestamp",
+          "@type": "xsd:long"
+        },
+        "cursor": "fauna:cursor",
+        "data": "fauna:data"
+      }
+    },
+
+    "Query": {
+      "@id": "fauna:Query",
+      "@context": {
+        "query": "fauna:queryString",
+        "arguments": "fauna:arguments"
+      }
+    },
+
+    "QueryResult": {
+      "@id": "fauna:QueryResult",
+      "@context": {
+        "data": "fauna:resultData",
+        "txn_ts": {
+          "@id": "fauna:transactionTimestamp",
+          "@type": "xsd:long"
+        },
+        "stats": "fauna:queryStats",
+        "static_type": "fauna:staticType",
+        "schema_version": {
+          "@id": "fauna:schemaVersion",
+          "@type": "xsd:long"
+        }
+      }
+    }
+  }
+}

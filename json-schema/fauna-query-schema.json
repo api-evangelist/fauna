@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fauna.com/schemas/fauna/query.json",
+  "title": "Fauna Query",
+  "description": "Represents the request and response structures for executing Fauna Query Language (FQL) v10 queries via the Core HTTP API /query/1 endpoint. Includes the query request body, successful response format, and error response format.",
+  "type": "object",
+  "$defs": {
+    "QueryRequest": {
+      "type": "object",
+      "description": "Request body for the /query/1 endpoint.",
+      "required": ["query"],
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The FQL v10 query string to execute against the Fauna database."
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Named arguments to pass to the query. These are available as variables within the FQL query and provide a safe way to inject values without string interpolation."
+        }
+      }
+    },
+    "QueryResponse": {
+      "type": "object",
+      "description": "Successful response from the /query/1 endpoint.",
+      "properties": {
+        "data": {
+          "description": "The query result data. The structure depends on the query executed and the X-Format header value (tagged or simple)."
+        },
+        "static_type": {
+          "type": "string",
+          "description": "The static type of the query result as determined by Fauna's type system."
+        },
+        "txn_ts": {
+          "type": "integer",
+          "description": "Transaction timestamp in microseconds since the Unix epoch."
+        },
+        "stats": {
+          "$ref": "#/$defs/QueryStats"
+        },
+        "schema_version": {
+          "type": "integer",
+          "description": "The schema version at the time the query was executed."
+        },
+        "summary": {
+          "type": "string",
+          "description": "Optional summary information about the query execution."
+        },
+        "query_tags": {
+          "type": "string",
+          "description": "Tags associated with the query for logging and monitoring purposes."
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "description": "Error response from the /query/1 endpoint. Contains an error object instead of data.",
+      "required": ["error"],
+      "properties": {
+        "error": {
+          "type": "object",
+          "required": ["code", "message"],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Machine-readable error code. Fauna error codes are part of the API contract and are safe to write programmatic logic against.",
+              "enum": [
+                "invalid_query",
+                "invalid_request",
+                "abort",
+                "unauthorized",
+                "forbidden",
+                "not_found",
+                "contention",
+                "limit_exceeded",
+                "time_out",
+                "internal_error",
+                "constraint_failure"
+              ]
+            },
+            "message": {
+              "type": "string",
+              "description": "Human-readable error message describing the failure."
+            },
+            "constraint_failures": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ConstraintFailure"
+              },
+              "description": "Details about check or unique constraint failures when the error code is constraint_failure."
+            }
+          }
+        },
+        "summary": {
+          "type": "string",
+          "description": "Detailed error information including the location of the error in the query."
+        },
+        "txn_ts": {
+          "type": "integer",
+          "description": "Transaction timestamp of the failed request."
+        },
+        "stats": {
+          "$ref": "#/$defs/QueryStats"
+        },
+        "schema_version": {
+          "type": "integer",
+          "description": "Schema version at the time of the failed request."
+        }
+      }
+    },
+    "QueryStats": {
+      "type": "object",
+      "description": "Operational statistics for query execution including compute, read, and write operations consumed.",
+      "properties": {
+        "compute_ops": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of Transactional Compute Operations consumed by the query."
+        },
+        "read_ops": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of Transactional Read Operations consumed."
+        },
+        "write_ops": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of Transactional Write Operations consumed."
+        },
+        "query_time_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Query execution time in milliseconds."
+        },
+        "contention_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of times the transaction was retried due to contention."
+        },
+        "storage_bytes_read": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of bytes read from storage."
+        },
+        "storage_bytes_write": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of bytes written to storage."
+        },
+        "rate_limits_hit": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of rate limits that were hit during query execution."
+        }
+      }
+    },
+    "ConstraintFailure": {
+      "type": "object",
+      "description": "Details about a specific check or unique constraint failure.",
+      "properties": {
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": "Field paths that triggered the constraint failure."
+        },
+        "message": {
+          "type": "string",
+          "description": "Description of the constraint that was violated."
+        }
+      }
+    }
+  }
+}

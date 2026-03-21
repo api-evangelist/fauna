@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fauna.com/schemas/fauna/event.json",
+  "title": "Fauna Event",
+  "description": "Represents a change data capture event emitted by Fauna event sources. Events are generated when tracked changes occur in a database and are delivered via event streams (real-time) or event feeds (polling). Each event includes the change type, transaction timestamp, cursor for pagination and reconnection, and the associated document data.",
+  "type": "object",
+  "required": ["type", "txn_ts"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["add", "remove", "update", "status"],
+      "description": "The type of change event. 'add' indicates a document was added to the tracked set, 'remove' indicates removal, 'update' indicates modification, and 'status' is a heartbeat or connection status event."
+    },
+    "txn_ts": {
+      "type": "integer",
+      "description": "Transaction timestamp in microseconds since the Unix epoch when the change occurred."
+    },
+    "cursor": {
+      "type": "string",
+      "description": "Cursor position for this event. Used for pagination in event feeds and for reconnection in event streams."
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "The document data associated with the event. Present for add, remove, and update events. The structure depends on the collection schema."
+    },
+    "stats": {
+      "$ref": "#/$defs/EventStats"
+    }
+  },
+  "$defs": {
+    "EventStats": {
+      "type": "object",
+      "description": "Operational statistics for the event processing.",
+      "properties": {
+        "read_ops": {
+          "type": "integer",
+          "description": "Number of Transactional Read Operations consumed."
+        },
+        "storage_bytes_read": {
+          "type": "integer",
+          "description": "Number of bytes read from storage."
+        },
+        "compute_ops": {
+          "type": "integer",
+          "description": "Number of Transactional Compute Operations consumed."
+        },
+        "processing_time_ms": {
+          "type": "integer",
+          "description": "Processing time in milliseconds."
+        },
+        "rate_limits_hit": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of rate limits that were hit during event processing."
+        }
+      }
+    },
+    "EventFeedPage": {
+      "type": "object",
+      "description": "A page of events returned by the event feed endpoint.",
+      "required": ["events", "has_next"],
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#"
+          },
+          "description": "Array of change events for the current page."
+        },
+        "cursor": {
+          "type": "string",
+          "description": "Cursor to use for fetching the next page of events."
+        },
+        "has_next": {
+          "type": "boolean",
+          "description": "Indicates whether more pages of events are available."
+        },
+        "stats": {
+          "$ref": "#/$defs/EventStats"
+        }
+      }
+    }
+  }
+}

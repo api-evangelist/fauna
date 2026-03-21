@@ -1,0 +1,837 @@
+openapi: 3.1.0
+info:
+  title: Fauna Core HTTP API
+  description: >-
+    The Fauna Core HTTP API provides direct access to the Fauna serverless
+    document database through HTTPS endpoints. It allows developers to execute
+    Fauna Query Language (FQL) queries, manage databases, perform CRUD
+    operations on documents, manage schema as FSL files, and consume change
+    data capture events via event feeds. The API uses token-based
+    authentication and supports features such as transactions, indexes, and
+    set operations. It serves as the foundation upon which Fauna's client
+    drivers and SDKs are built.
+  version: '1'
+  contact:
+    name: Fauna Support
+    url: https://support.fauna.com
+  termsOfService: https://fauna.com/terms
+externalDocs:
+  description: Fauna Core HTTP API Documentation
+  url: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
+servers:
+  - url: https://db.fauna.com
+    description: Fauna Global Production Server
+tags:
+  - name: Query
+    description: >-
+      Execute Fauna Query Language (FQL) queries against a Fauna database.
+  - name: Schema
+    description: >-
+      Fetch, update, validate, and manage a database's schema as FSL files.
+      Supports staged schema changes with status checking, committing, and
+      abandoning.
+  - name: EventFeeds
+    description: >-
+      Poll-based change data capture using event feeds. Retrieve batches of
+      change events at your own pace for scheduled synchronization and batch
+      processing workflows.
+security:
+  - bearerAuth: []
+paths:
+  /query/1:
+    post:
+      operationId: executeQuery
+      summary: Execute an FQL query
+      description: >-
+        Executes a Fauna Query Language (FQL) v10 query against the
+        authenticated database. Each query is an independently authenticated
+        request. The request body contains the FQL query string and optional
+        arguments. The response includes the query result data, transaction
+        timestamp, and operational statistics.
+      tags:
+        - Query
+      parameters:
+        - $ref: '#/components/parameters/XFormat'
+        - $ref: '#/components/parameters/XTypecheck'
+        - $ref: '#/components/parameters/XLinearized'
+        - $ref: '#/components/parameters/XQueryTimeout'
+        - $ref: '#/components/parameters/XLastTxnTs'
+        - $ref: '#/components/parameters/XQueryTags'
+        - $ref: '#/components/parameters/XTraceparent'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Query executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Bad request due to malformed query or invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized due to invalid or missing authentication secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden due to insufficient privileges
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict due to contention on the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            X-Rate-Limited-Ops:
+              description: Operations that were rate limited
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '440':
+          description: Query timeout exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /feed/1:
+    post:
+      operationId: pollEventFeed
+      summary: Poll an event feed
+      description: >-
+        Retrieves a page of change data capture events from an event source
+        using a polling-based approach. Event feeds allow developers to
+        retrieve batches of change events at their own pace rather than
+        maintaining a persistent connection. Specify a start timestamp for
+        the initial request and use cursors for subsequent pagination.
+      tags:
+        - EventFeeds
+      parameters:
+        - $ref: '#/components/parameters/XFormat'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventFeedRequest'
+      responses:
+        '200':
+          description: Event feed page retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventFeedResponse'
+        '400':
+          description: Bad request due to invalid token or parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized due to invalid or missing authentication secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /schema/1/files:
+    get:
+      operationId: getSchemaFiles
+      summary: Get schema files
+      description: >-
+        Retrieves the FSL schema files for the authenticated database. Returns
+        the active schema files or staged schema files if a staged schema
+        change is in progress. Requires an authentication secret with the
+        built-in admin, server, or server-readonly role.
+      tags:
+        - Schema
+      parameters:
+        - name: staged
+          in: query
+          description: >-
+            If true, return staged schema files instead of active schema files.
+          schema:
+            type: boolean
+            default: false
+        - name: version
+          in: query
+          description: >-
+            Schema version timestamp to retrieve a specific version of the
+            schema files.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Schema files retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaFilesResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden due to insufficient role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /schema/1/update:
+    post:
+      operationId: updateSchemaFiles
+      summary: Update schema files
+      description: >-
+        Updates the FSL schema files for the authenticated database. You can
+        push schema changes as staged changes or apply them immediately. Each
+        form-data field corresponds to a file name and contains the FSL file
+        content. A database can have up to 1024 FSL files. Requires an
+        authentication secret with the built-in admin role.
+      tags:
+        - Schema
+      parameters:
+        - name: staged
+          in: query
+          description: >-
+            If true, stage the schema changes instead of applying immediately.
+          schema:
+            type: boolean
+            default: false
+        - name: version
+          in: query
+          description: >-
+            Expected schema version. The request fails if the version does
+            not match the current schema version.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+                description: >-
+                  FSL file content. The field name is the file name including
+                  any relative path.
+      responses:
+        '200':
+          description: Schema updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaUpdateResponse'
+        '400':
+          description: Schema validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden due to insufficient role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Schema version conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /schema/1/validate:
+    post:
+      operationId: validateSchemaFiles
+      summary: Validate schema files
+      description: >-
+        Validates the provided FSL schema files against the current schema
+        without applying any changes. Returns a diff between the proposed
+        and current schema. Useful for previewing changes before pushing.
+      tags:
+        - Schema
+      parameters:
+        - name: staged
+          in: query
+          description: >-
+            If true, validate against staged schema instead of active schema.
+          schema:
+            type: boolean
+            default: false
+        - name: version
+          in: query
+          description: >-
+            Expected schema version for validation.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+                description: >-
+                  FSL file content to validate.
+      responses:
+        '200':
+          description: Validation result with diff
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaValidationResponse'
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /schema/1/status:
+    get:
+      operationId: getStagedSchemaStatus
+      summary: Get staged schema status
+      description: >-
+        Gets the index build status for the database's current staged schema.
+        You can only commit staged schema with a status of ready. If format
+        is specified, the request also returns a diff between the staged and
+        active schema. Requires an authentication secret with the built-in
+        admin, server, or server-readonly role.
+      tags:
+        - Schema
+      parameters:
+        - name: version
+          in: query
+          description: >-
+            Expected schema version.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Staged schema status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaStatusResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /schema/1/staged/commit:
+    post:
+      operationId: commitStagedSchema
+      summary: Commit staged schema
+      description: >-
+        Applies the currently staged schema change to the database. You can
+        only commit a staged schema that has a status of ready. This is the
+        API equivalent of the fauna schema commit CLI command.
+      tags:
+        - Schema
+      parameters:
+        - name: version
+          in: query
+          description: >-
+            Expected schema version.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Staged schema committed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaCommitResponse'
+        '400':
+          description: Cannot commit schema that is not ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /schema/1/staged/abandon:
+    post:
+      operationId: abandonStagedSchema
+      summary: Abandon staged schema
+      description: >-
+        Discards the currently staged schema change. You can abandon a staged
+        schema change at any time including changes with a ready status. This
+        is the API equivalent of the fauna schema abandon CLI command.
+      tags:
+        - Schema
+      parameters:
+        - name: version
+          in: query
+          description: >-
+            Expected schema version.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Staged schema abandoned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaAbandonResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Fauna authentication secret passed as a bearer token. Secrets can be
+        keys, tokens, or JWTs from third-party identity providers.
+  parameters:
+    XFormat:
+      name: X-Format
+      in: header
+      description: >-
+        Specifies the data format used to encode FQL values in query results
+        and arguments. Supported values are tagged and simple.
+      schema:
+        type: string
+        enum:
+          - tagged
+          - simple
+    XTypecheck:
+      name: X-Typecheck
+      in: header
+      description: >-
+        If true, enables type checking for the query. Fauna validates the
+        query against the database schema before executing.
+      schema:
+        type: boolean
+    XLinearized:
+      name: X-Linearized
+      in: header
+      description: >-
+        If true, enforces strict serializability by ensuring reads reflect
+        all prior committed transactions.
+      schema:
+        type: boolean
+    XQueryTimeout:
+      name: X-Query-Timeout-Ms
+      in: header
+      description: >-
+        Query timeout in milliseconds. If the query exceeds this time, Fauna
+        returns a 440 timeout error.
+      schema:
+        type: integer
+        minimum: 1
+    XLastTxnTs:
+      name: X-Last-Txn-Ts
+      in: header
+      description: >-
+        Last known transaction timestamp in microseconds since the Unix
+        epoch. Used for snapshot isolation to ensure reads are at least as
+        recent as this timestamp.
+      schema:
+        type: integer
+        format: int64
+    XQueryTags:
+      name: X-Query-Tags
+      in: header
+      description: >-
+        Arbitrary tags to associate with the query for logging and monitoring.
+        Format is key=value pairs separated by commas.
+      schema:
+        type: string
+    XTraceparent:
+      name: traceparent
+      in: header
+      description: >-
+        W3C Trace Context traceparent header for distributed tracing.
+      schema:
+        type: string
+  schemas:
+    QueryRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: >-
+            The FQL v10 query string to execute.
+        arguments:
+          type: object
+          additionalProperties: true
+          description: >-
+            Optional named arguments to pass to the query. Arguments are
+            available as variables in the FQL query.
+    QueryResponse:
+      type: object
+      properties:
+        data:
+          description: >-
+            The query result data. The structure depends on the query
+            executed and the X-Format header.
+        static_type:
+          type: string
+          description: >-
+            The static type of the query result as determined by Fauna's
+            type system.
+        txn_ts:
+          type: integer
+          format: int64
+          description: >-
+            Transaction timestamp in microseconds since the Unix epoch.
+        stats:
+          $ref: '#/components/schemas/QueryStats'
+        schema_version:
+          type: integer
+          format: int64
+          description: >-
+            The schema version at the time the query was executed.
+        summary:
+          type: string
+          description: >-
+            Optional summary information about the query execution.
+        query_tags:
+          type: string
+          description: >-
+            Tags associated with the query for logging and monitoring.
+    QueryStats:
+      type: object
+      description: >-
+        Operational statistics for the query execution.
+      properties:
+        compute_ops:
+          type: integer
+          description: >-
+            Number of Transactional Compute Operations consumed.
+        read_ops:
+          type: integer
+          description: >-
+            Number of Transactional Read Operations consumed.
+        write_ops:
+          type: integer
+          description: >-
+            Number of Transactional Write Operations consumed.
+        query_time_ms:
+          type: integer
+          description: >-
+            Query execution time in milliseconds.
+        contention_retries:
+          type: integer
+          description: >-
+            Number of times the transaction was retried due to contention.
+        storage_bytes_read:
+          type: integer
+          description: >-
+            Number of bytes read from storage.
+        storage_bytes_write:
+          type: integer
+          description: >-
+            Number of bytes written to storage.
+        rate_limits_hit:
+          type: array
+          items:
+            type: string
+          description: >-
+            List of rate limits that were hit during query execution.
+    EventFeedRequest:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          description: >-
+            The event source token obtained from an FQL query that returns
+            an event source.
+        cursor:
+          type: string
+          description: >-
+            Cursor from a previous event feed response for pagination.
+            Mutually exclusive with start_ts.
+        start_ts:
+          type: integer
+          format: int64
+          description: >-
+            Start timestamp in microseconds since the Unix epoch. Fauna
+            returns events that occurred after this timestamp. Mutually
+            exclusive with cursor.
+        page_size:
+          type: integer
+          minimum: 1
+          maximum: 16000
+          default: 16
+          description: >-
+            Maximum number of events to return per page. Must be between
+            1 and 16000 inclusive.
+    EventFeedResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+          description: >-
+            Array of change events for the current page.
+        cursor:
+          type: string
+          description: >-
+            Cursor to use for fetching the next page of events.
+        has_next:
+          type: boolean
+          description: >-
+            Indicates whether more pages of events are available.
+        stats:
+          $ref: '#/components/schemas/EventStats'
+    Event:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - add
+            - remove
+            - update
+            - status
+          description: >-
+            The type of change event.
+        txn_ts:
+          type: integer
+          format: int64
+          description: >-
+            Transaction timestamp of the event in microseconds since the
+            Unix epoch.
+        cursor:
+          type: string
+          description: >-
+            Cursor for this specific event.
+        data:
+          type: object
+          additionalProperties: true
+          description: >-
+            The document data associated with the event.
+    EventStats:
+      type: object
+      description: >-
+        Aggregated statistics for all events in the page.
+      properties:
+        read_ops:
+          type: integer
+          description: >-
+            Number of Transactional Read Operations consumed.
+        storage_bytes_read:
+          type: integer
+          description: >-
+            Number of bytes read from storage.
+        compute_ops:
+          type: integer
+          description: >-
+            Number of Transactional Compute Operations consumed.
+        processing_time_ms:
+          type: integer
+          description: >-
+            Processing time in milliseconds.
+        rate_limits_hit:
+          type: array
+          items:
+            type: string
+          description: >-
+            List of rate limits that were hit.
+    SchemaFilesResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: >-
+            Schema version timestamp.
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaFile'
+          description: >-
+            Array of FSL schema files.
+    SchemaFile:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: >-
+            Name of the FSL file including any relative path.
+        content:
+          type: string
+          description: >-
+            Contents of the FSL schema file.
+    SchemaUpdateResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: >-
+            New schema version timestamp after the update.
+        diff:
+          type: string
+          description: >-
+            Diff between the previous and updated schema.
+    SchemaValidationResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: >-
+            Current schema version.
+        diff:
+          type: string
+          description: >-
+            Diff between the proposed and current schema.
+        valid:
+          type: boolean
+          description: >-
+            Whether the proposed schema is valid.
+    SchemaStatusResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: >-
+            Schema version timestamp.
+        status:
+          type: string
+          enum:
+            - none
+            - pending
+            - ready
+            - failed
+          description: >-
+            Index build status for the staged schema. Only schemas with
+            a ready status can be committed.
+        diff:
+          type: string
+          description: >-
+            Diff between the staged and active schema if format was specified.
+    SchemaCommitResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: >-
+            New active schema version after committing.
+    SchemaAbandonResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: >-
+            Active schema version after abandoning the staged change.
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: >-
+                Machine-readable error code. Error codes are part of the API
+                contract and are safe to write programmatic logic against.
+            message:
+              type: string
+              description: >-
+                Human-readable error message describing the failure.
+            constraint_failures:
+              type: array
+              items:
+                type: object
+                properties:
+                  paths:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: string
+                  message:
+                    type: string
+              description: >-
+                Details about check or unique constraint failures.
+          required:
+            - code
+            - message
+        summary:
+          type: string
+          description: >-
+            Detailed error information including the location of the error
+            in the query.
+        txn_ts:
+          type: integer
+          format: int64
+          description: >-
+            Transaction timestamp of the failed request.
+        stats:
+          $ref: '#/components/schemas/QueryStats'
+        schema_version:
+          type: integer
+          format: int64
+          description: >-
+            Schema version at the time of the failed request.
