@@ -1,5 +1,6 @@
 aid: fauna
-url: https://raw.githubusercontent.com/api-evangelist/fauna/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/fauna/refs/heads/main/apis.yml
 modified: '2026-03-20'
 apis:
   - aid: fauna:core-http-api
@@ -10,11 +11,14 @@ apis:
       - Document Database
       - NoSQL
       - Queries
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://db.fauna.com
-    humanURL: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
+    humanURL: 
+      https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
     properties:
-      - url: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
+      - url: 
+          https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
         type: Documentation
       - url: openapi/fauna-core-http-api-openapi.yml
         type: OpenAPI
@@ -34,7 +38,8 @@ apis:
       - Real-Time
       - Change Data Capture
       - Database
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://db.fauna.com
     humanURL: https://docs.fauna.com/fauna/current/reference/streaming/
     properties:
@@ -57,7 +62,8 @@ apis:
       - Change Data Capture
       - Polling
       - Database
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://db.fauna.com
     humanURL: https://docs.fauna.com/fauna/current/learn/cdc/
     properties:
@@ -78,7 +84,8 @@ apis:
       - Database
       - Serverless
       - Query Language
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://graphql.fauna.com
     humanURL: https://docs.fauna.com/fauna/current/
     properties:
@@ -102,7 +109,8 @@ apis:
       - Node.js
       - TypeScript
       - Driver
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://docs.fauna.com/fauna/current/
     properties:
@@ -121,7 +129,8 @@ apis:
       - Python
       - SDK
       - Driver
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://docs.fauna.com/fauna/current/
     properties:
@@ -141,7 +150,8 @@ apis:
       - C#
       - SDK
       - Driver
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://github.com/fauna/fauna-dotnet
     properties:
@@ -163,3 +173,7 @@ common:
     url: json-schema/fauna-event-schema.json
   - type: JSONSchema
     url: json-schema/fauna-query-schema.json
+description: >-
+  Fauna is a distributed document-relational database delivered as a cloud API that
+  combines the relational query power of SQL with the flexibility of documents and
+  global serverless distribution.
