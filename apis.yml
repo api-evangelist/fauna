@@ -1,24 +1,20 @@
 aid: fauna
-url: 
-  https://raw.githubusercontent.com/api-evangelist/fauna/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/fauna/refs/heads/main/apis.yml
 modified: '2026-03-20'
 apis:
   - aid: fauna:core-http-api
     name: Fauna Core HTTP API
     tags:
       - Database
-      - Serverless
       - Document Database
       - NoSQL
       - Queries
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Serverless
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://db.fauna.com
-    humanURL: 
-      https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
+    humanURL: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
     properties:
-      - url: 
-          https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
+      - url: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
         type: Documentation
       - url: openapi/fauna-core-http-api-openapi.yml
         type: OpenAPI
@@ -33,13 +29,12 @@ apis:
   - aid: fauna:event-streaming-api
     name: Fauna Event Streaming API
     tags:
-      - Streaming
-      - Events
-      - Real-Time
       - Change Data Capture
       - Database
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Events
+      - Real-Time
+      - Streaming
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://db.fauna.com
     humanURL: https://docs.fauna.com/fauna/current/reference/streaming/
     properties:
@@ -58,12 +53,11 @@ apis:
   - aid: fauna:event-feeds-api
     name: Fauna Event Feeds API
     tags:
-      - Events
       - Change Data Capture
-      - Polling
       - Database
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Events
+      - Polling
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://db.fauna.com
     humanURL: https://docs.fauna.com/fauna/current/learn/cdc/
     properties:
@@ -80,12 +74,11 @@ apis:
   - aid: fauna:graphql-api
     name: Fauna GraphQL API
     tags:
-      - GraphQL
       - Database
-      - Serverless
+      - GraphQL
       - Query Language
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Serverless
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://graphql.fauna.com
     humanURL: https://docs.fauna.com/fauna/current/
     properties:
@@ -104,13 +97,12 @@ apis:
   - aid: fauna:javascript-driver
     name: Fauna JavaScript Driver
     tags:
-      - JavaScript
-      - SDK
-      - Node.js
-      - TypeScript
       - Driver
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - JavaScript
+      - Node.js
+      - SDK
+      - TypeScript
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://docs.fauna.com/fauna/current/
     properties:
@@ -126,11 +118,10 @@ apis:
   - aid: fauna:python-driver
     name: Fauna Python Driver
     tags:
+      - Driver
       - Python
       - SDK
-      - Driver
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://docs.fauna.com/fauna/current/
     properties:
@@ -148,10 +139,9 @@ apis:
     tags:
       - .NET
       - C#
-      - SDK
       - Driver
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - SDK
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://github.com/fauna/fauna-dotnet
     properties:
