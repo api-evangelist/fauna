@@ -1,6 +1,6 @@
 aid: fauna
 url: https://raw.githubusercontent.com/api-evangelist/fauna/refs/heads/main/apis.yml
-modified: '2026-03-20'
+modified: '2026-04-28'
 apis:
   - aid: fauna:core-http-api
     name: Fauna Core HTTP API
