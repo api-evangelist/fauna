@@ -1,112 +1,60 @@
 specification: API Commons Rate Limits
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
-provider: fauna
+provider: Fauna
 providerId: fauna
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
+  - Database
+  - Document Database
+  - Serverless
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the fauna API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  - End of Service
+description: Fauna announced End-of-Service in March 2025 and fully shut down its hosted service on May
+  30, 2025. Historically Fauna throttled by Transactional Operations (TROs / TWOs / TCOs) on a per-database
+  basis with per-plan ceilings, and exposed standard 429 responses. The service is no longer accepting
+  traffic; this artifact preserves the historical rate-limiting shape for archival purposes.
+notes: Service discontinued May 30, 2025. Historical limits are not actionable.
+sources:
+  - https://fauna.com/blog/announcing-fauna-end-of-service
+  - https://docs.fauna.com/fauna/current/learn/limits/
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
+  serverError: 500
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Fauna Core HTTP API
-      - Fauna Event Streaming API
-      - Fauna Event Feeds API
-      - Fauna GraphQL API
-      - Fauna JavaScript Driver
-      - Fauna Python Driver
-      - Fauna .NET Driver
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Fauna Core HTTP API
-      - Fauna Event Streaming API
-      - Fauna Event Feeds API
-      - Fauna GraphQL API
-      - Fauna JavaScript Driver
-      - Fauna Python Driver
-      - Fauna .NET Driver
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Fauna Core HTTP API
-      - Fauna Event Streaming API
-      - Fauna Event Feeds API
-      - Fauna GraphQL API
-      - Fauna JavaScript Driver
-      - Fauna Python Driver
-      - Fauna .NET Driver
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Fauna Core HTTP API
-      - Fauna Event Streaming API
-      - Fauna Event Feeds API
-      - Fauna GraphQL API
-      - Fauna JavaScript Driver
-      - Fauna Python Driver
-      - Fauna .NET Driver
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Fauna Core HTTP API
-      - Fauna Event Streaming API
-      - Fauna Event Feeds API
-      - Fauna GraphQL API
-      - Fauna JavaScript Driver
-      - Fauna Python Driver
-      - Fauna .NET Driver
+  - name: Transactional Read Operations (TROs) per database (historical)
+    scope: database
+    metric: operations
+    limit: per-plan ceiling; Free included 100K/day; paid plans metered
+    notes: Historical; service discontinued May 30, 2025.
+  - name: Transactional Write Operations (TWOs) per database (historical)
+    scope: database
+    metric: operations
+    limit: per-plan ceiling; Free included 50K/day; paid plans metered
+    notes: Historical; service discontinued May 30, 2025.
+  - name: Transactional Compute Operations (TCOs) per database (historical)
+    scope: database
+    metric: operations
+    limit: per-plan ceiling; Free included 50K/day; paid plans metered
+    notes: Historical; service discontinued May 30, 2025.
+  - name: Storage per database (historical)
+    scope: database
+    metric: GB
+    limit: Free included 5GB; paid plans metered per-GB-month
+    notes: Historical; service discontinued May 30, 2025.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers: []
+  - name: End of Service
+    description: 'Fauna service was decommissioned on 2025-05-30. New signups closed in March 2025; existing
+      tenants were given a migration window. This rate-limit artifact is archival.'
+  - name: Historical retry pattern
+    description: When operational, Fauna returned 429 with Retry-After on quota exhaustion; clients should
+      have used exponential backoff with jitter.
+  - name: Historical idempotency
+    description: Fauna FQL transactions were ACID and idempotent within a single transaction; retries
+      of the same FQL were safe.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

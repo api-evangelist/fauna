@@ -6,177 +6,141 @@ alignedWith:
   dataSpec: FOCUS
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
-provider: fauna
+provider: Fauna
 providerId: fauna
-publisherName: fauna
-serviceCategory: API
+publisherName: Fauna, Inc.
+serviceCategory: Database / Serverless
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
+  - Database
+  - Document Database
+  - Serverless
+  - End of Service
   - FinOps
   - Cost Management
   - FOCUS
-description: FinOps framework definition for the fauna API surface. Provides a FOCUS-aligned mapping for
-  cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
+description: 'FOCUS-aligned FinOps for Fauna (archival). Fauna service was decommissioned on 2025-05-30
+  following a March 2025 End-of-Service announcement. Historically Fauna billed usage-based on TROs (Transactional
+  Read Operations), TWOs (Transactional Write Operations), TCOs (Transactional Compute Operations), storage
+  (GB-month), and outbound transfer (GB), with optional monthly platform fees on Team / Business plans.
+  This artifact preserves the FinOps shape for cost-archive and migration accounting purposes.'
+notes: Fauna End-of-Service 2025-05-30. FinOps levers below are archival; for live workloads see migration
+  guidance.
+sources:
+  - https://fauna.com/blog/announcing-fauna-end-of-service
+  - https://fauna.com/pricing
 principles:
   - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
+    description: Historically — pull TRO/TWO/TCO/storage usage from the Fauna Dashboard or the /usage
+      API endpoints; reconcile against monthly invoice. Now archival.
   - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
+    description: Historically — allocate by Fauna database (each database had its own usage counters);
+      tag with team/product. Now archival.
   - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
+    description: Historical levers were — index design (avoid full-collection scans that drove TROs);
+      batch FQL queries; minimize streaming subscriptions; choose region carefully to limit egress.
   - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
+    description: Historically the data platform team owned Fauna entitlement; per-database owners owned
+      usage. Now — accountability shifts to migration completion and shutdown reconciliation.
 domains:
   - name: Understand Usage and Cost
     capabilities:
       - Data Ingestion
       - Allocation
       - Reporting and Analytics
-      - Anomaly Management
   - name: Quantify Business Value
     capabilities:
       - Planning and Estimating
       - Forecasting
       - Budgeting
-      - Benchmarking
-      - Unit Economics
   - name: Optimize Usage and Cost
     capabilities:
       - Architecting for Cloud
-      - Rate Optimization
       - Workload Optimization
-      - Cloud Sustainability
       - Licensing and SaaS
   - name: Manage the FinOps Practice
     capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
       - Onboarding Workloads
-      - Intersecting Disciplines
+      - Invoicing and Chargeback
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Usage-Based (Discontinued)
+  billingFrequency: Monthly (historical)
   billingCurrency: USD
   chargeCategories:
     - Usage
     - Purchase
     - Tax
-    - Credit
     - Adjustment
-  chargeFrequency: Recurring
+    - Refund
+  chargeFrequency: Recurring (historical)
 focusColumns:
-  ServiceName: fauna
-  ServiceCategory: Developer Tools / API
-  ProviderName: fauna
-  PublisherName: fauna
-  InvoiceIssuerName: fauna
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  ServiceName: Fauna
+  ServiceCategory: Database / Serverless
+  ProviderName: Fauna
+  PublisherName: Fauna, Inc.
+  InvoiceIssuerName: Fauna, Inc.
+  PricingCategory: Usage-Based (discontinued)
+  PricingUnit: operation | GB
   BillingCurrency: USD
   ChargeCategory: Usage
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: tros
+    description: Transactional Read Operations.
+    unit: operation
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
+      - database
       - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
+  - name: twos
+    description: Transactional Write Operations.
+    unit: operation
+    aggregation: sum
+    dimensions:
+      - database
+      - region
+  - name: tcos
+    description: Transactional Compute Operations.
+    unit: operation
+    aggregation: sum
+    dimensions:
+      - database
+      - region
+  - name: storage_gb_month
+    description: Stored data per GB-month.
+    unit: GB-month
+    aggregation: sum
+    dimensions:
+      - database
+      - region
+  - name: egress_gb
+    description: Outbound data transfer.
     unit: GB
     aggregation: sum
     dimensions:
-      - api
+      - database
       - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
 apis:
   - name: Fauna Core HTTP API
     baseURL: https://db.fauna.com
-    tags:
-      - Database
-      - Document Database
-      - NoSQL
-      - Queries
-      - Serverless
     serviceName: Fauna Core HTTP API
-    serviceCategory: API
-  - name: Fauna Event Streaming API
-    baseURL: https://db.fauna.com
-    tags:
-      - Change Data Capture
-      - Database
-      - Events
-      - Real-Time
-      - Streaming
-    serviceName: Fauna Event Streaming API
-    serviceCategory: API
-  - name: Fauna Event Feeds API
-    baseURL: https://db.fauna.com
-    tags:
-      - Change Data Capture
-      - Database
-      - Events
-      - Polling
-    serviceName: Fauna Event Feeds API
     serviceCategory: API
   - name: Fauna GraphQL API
     baseURL: https://graphql.fauna.com
-    tags:
-      - Database
-      - GraphQL
-      - Query Language
-      - Serverless
     serviceName: Fauna GraphQL API
     serviceCategory: API
-  - name: Fauna JavaScript Driver
-    baseURL: https://api.example.com
-    tags:
-      - Driver
-      - JavaScript
-      - Node.js
-      - SDK
-      - TypeScript
-    serviceName: Fauna JavaScript Driver
-    serviceCategory: API
-  - name: Fauna Python Driver
-    baseURL: https://api.example.com
-    tags:
-      - Driver
-      - Python
-      - SDK
-    serviceName: Fauna Python Driver
-    serviceCategory: API
-  - name: Fauna .NET Driver
-    baseURL: https://api.example.com
-    tags:
-      - .NET
-      - C#
-      - Driver
-      - SDK
-    serviceName: Fauna .NET Driver
+  - name: Fauna Event Streaming API
+    baseURL: https://db.fauna.com
+    serviceName: Fauna Event Streaming API
     serviceCategory: API
 unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
-maintainers: []
+  - name: Cost per 1M TROs (historical)
+    metric: tro_cost / (tros / 1000000)
+    target: see fauna.com/pricing snapshot
+  - name: Cost per 1M TWOs (historical)
+    metric: two_cost / (twos / 1000000)
+    target: see fauna.com/pricing snapshot
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
