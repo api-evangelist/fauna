@@ -155,7 +155,7 @@ apis:
       queries, and manage database resources using familiar C# patterns and
       conventions.
 common:
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/fauna-context.jsonld
   - type: JSONSchema
     url: json-schema/fauna-document-schema.json
