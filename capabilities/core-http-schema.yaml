@@ -1,0 +1,316 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fauna Core HTTP API — Schema
+  description: 'Fauna Core HTTP API — Schema. 6 operations. Lead operation: Get schema files. Self-contained Naftiko capability
+    covering one Fauna business surface.'
+  tags:
+  - Fauna
+  - Schema
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FAUNA_API_KEY: FAUNA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: core-http-schema
+    baseUri: https://db.fauna.com
+    description: Fauna Core HTTP API — Schema business capability. Self-contained, no shared references.
+    resources:
+    - name: schema-1-files
+      path: /schema/1/files
+      operations:
+      - name: getschemafiles
+        method: GET
+        description: Get schema files
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: staged
+          in: query
+          type: boolean
+          description: If true, return staged schema files instead of active schema files.
+        - name: version
+          in: query
+          type: integer
+          description: Schema version timestamp to retrieve a specific version of the schema files.
+    - name: schema-1-staged-abandon
+      path: /schema/1/staged/abandon
+      operations:
+      - name: abandonstagedschema
+        method: POST
+        description: Abandon staged schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: integer
+          description: Expected schema version.
+    - name: schema-1-staged-commit
+      path: /schema/1/staged/commit
+      operations:
+      - name: commitstagedschema
+        method: POST
+        description: Commit staged schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: integer
+          description: Expected schema version.
+    - name: schema-1-status
+      path: /schema/1/status
+      operations:
+      - name: getstagedschemastatus
+        method: GET
+        description: Get staged schema status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: integer
+          description: Expected schema version.
+    - name: schema-1-update
+      path: /schema/1/update
+      operations:
+      - name: updateschemafiles
+        method: POST
+        description: Update schema files
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: staged
+          in: query
+          type: boolean
+          description: If true, stage the schema changes instead of applying immediately.
+        - name: version
+          in: query
+          type: integer
+          description: Expected schema version. The request fails if the version does not match the current schema version.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: schema-1-validate
+      path: /schema/1/validate
+      operations:
+      - name: validateschemafiles
+        method: POST
+        description: Validate schema files
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: staged
+          in: query
+          type: boolean
+          description: If true, validate against staged schema instead of active schema.
+        - name: version
+          in: query
+          type: integer
+          description: Expected schema version for validation.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FAUNA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: core-http-schema-rest
+    port: 8080
+    description: REST adapter for Fauna Core HTTP API — Schema. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/schema/1/files
+      name: schema-1-files
+      description: REST surface for schema-1-files.
+      operations:
+      - method: GET
+        name: getschemafiles
+        description: Get schema files
+        call: core-http-schema.getschemafiles
+        with:
+          staged: rest.staged
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schema/1/staged/abandon
+      name: schema-1-staged-abandon
+      description: REST surface for schema-1-staged-abandon.
+      operations:
+      - method: POST
+        name: abandonstagedschema
+        description: Abandon staged schema
+        call: core-http-schema.abandonstagedschema
+        with:
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schema/1/staged/commit
+      name: schema-1-staged-commit
+      description: REST surface for schema-1-staged-commit.
+      operations:
+      - method: POST
+        name: commitstagedschema
+        description: Commit staged schema
+        call: core-http-schema.commitstagedschema
+        with:
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schema/1/status
+      name: schema-1-status
+      description: REST surface for schema-1-status.
+      operations:
+      - method: GET
+        name: getstagedschemastatus
+        description: Get staged schema status
+        call: core-http-schema.getstagedschemastatus
+        with:
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schema/1/update
+      name: schema-1-update
+      description: REST surface for schema-1-update.
+      operations:
+      - method: POST
+        name: updateschemafiles
+        description: Update schema files
+        call: core-http-schema.updateschemafiles
+        with:
+          staged: rest.staged
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/schema/1/validate
+      name: schema-1-validate
+      description: REST surface for schema-1-validate.
+      operations:
+      - method: POST
+        name: validateschemafiles
+        description: Validate schema files
+        call: core-http-schema.validateschemafiles
+        with:
+          staged: rest.staged
+          version: rest.version
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-http-schema-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fauna Core HTTP API — Schema. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-schema-files
+      description: Get schema files
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-http-schema.getschemafiles
+      with:
+        staged: tools.staged
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: abandon-staged-schema
+      description: Abandon staged schema
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: core-http-schema.abandonstagedschema
+      with:
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commit-staged-schema
+      description: Commit staged schema
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: core-http-schema.commitstagedschema
+      with:
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-staged-schema-status
+      description: Get staged schema status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-http-schema.getstagedschemastatus
+      with:
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-schema-files
+      description: Update schema files
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: core-http-schema.updateschemafiles
+      with:
+        staged: tools.staged
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: validate-schema-files
+      description: Validate schema files
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: core-http-schema.validateschemafiles
+      with:
+        staged: tools.staged
+        version: tools.version
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
