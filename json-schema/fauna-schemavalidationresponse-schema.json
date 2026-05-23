@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SchemaValidationResponse",
+  "title": "SchemaValidationResponse",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Current schema version."
+    },
+    "diff": {
+      "type": "string",
+      "description": "Diff between the proposed and current schema."
+    },
+    "valid": {
+      "type": "boolean",
+      "description": "Whether the proposed schema is valid."
+    }
+  }
+}

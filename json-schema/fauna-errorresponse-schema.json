@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ErrorResponse",
+  "title": "ErrorResponse",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Machine-readable error code. Error codes are part of the API contract and are safe to write programmatic logic against."
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable error message describing the failure."
+        },
+        "constraint_failures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Details about check or unique constraint failures."
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "description": "Detailed error information including the location of the error in the query."
+    },
+    "txn_ts": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Transaction timestamp of the failed request."
+    },
+    "stats": {
+      "$ref": "#/components/schemas/QueryStats"
+    },
+    "schema_version": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Schema version at the time of the failed request."
+    }
+  }
+}

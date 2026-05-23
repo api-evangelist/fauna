@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SchemaStatusResponse",
+  "title": "SchemaStatusResponse",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Schema version timestamp."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "none",
+        "pending",
+        "ready",
+        "failed"
+      ],
+      "description": "Index build status for the staged schema. Only schemas with a ready status can be committed."
+    },
+    "diff": {
+      "type": "string",
+      "description": "Diff between the staged and active schema if format was specified."
+    }
+  }
+}

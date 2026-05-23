@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SchemaAbandonResponse",
+  "title": "SchemaAbandonResponse",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Active schema version after abandoning the staged change."
+    }
+  }
+}

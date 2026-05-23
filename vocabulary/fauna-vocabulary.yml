@@ -1,0 +1,13 @@
+name: Fauna Domain Vocabulary
+provider: Fauna
+providerId: fauna
+description: Tag-derived vocabulary for the Fauna API surface; sourced from openapi/ tags.
+terms:
+- term: EventFeeds
+  description: Poll-based change data capture using event feeds. Retrieve batches of change events at your own pace for scheduled
+    synchronization and batch processing workflows.
+- term: Query
+  description: Execute Fauna Query Language (FQL) queries against a Fauna database.
+- term: Schema
+  description: Fetch, update, validate, and manage a database's schema as FSL files. Supports staged schema changes with status
+    checking, committing, and abandoning.

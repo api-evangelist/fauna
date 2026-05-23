@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EventFeedResponse",
+  "title": "EventFeedResponse",
+  "type": "object",
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Event"
+      },
+      "description": "Array of change events for the current page."
+    },
+    "cursor": {
+      "type": "string",
+      "description": "Cursor to use for fetching the next page of events."
+    },
+    "has_next": {
+      "type": "boolean",
+      "description": "Indicates whether more pages of events are available."
+    },
+    "stats": {
+      "$ref": "#/components/schemas/EventStats"
+    }
+  }
+}

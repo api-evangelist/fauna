@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EventStats",
+  "title": "EventStats",
+  "type": "object",
+  "description": "Aggregated statistics for all events in the page.",
+  "properties": {
+    "read_ops": {
+      "type": "integer",
+      "description": "Number of Transactional Read Operations consumed."
+    },
+    "storage_bytes_read": {
+      "type": "integer",
+      "description": "Number of bytes read from storage."
+    },
+    "compute_ops": {
+      "type": "integer",
+      "description": "Number of Transactional Compute Operations consumed."
+    },
+    "processing_time_ms": {
+      "type": "integer",
+      "description": "Processing time in milliseconds."
+    },
+    "rate_limits_hit": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of rate limits that were hit."
+    }
+  }
+}

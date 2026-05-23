@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/QueryRequest",
+  "title": "QueryRequest",
+  "type": "object",
+  "required": [
+    "query"
+  ],
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "The FQL v10 query string to execute."
+    },
+    "arguments": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Optional named arguments to pass to the query. Arguments are available as variables in the FQL query."
+    }
+  }
+}

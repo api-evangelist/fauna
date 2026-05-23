@@ -1,0 +1,178 @@
+{
+  "provider": "Fauna",
+  "providerId": "fauna",
+  "kind": "json-structure",
+  "description": "Structural overview of the Fauna API surface; extracted from openapi/.",
+  "schemaCount": 15,
+  "operationCount": 8,
+  "schemas": [
+    {
+      "name": "QueryRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "query"
+      ]
+    },
+    {
+      "name": "QueryResponse",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "QueryStats",
+      "type": "object",
+      "propertyCount": 8,
+      "required": []
+    },
+    {
+      "name": "EventFeedRequest",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "token"
+      ]
+    },
+    {
+      "name": "EventFeedResponse",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "Event",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "EventStats",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "SchemaFilesResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "SchemaFile",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "SchemaUpdateResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "SchemaValidationResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "SchemaStatusResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "SchemaCommitResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "SchemaAbandonResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ErrorResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/query/1",
+      "operationId": "executeQuery",
+      "summary": "Execute an FQL query",
+      "tags": [
+        "Query"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/feed/1",
+      "operationId": "pollEventFeed",
+      "summary": "Poll an event feed",
+      "tags": [
+        "EventFeeds"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/schema/1/files",
+      "operationId": "getSchemaFiles",
+      "summary": "Get schema files",
+      "tags": [
+        "Schema"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/schema/1/update",
+      "operationId": "updateSchemaFiles",
+      "summary": "Update schema files",
+      "tags": [
+        "Schema"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/schema/1/validate",
+      "operationId": "validateSchemaFiles",
+      "summary": "Validate schema files",
+      "tags": [
+        "Schema"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/schema/1/status",
+      "operationId": "getStagedSchemaStatus",
+      "summary": "Get staged schema status",
+      "tags": [
+        "Schema"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/schema/1/staged/commit",
+      "operationId": "commitStagedSchema",
+      "summary": "Commit staged schema",
+      "tags": [
+        "Schema"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/schema/1/staged/abandon",
+      "operationId": "abandonStagedSchema",
+      "summary": "Abandon staged schema",
+      "tags": [
+        "Schema"
+      ]
+    }
+  ]
+}

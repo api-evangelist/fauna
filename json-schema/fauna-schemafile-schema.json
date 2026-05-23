@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SchemaFile",
+  "title": "SchemaFile",
+  "type": "object",
+  "properties": {
+    "filename": {
+      "type": "string",
+      "description": "Name of the FSL file including any relative path."
+    },
+    "content": {
+      "type": "string",
+      "description": "Contents of the FSL schema file."
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SchemaCommitResponse",
+  "title": "SchemaCommitResponse",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "integer",
+      "format": "int64",
+      "description": "New active schema version after committing."
+    }
+  }
+}

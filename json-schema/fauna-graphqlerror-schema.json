@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GraphQLError",
+  "title": "GraphQLError",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Human-readable error message."
+    },
+    "locations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "line": {
+            "type": "integer",
+            "description": "Line number in the query where the error occurred."
+          },
+          "column": {
+            "type": "integer",
+            "description": "Column number in the query where the error occurred."
+          }
+        }
+      },
+      "description": "Locations in the query document where the error occurred."
+    },
+    "path": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "integer"
+          }
+        ]
+      },
+      "description": "Path to the field that caused the error in the response data."
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Additional error information specific to Fauna."
+    }
+  }
+}

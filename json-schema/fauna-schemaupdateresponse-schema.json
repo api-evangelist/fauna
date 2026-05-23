@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SchemaUpdateResponse",
+  "title": "SchemaUpdateResponse",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "integer",
+      "format": "int64",
+      "description": "New schema version timestamp after the update."
+    },
+    "diff": {
+      "type": "string",
+      "description": "Diff between the previous and updated schema."
+    }
+  }
+}

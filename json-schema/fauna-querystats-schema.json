@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/QueryStats",
+  "title": "QueryStats",
+  "type": "object",
+  "description": "Operational statistics for the query execution.",
+  "properties": {
+    "compute_ops": {
+      "type": "integer",
+      "description": "Number of Transactional Compute Operations consumed."
+    },
+    "read_ops": {
+      "type": "integer",
+      "description": "Number of Transactional Read Operations consumed."
+    },
+    "write_ops": {
+      "type": "integer",
+      "description": "Number of Transactional Write Operations consumed."
+    },
+    "query_time_ms": {
+      "type": "integer",
+      "description": "Query execution time in milliseconds."
+    },
+    "contention_retries": {
+      "type": "integer",
+      "description": "Number of times the transaction was retried due to contention."
+    },
+    "storage_bytes_read": {
+      "type": "integer",
+      "description": "Number of bytes read from storage."
+    },
+    "storage_bytes_write": {
+      "type": "integer",
+      "description": "Number of bytes written to storage."
+    },
+    "rate_limits_hit": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of rate limits that were hit during query execution."
+    }
+  }
+}

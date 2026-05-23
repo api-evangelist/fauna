@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EventFeedRequest",
+  "title": "EventFeedRequest",
+  "type": "object",
+  "required": [
+    "token"
+  ],
+  "properties": {
+    "token": {
+      "type": "string",
+      "description": "The event source token obtained from an FQL query that returns an event source."
+    },
+    "cursor": {
+      "type": "string",
+      "description": "Cursor from a previous event feed response for pagination. Mutually exclusive with start_ts."
+    },
+    "start_ts": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Start timestamp in microseconds since the Unix epoch. Fauna returns events that occurred after this timestamp. Mutually exclusive with cursor."
+    },
+    "page_size": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16000,
+      "default": 16,
+      "description": "Maximum number of events to return per page. Must be between 1 and 16000 inclusive."
+    }
+  }
+}

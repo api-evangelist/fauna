@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SchemaFilesResponse",
+  "title": "SchemaFilesResponse",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Schema version timestamp."
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SchemaFile"
+      },
+      "description": "Array of FSL schema files."
+    }
+  }
+}

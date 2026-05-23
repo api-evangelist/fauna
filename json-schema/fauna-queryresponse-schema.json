@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/QueryResponse",
+  "title": "QueryResponse",
+  "type": "object",
+  "properties": {
+    "data": {
+      "description": "The query result data. The structure depends on the query executed and the X-Format header."
+    },
+    "static_type": {
+      "type": "string",
+      "description": "The static type of the query result as determined by Fauna's type system."
+    },
+    "txn_ts": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Transaction timestamp in microseconds since the Unix epoch."
+    },
+    "stats": {
+      "$ref": "#/components/schemas/QueryStats"
+    },
+    "schema_version": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The schema version at the time the query was executed."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Optional summary information about the query execution."
+    },
+    "query_tags": {
+      "type": "string",
+      "description": "Tags associated with the query for logging and monitoring."
+    }
+  }
+}
