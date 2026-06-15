@@ -1,0 +1,246 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fauna Core HTTP API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Query",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute an FQL query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://db.fauna.com/query/1",
+            "headers": [
+              {
+                "name": "X-Format",
+                "value": ""
+              },
+              {
+                "name": "X-Typecheck",
+                "value": ""
+              },
+              {
+                "name": "X-Linearized",
+                "value": ""
+              },
+              {
+                "name": "X-Query-Timeout-Ms",
+                "value": ""
+              },
+              {
+                "name": "X-Last-Txn-Ts",
+                "value": ""
+              },
+              {
+                "name": "X-Query-Tags",
+                "value": ""
+              },
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a Fauna Query Language (FQL) v10 query against the authenticated database. Each query is an independently authenticated request. The request body contains the FQL query string and optional arguments. The response includes the query result data, transaction timestamp, and operational statistics."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "EventFeeds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Poll an event feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://db.fauna.com/feed/1",
+            "headers": [
+              {
+                "name": "X-Format",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a page of change data capture events from an event source using a polling-based approach. Event feeds allow developers to retrieve batches of change events at their own pace rather than maintaining a persistent connection. Specify a start timestamp for the initial request and use cursors for subsequent pagination."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Schema",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get schema files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://db.fauna.com/schema/1/files",
+            "params": [
+              {
+                "name": "staged",
+                "value": "",
+                "type": "query",
+                "description": "If true, return staged schema files instead of active schema files."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Schema version timestamp to retrieve a specific version of the schema files."
+              }
+            ]
+          },
+          "docs": "Retrieves the FSL schema files for the authenticated database. Returns the active schema files or staged schema files if a staged schema change is in progress. Requires an authentication secret with the built-in admin, server, or server-readonly role."
+        },
+        {
+          "info": {
+            "name": "Update schema files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://db.fauna.com/schema/1/update",
+            "params": [
+              {
+                "name": "staged",
+                "value": "",
+                "type": "query",
+                "description": "If true, stage the schema changes instead of applying immediately."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Expected schema version. The request fails if the version does not match the current schema version."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Updates the FSL schema files for the authenticated database. You can push schema changes as staged changes or apply them immediately. Each form-data field corresponds to a file name and contains the FSL file content. A database can have up to 1024 FSL files. Requires an authentication secret with the built-in admin role."
+        },
+        {
+          "info": {
+            "name": "Validate schema files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://db.fauna.com/schema/1/validate",
+            "params": [
+              {
+                "name": "staged",
+                "value": "",
+                "type": "query",
+                "description": "If true, validate against staged schema instead of active schema."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Expected schema version for validation."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Validates the provided FSL schema files against the current schema without applying any changes. Returns a diff between the proposed and current schema. Useful for previewing changes before pushing."
+        },
+        {
+          "info": {
+            "name": "Get staged schema status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://db.fauna.com/schema/1/status",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Expected schema version."
+              }
+            ]
+          },
+          "docs": "Gets the index build status for the database's current staged schema. You can only commit staged schema with a status of ready. If format is specified, the request also returns a diff between the staged and active schema. Requires an authentication secret with the built-in admin, server, or server-readonly role."
+        },
+        {
+          "info": {
+            "name": "Commit staged schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://db.fauna.com/schema/1/staged/commit",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Expected schema version."
+              }
+            ]
+          },
+          "docs": "Applies the currently staged schema change to the database. You can only commit a staged schema that has a status of ready. This is the API equivalent of the fauna schema commit CLI command."
+        },
+        {
+          "info": {
+            "name": "Abandon staged schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://db.fauna.com/schema/1/staged/abandon",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Expected schema version."
+              }
+            ]
+          },
+          "docs": "Discards the currently staged schema change. You can abandon a staged schema change at any time including changes with a ready status. This is the API equivalent of the fauna schema abandon CLI command."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

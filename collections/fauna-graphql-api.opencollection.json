@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fauna GraphQL API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GraphQL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute a GraphQL query or mutation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graphql.fauna.com/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a GraphQL query or mutation against the authenticated Fauna database. The database must have a GraphQL schema imported. Fauna automatically resolves queries and mutations based on the imported schema, creating the necessary collections and indexes. Supports standard GraphQL features including variables and operation names."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Schema",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import a GraphQL schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graphql.fauna.com/import",
+            "params": [
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Schema import mode. Use merge to add to the existing schema or replace to overwrite it entirely. Override allows updating existing types."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "schema",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Imports a GraphQL schema definition into the authenticated Fauna database. Fauna automatically creates collections, indexes, and resolvers based on the schema types and relationships. Use mode parameter to control whether to merge with or replace the existing schema."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
