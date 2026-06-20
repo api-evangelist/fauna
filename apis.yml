@@ -10,7 +10,7 @@ apis:
   - NoSQL
   - Queries
   - Serverless
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://db.fauna.com
   humanURL: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
   properties:
@@ -31,7 +31,7 @@ apis:
   - Events
   - Real-Time
   - Streaming
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://db.fauna.com
   humanURL: https://docs.fauna.com/fauna/current/reference/streaming/
   properties:
@@ -52,7 +52,7 @@ apis:
   - Database
   - Events
   - Polling
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://db.fauna.com
   humanURL: https://docs.fauna.com/fauna/current/learn/cdc/
   properties:
@@ -71,7 +71,7 @@ apis:
   - GraphQL
   - Query Language
   - Serverless
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://graphql.fauna.com
   humanURL: https://docs.fauna.com/fauna/current/
   properties:
@@ -95,7 +95,7 @@ apis:
   - Node.js
   - SDK
   - TypeScript
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.example.com
   humanURL: https://docs.fauna.com/fauna/current/
   properties:
@@ -112,7 +112,7 @@ apis:
   - Driver
   - Python
   - SDK
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.example.com
   humanURL: https://docs.fauna.com/fauna/current/
   properties:
@@ -130,7 +130,7 @@ apis:
   - C#
   - Driver
   - SDK
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.example.com
   humanURL: https://github.com/fauna/fauna-dotnet
   properties:
