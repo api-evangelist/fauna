@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/fauna-core-http-api-openapi.yml, openapi/fauna-graphql-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Fauna authentication secret passed as a bearer token. Secrets can be keys, tokens,
+    or JWTs from third-party identity providers.
+  sources:
+  - openapi/fauna-core-http-api-openapi.yml
+  - openapi/fauna-graphql-api-openapi.yml

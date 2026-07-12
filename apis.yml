@@ -142,6 +142,10 @@ apis:
     enables .NET developers to perform document operations, run queries, and manage database resources using familiar
     C# patterns and conventions.
 common:
+- type: DomainSecurity
+  url: security/fauna-domain-security.yml
+- type: Authentication
+  url: authentication/fauna-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/faunainc
 - type: JSONLD
