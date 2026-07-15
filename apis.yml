@@ -142,6 +142,8 @@ apis:
     enables .NET developers to perform document operations, run queries, and manage database resources using familiar
     C# patterns and conventions.
 common:
+- type: AgenticAccess
+  url: agentic-access/fauna-agentic-access.yml
 - type: DomainSecurity
   url: security/fauna-domain-security.yml
 - type: Authentication
