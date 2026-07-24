@@ -1,0 +1,230 @@
+openapi: 3.1.0
+info:
+  title: Fauna Core HTTP EventFeeds API
+  description: The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints. It allows developers to execute Fauna Query Language (FQL) queries, manage databases, perform CRUD operations on documents, manage schema as FSL files, and consume change data capture events via event feeds. The API uses token-based authentication and supports features such as transactions, indexes, and set operations. It serves as the foundation upon which Fauna's client drivers and SDKs are built.
+  version: '1'
+  contact:
+    name: Fauna Support
+    url: https://support.fauna.com
+  termsOfService: https://fauna.com/terms
+servers:
+- url: https://db.fauna.com
+  description: Fauna Global Production Server
+security:
+- bearerAuth: []
+tags:
+- name: EventFeeds
+  description: Poll-based change data capture using event feeds. Retrieve batches of change events at your own pace for scheduled synchronization and batch processing workflows.
+paths:
+  /feed/1:
+    post:
+      operationId: pollEventFeed
+      summary: Poll an event feed
+      description: Retrieves a page of change data capture events from an event source using a polling-based approach. Event feeds allow developers to retrieve batches of change events at their own pace rather than maintaining a persistent connection. Specify a start timestamp for the initial request and use cursors for subsequent pagination.
+      tags:
+      - EventFeeds
+      parameters:
+      - $ref: '#/components/parameters/XFormat'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventFeedRequest'
+      responses:
+        '200':
+          description: Event feed page retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventFeedResponse'
+        '400':
+          description: Bad request due to invalid token or parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized due to invalid or missing authentication secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    EventStats:
+      type: object
+      description: Aggregated statistics for all events in the page.
+      properties:
+        read_ops:
+          type: integer
+          description: Number of Transactional Read Operations consumed.
+        storage_bytes_read:
+          type: integer
+          description: Number of bytes read from storage.
+        compute_ops:
+          type: integer
+          description: Number of Transactional Compute Operations consumed.
+        processing_time_ms:
+          type: integer
+          description: Processing time in milliseconds.
+        rate_limits_hit:
+          type: array
+          items:
+            type: string
+          description: List of rate limits that were hit.
+    Event:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - add
+          - remove
+          - update
+          - status
+          description: The type of change event.
+        txn_ts:
+          type: integer
+          format: int64
+          description: Transaction timestamp of the event in microseconds since the Unix epoch.
+        cursor:
+          type: string
+          description: Cursor for this specific event.
+        data:
+          type: object
+          additionalProperties: true
+          description: The document data associated with the event.
+    EventFeedResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+          description: Array of change events for the current page.
+        cursor:
+          type: string
+          description: Cursor to use for fetching the next page of events.
+        has_next:
+          type: boolean
+          description: Indicates whether more pages of events are available.
+        stats:
+          $ref: '#/components/schemas/EventStats'
+    EventFeedRequest:
+      type: object
+      required:
+      - token
+      properties:
+        token:
+          type: string
+          description: The event source token obtained from an FQL query that returns an event source.
+        cursor:
+          type: string
+          description: Cursor from a previous event feed response for pagination. Mutually exclusive with start_ts.
+        start_ts:
+          type: integer
+          format: int64
+          description: Start timestamp in microseconds since the Unix epoch. Fauna returns events that occurred after this timestamp. Mutually exclusive with cursor.
+        page_size:
+          type: integer
+          minimum: 1
+          maximum: 16000
+          default: 16
+          description: Maximum number of events to return per page. Must be between 1 and 16000 inclusive.
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Machine-readable error code. Error codes are part of the API contract and are safe to write programmatic logic against.
+            message:
+              type: string
+              description: Human-readable error message describing the failure.
+            constraint_failures:
+              type: array
+              items:
+                type: object
+                properties:
+                  paths:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: string
+                  message:
+                    type: string
+              description: Details about check or unique constraint failures.
+          required:
+          - code
+          - message
+        summary:
+          type: string
+          description: Detailed error information including the location of the error in the query.
+        txn_ts:
+          type: integer
+          format: int64
+          description: Transaction timestamp of the failed request.
+        stats:
+          $ref: '#/components/schemas/QueryStats'
+        schema_version:
+          type: integer
+          format: int64
+          description: Schema version at the time of the failed request.
+    QueryStats:
+      type: object
+      description: Operational statistics for the query execution.
+      properties:
+        compute_ops:
+          type: integer
+          description: Number of Transactional Compute Operations consumed.
+        read_ops:
+          type: integer
+          description: Number of Transactional Read Operations consumed.
+        write_ops:
+          type: integer
+          description: Number of Transactional Write Operations consumed.
+        query_time_ms:
+          type: integer
+          description: Query execution time in milliseconds.
+        contention_retries:
+          type: integer
+          description: Number of times the transaction was retried due to contention.
+        storage_bytes_read:
+          type: integer
+          description: Number of bytes read from storage.
+        storage_bytes_write:
+          type: integer
+          description: Number of bytes written to storage.
+        rate_limits_hit:
+          type: array
+          items:
+            type: string
+          description: List of rate limits that were hit during query execution.
+  parameters:
+    XFormat:
+      name: X-Format
+      in: header
+      description: Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.
+      schema:
+        type: string
+        enum:
+        - tagged
+        - simple
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Fauna authentication secret passed as a bearer token. Secrets can be keys, tokens, or JWTs from third-party identity providers.
+externalDocs:
+  description: Fauna Core HTTP API Documentation
+  url: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
