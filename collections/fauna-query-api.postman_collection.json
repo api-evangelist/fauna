@@ -1,0 +1,795 @@
+{
+  "item": [
+    {
+      "id": "b1fbffe4-700c-4c91-b8b4-fd0dd48d185f",
+      "name": "Query",
+      "description": {
+        "content": "Execute Fauna Query Language (FQL) queries against a Fauna database.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7a539a52-ecef-4281-a927-e016b7860910",
+          "name": "Execute an FQL query",
+          "request": {
+            "name": "Execute an FQL query",
+            "description": {
+              "content": "Executes a Fauna Query Language (FQL) v10 query against the authenticated database. Each query is an independently authenticated request. The request body contains the FQL query string and optional arguments. The response includes the query result data, transaction timestamp, and operational statistics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "query",
+                "1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                "key": "X-Format",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "If true, enables type checking for the query. Fauna validates the query against the database schema before executing.",
+                "key": "X-Typecheck",
+                "value": "<boolean>"
+              },
+              {
+                "disabled": false,
+                "description": "If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.",
+                "key": "X-Linearized",
+                "value": "<boolean>"
+              },
+              {
+                "disabled": false,
+                "description": "Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.",
+                "key": "X-Query-Timeout-Ms",
+                "value": "<integer>"
+              },
+              {
+                "disabled": false,
+                "description": "Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.",
+                "key": "X-Last-Txn-Ts",
+                "value": "<long>"
+              },
+              {
+                "disabled": false,
+                "description": "Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.",
+                "key": "X-Query-Tags",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "W3C Trace Context traceparent header for distributed tracing.",
+                "key": "traceparent",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"arguments\": {\n    \"key_0\": 1564,\n    \"key_1\": 6727.506152620546,\n    \"key_2\": false,\n    \"key_3\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5378a76c-d65c-43eb-b0f2-97056759957a",
+              "name": "Query executed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enables type checking for the query. Fauna validates the query against the database schema before executing.",
+                    "key": "X-Typecheck",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.",
+                    "key": "X-Linearized",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.",
+                    "key": "X-Query-Timeout-Ms",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.",
+                    "key": "X-Last-Txn-Ts",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.",
+                    "key": "X-Query-Tags",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "W3C Trace Context traceparent header for distributed tracing.",
+                    "key": "traceparent",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"arguments\": {\n    \"key_0\": 886.068230951379,\n    \"key_1\": 1128,\n    \"key_2\": 5736\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"static_type\": \"string\",\n  \"txn_ts\": 2903,\n  \"stats\": {\n    \"compute_ops\": 2877,\n    \"read_ops\": 1422,\n    \"write_ops\": 6960,\n    \"query_time_ms\": 5078,\n    \"contention_retries\": 9557,\n    \"storage_bytes_read\": 8146,\n    \"storage_bytes_write\": 2837,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 3064,\n  \"summary\": \"string\",\n  \"query_tags\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77829ec9-966c-4101-99ca-f8bcbdd84da4",
+              "name": "Bad request due to malformed query or invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enables type checking for the query. Fauna validates the query against the database schema before executing.",
+                    "key": "X-Typecheck",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.",
+                    "key": "X-Linearized",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.",
+                    "key": "X-Query-Timeout-Ms",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.",
+                    "key": "X-Last-Txn-Ts",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.",
+                    "key": "X-Query-Tags",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "W3C Trace Context traceparent header for distributed tracing.",
+                    "key": "traceparent",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"arguments\": {\n    \"key_0\": 886.068230951379,\n    \"key_1\": 1128,\n    \"key_2\": 5736\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 8940,\n  \"stats\": {\n    \"compute_ops\": 8206,\n    \"read_ops\": 9766,\n    \"write_ops\": 9545,\n    \"query_time_ms\": 1534,\n    \"contention_retries\": 13,\n    \"storage_bytes_read\": 9768,\n    \"storage_bytes_write\": 374,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 9343\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b67764a-d7bb-48db-b58e-28cb484a2b8e",
+              "name": "Unauthorized due to invalid or missing authentication secret",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enables type checking for the query. Fauna validates the query against the database schema before executing.",
+                    "key": "X-Typecheck",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.",
+                    "key": "X-Linearized",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.",
+                    "key": "X-Query-Timeout-Ms",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.",
+                    "key": "X-Last-Txn-Ts",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.",
+                    "key": "X-Query-Tags",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "W3C Trace Context traceparent header for distributed tracing.",
+                    "key": "traceparent",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"arguments\": {\n    \"key_0\": 886.068230951379,\n    \"key_1\": 1128,\n    \"key_2\": 5736\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 8940,\n  \"stats\": {\n    \"compute_ops\": 8206,\n    \"read_ops\": 9766,\n    \"write_ops\": 9545,\n    \"query_time_ms\": 1534,\n    \"contention_retries\": 13,\n    \"storage_bytes_read\": 9768,\n    \"storage_bytes_write\": 374,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 9343\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1e2b6ba-2dbe-4d74-87e9-45038f70ca08",
+              "name": "Forbidden due to insufficient privileges",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enables type checking for the query. Fauna validates the query against the database schema before executing.",
+                    "key": "X-Typecheck",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.",
+                    "key": "X-Linearized",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.",
+                    "key": "X-Query-Timeout-Ms",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.",
+                    "key": "X-Last-Txn-Ts",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.",
+                    "key": "X-Query-Tags",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "W3C Trace Context traceparent header for distributed tracing.",
+                    "key": "traceparent",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"arguments\": {\n    \"key_0\": 886.068230951379,\n    \"key_1\": 1128,\n    \"key_2\": 5736\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 8940,\n  \"stats\": {\n    \"compute_ops\": 8206,\n    \"read_ops\": 9766,\n    \"write_ops\": 9545,\n    \"query_time_ms\": 1534,\n    \"contention_retries\": 13,\n    \"storage_bytes_read\": 9768,\n    \"storage_bytes_write\": 374,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 9343\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b35cb91c-e7e4-40ba-aa15-b1a0a1f5ef75",
+              "name": "Conflict due to contention on the requested resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enables type checking for the query. Fauna validates the query against the database schema before executing.",
+                    "key": "X-Typecheck",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.",
+                    "key": "X-Linearized",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.",
+                    "key": "X-Query-Timeout-Ms",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.",
+                    "key": "X-Last-Txn-Ts",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.",
+                    "key": "X-Query-Tags",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "W3C Trace Context traceparent header for distributed tracing.",
+                    "key": "traceparent",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"arguments\": {\n    \"key_0\": 886.068230951379,\n    \"key_1\": 1128,\n    \"key_2\": 5736\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 8940,\n  \"stats\": {\n    \"compute_ops\": 8206,\n    \"read_ops\": 9766,\n    \"write_ops\": 9545,\n    \"query_time_ms\": 1534,\n    \"contention_retries\": 13,\n    \"storage_bytes_read\": 9768,\n    \"storage_bytes_write\": 374,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 9343\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6424f5a3-4c1f-4e88-be1c-f145386242e7",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enables type checking for the query. Fauna validates the query against the database schema before executing.",
+                    "key": "X-Typecheck",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.",
+                    "key": "X-Linearized",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.",
+                    "key": "X-Query-Timeout-Ms",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.",
+                    "key": "X-Last-Txn-Ts",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.",
+                    "key": "X-Query-Tags",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "W3C Trace Context traceparent header for distributed tracing.",
+                    "key": "traceparent",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"arguments\": {\n    \"key_0\": 886.068230951379,\n    \"key_1\": 1128,\n    \"key_2\": 5736\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Operations that were rate limited",
+                  "key": "X-Rate-Limited-Ops",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 8940,\n  \"stats\": {\n    \"compute_ops\": 8206,\n    \"read_ops\": 9766,\n    \"write_ops\": 9545,\n    \"query_time_ms\": 1534,\n    \"contention_retries\": 13,\n    \"storage_bytes_read\": 9768,\n    \"storage_bytes_write\": 374,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 9343\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2feee9fa-dcbb-450e-8ef2-f84553210aaf",
+              "name": "Query timeout exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "query",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enables type checking for the query. Fauna validates the query against the database schema before executing.",
+                    "key": "X-Typecheck",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.",
+                    "key": "X-Linearized",
+                    "value": "<boolean>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.",
+                    "key": "X-Query-Timeout-Ms",
+                    "value": "<integer>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.",
+                    "key": "X-Last-Txn-Ts",
+                    "value": "<long>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.",
+                    "key": "X-Query-Tags",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "W3C Trace Context traceparent header for distributed tracing.",
+                    "key": "traceparent",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"arguments\": {\n    \"key_0\": 886.068230951379,\n    \"key_1\": 1128,\n    \"key_2\": 5736\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 440,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 8940,\n  \"stats\": {\n    \"compute_ops\": 8206,\n    \"read_ops\": 9766,\n    \"write_ops\": 9545,\n    \"query_time_ms\": 1534,\n    \"contention_retries\": 13,\n    \"storage_bytes_read\": 9768,\n    \"storage_bytes_write\": 374,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 9343\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://db.fauna.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4c71a847-e16d-4118-b491-e0e29406db7d",
+    "name": "Fauna Core HTTP EventFeeds Query API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints. It allows developers to execute Fauna Query Language (FQL) queries, manage databases, perform CRUD operations on documents, manage schema as FSL files, and consume change data capture events via event feeds. The API uses token-based authentication and supports features such as transactions, indexes, and set operations. It serves as the foundation upon which Fauna's client drivers and SDKs are built.\n\nContact Support:\n Name: Fauna Support",
+      "type": "text/plain"
+    }
+  }
+}

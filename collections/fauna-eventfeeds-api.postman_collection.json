@@ -1,0 +1,328 @@
+{
+  "item": [
+    {
+      "id": "1c79c750-7b95-4f13-84cd-4b9b8e2512ac",
+      "name": "EventFeeds",
+      "description": {
+        "content": "Poll-based change data capture using event feeds. Retrieve batches of change events at your own pace for scheduled synchronization and batch processing workflows.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "610a6486-80bc-4122-b518-90ca4e1404e5",
+          "name": "Poll an event feed",
+          "request": {
+            "name": "Poll an event feed",
+            "description": {
+              "content": "Retrieves a page of change data capture events from an event source using a polling-based approach. Event feeds allow developers to retrieve batches of change events at their own pace rather than maintaining a persistent connection. Specify a start timestamp for the initial request and use cursors for subsequent pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "feed",
+                "1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                "key": "X-Format",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"start_ts\": \"<long>\",\n  \"page_size\": 16\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4179494a-c9e7-40b8-af89-49c146156ea7",
+              "name": "Event feed page retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feed",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"start_ts\": \"<long>\",\n  \"page_size\": 16\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"type\": \"update\",\n      \"txn_ts\": 2907,\n      \"cursor\": \"string\",\n      \"data\": {\n        \"key_0\": 7982.549581696327\n      }\n    },\n    {\n      \"type\": \"status\",\n      \"txn_ts\": 1619,\n      \"cursor\": \"string\",\n      \"data\": {\n        \"key_0\": 3299.1676754168398\n      }\n    }\n  ],\n  \"cursor\": \"string\",\n  \"has_next\": false,\n  \"stats\": {\n    \"read_ops\": 4653,\n    \"storage_bytes_read\": 5045,\n    \"compute_ops\": 7987,\n    \"processing_time_ms\": 6933,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24415118-236d-4fda-b87b-c819246093c0",
+              "name": "Bad request due to invalid token or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feed",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"start_ts\": \"<long>\",\n  \"page_size\": 16\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 8007,\n  \"stats\": {\n    \"compute_ops\": 1420,\n    \"read_ops\": 2093,\n    \"write_ops\": 1232,\n    \"query_time_ms\": 3762,\n    \"contention_retries\": 6370,\n    \"storage_bytes_read\": 1373,\n    \"storage_bytes_write\": 6441,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 5678\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a110b7f-f1bc-4f22-bfbf-b47b380357da",
+              "name": "Unauthorized due to invalid or missing authentication secret",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feed",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"start_ts\": \"<long>\",\n  \"page_size\": 16\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 8007,\n  \"stats\": {\n    \"compute_ops\": 1420,\n    \"read_ops\": 2093,\n    \"write_ops\": 1232,\n    \"query_time_ms\": 3762,\n    \"contention_retries\": 6370,\n    \"storage_bytes_read\": 1373,\n    \"storage_bytes_write\": 6441,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 5678\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3da20bc8-15d4-413a-a239-299e89ea18c9",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feed",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.",
+                    "key": "X-Format",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"start_ts\": \"<long>\",\n  \"page_size\": 16\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 8007,\n  \"stats\": {\n    \"compute_ops\": 1420,\n    \"read_ops\": 2093,\n    \"write_ops\": 1232,\n    \"query_time_ms\": 3762,\n    \"contention_retries\": 6370,\n    \"storage_bytes_read\": 1373,\n    \"storage_bytes_write\": 6441,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 5678\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://db.fauna.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e6defe7d-92f3-4d21-8592-2875ecb919f4",
+    "name": "Fauna Core HTTP EventFeeds API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints. It allows developers to execute Fauna Query Language (FQL) queries, manage databases, perform CRUD operations on documents, manage schema as FSL files, and consume change data capture events via event feeds. The API uses token-based authentication and supports features such as transactions, indexes, and set operations. It serves as the foundation upon which Fauna's client drivers and SDKs are built.\n\nContact Support:\n Name: Fauna Support",
+      "type": "text/plain"
+    }
+  }
+}

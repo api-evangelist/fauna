@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fauna Core HTTP EventFeeds API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "EventFeeds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Poll an event feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://db.fauna.com/feed/1",
+            "headers": [
+              {
+                "name": "X-Format",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves a page of change data capture events from an event source using a polling-based approach. Event feeds allow developers to retrieve batches of change events at their own pace rather than maintaining a persistent connection. Specify a start timestamp for the initial request and use cursors for subsequent pagination."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fauna Core HTTP EventFeeds Query API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Query",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute an FQL query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://db.fauna.com/query/1",
+            "headers": [
+              {
+                "name": "X-Format",
+                "value": ""
+              },
+              {
+                "name": "X-Typecheck",
+                "value": ""
+              },
+              {
+                "name": "X-Linearized",
+                "value": ""
+              },
+              {
+                "name": "X-Query-Timeout-Ms",
+                "value": ""
+              },
+              {
+                "name": "X-Last-Txn-Ts",
+                "value": ""
+              },
+              {
+                "name": "X-Query-Tags",
+                "value": ""
+              },
+              {
+                "name": "traceparent",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a Fauna Query Language (FQL) v10 query against the authenticated database. Each query is an independently authenticated request. The request body contains the FQL query string and optional arguments. The response includes the query result data, transaction timestamp, and operational statistics."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

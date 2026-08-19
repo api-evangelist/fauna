@@ -1,0 +1,1766 @@
+{
+  "item": [
+    {
+      "id": "3b7348b5-152f-4690-9adf-69e2952742f8",
+      "name": "Schema",
+      "description": {
+        "content": "Fetch, update, validate, and manage a database's schema as FSL files. Supports staged schema changes with status checking, committing, and abandoning.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3d67e2cc-b996-4b95-92f4-dcfa06c17354",
+          "name": "Get schema files",
+          "request": {
+            "name": "Get schema files",
+            "description": {
+              "content": "Retrieves the FSL schema files for the authenticated database. Returns the active schema files or staged schema files if a staged schema change is in progress. Requires an authentication secret with the built-in admin, server, or server-readonly role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schema",
+                "1",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "staged",
+                  "value": "false",
+                  "description": "If true, return staged schema files instead of active schema files."
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<long>",
+                  "description": "Schema version timestamp to retrieve a specific version of the schema files."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb77d9a3-4993-4fc5-bc47-72419d30dd6f",
+              "name": "Schema files retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": 5084,\n  \"files\": [\n    {\n      \"filename\": \"string\",\n      \"content\": \"string\"\n    },\n    {\n      \"filename\": \"string\",\n      \"content\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "335091f5-d9c0-4f37-87b0-ed6b2fe44f82",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6558d642-e965-47dd-8081-54fede5e7b0d",
+              "name": "Forbidden due to insufficient role",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f17c2c91-a3ed-483d-993b-9ad258f01e78",
+          "name": "Update schema files",
+          "request": {
+            "name": "Update schema files",
+            "description": {
+              "content": "Updates the FSL schema files for the authenticated database. You can push schema changes as staged changes or apply them immediately. Each form-data field corresponds to a file name and contains the FSL file content. A database can have up to 1024 FSL files. Requires an authentication secret with the built-in admin role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schema",
+                "1",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "staged",
+                  "value": "false",
+                  "description": "If true, stage the schema changes instead of applying immediately."
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<long>",
+                  "description": "Expected schema version. The request fails if the version does not match the current schema version."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "key_0",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "key_1",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "23fc66a5-b800-4a20-b9ab-c150634ecdc4",
+              "name": "Schema updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_0",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_1",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": 1567,\n  \"diff\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ca5c9a0-f5c6-4bf8-92ec-ca2bcff17bf5",
+              "name": "Schema validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_0",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_1",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f317a34-343f-4706-87e5-5cf6b6c7d844",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_0",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_1",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de0cb167-a806-4656-adc0-1cf9d7afaf1d",
+              "name": "Forbidden due to insufficient role",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_0",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_1",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cfb1cc0-ec1b-4215-ae5e-d921f5ffc92f",
+              "name": "Schema version conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_0",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_1",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47037b84-5f7a-46f9-b1f0-b303b1778fe3",
+          "name": "Validate schema files",
+          "request": {
+            "name": "Validate schema files",
+            "description": {
+              "content": "Validates the provided FSL schema files against the current schema without applying any changes. Returns a diff between the proposed and current schema. Useful for previewing changes before pushing.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schema",
+                "1",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "staged",
+                  "value": "false",
+                  "description": "If true, validate against staged schema instead of active schema."
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<long>",
+                  "description": "Expected schema version for validation."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "key_0",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "key_1",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "key_2",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                },
+                {
+                  "key": "key_3",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3f8b6b19-d9d2-4ea6-80ab-da3f2bb6f711",
+              "name": "Validation result with diff",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_0",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": 135,\n  \"diff\": \"string\",\n  \"valid\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77a59726-e120-4016-8b27-0e715e50991c",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_0",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d484c20b-0477-4a19-b821-25681a024774",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "staged",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "key_0",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa837b5c-88b4-471d-bcf3-6bbf1eb269b5",
+          "name": "Get staged schema status",
+          "request": {
+            "name": "Get staged schema status",
+            "description": {
+              "content": "Gets the index build status for the database's current staged schema. You can only commit staged schema with a status of ready. If format is specified, the request also returns a diff between the staged and active schema. Requires an authentication secret with the built-in admin, server, or server-readonly role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schema",
+                "1",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<long>",
+                  "description": "Expected schema version."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dbdee350-aff8-4280-8748-721cb1a4ad12",
+              "name": "Staged schema status retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": 6264,\n  \"status\": \"failed\",\n  \"diff\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3502272f-8bd4-49dc-a84a-252dd91e956d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b1aee96-9fff-45db-8249-42340e61525d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d197136b-be35-4dda-90f5-3ad480d5f903",
+          "name": "Commit staged schema",
+          "request": {
+            "name": "Commit staged schema",
+            "description": {
+              "content": "Applies the currently staged schema change to the database. You can only commit a staged schema that has a status of ready. This is the API equivalent of the fauna schema commit CLI command.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schema",
+                "1",
+                "staged",
+                "commit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<long>",
+                  "description": "Expected schema version."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f57e198c-d1d7-48d0-95b7-df5025e115e2",
+              "name": "Staged schema committed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "staged",
+                    "commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": 8981\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3dd19e10-aefd-4a69-a334-0addc8e832a2",
+              "name": "Cannot commit schema that is not ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "staged",
+                    "commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e81af8ec-2baa-4c91-addd-868964af009d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "staged",
+                    "commit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b3f628a2-3c00-480f-8367-556f6d5ffc63",
+          "name": "Abandon staged schema",
+          "request": {
+            "name": "Abandon staged schema",
+            "description": {
+              "content": "Discards the currently staged schema change. You can abandon a staged schema change at any time including changes with a ready status. This is the API equivalent of the fauna schema abandon CLI command.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schema",
+                "1",
+                "staged",
+                "abandon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<long>",
+                  "description": "Expected schema version."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a1fab995-d0ba-4892-a943-1a7836e9e847",
+              "name": "Staged schema abandoned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "staged",
+                    "abandon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": 7325\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "248635ac-0240-4a9d-b28d-26ff75dac3f2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schema",
+                    "1",
+                    "staged",
+                    "abandon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"constraint_failures\": [\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      },\n      {\n        \"paths\": [\n          [\n            \"string\",\n            \"string\"\n          ],\n          [\n            \"string\",\n            \"string\"\n          ]\n        ],\n        \"message\": \"string\"\n      }\n    ]\n  },\n  \"summary\": \"string\",\n  \"txn_ts\": 4845,\n  \"stats\": {\n    \"compute_ops\": 3089,\n    \"read_ops\": 9218,\n    \"write_ops\": 581,\n    \"query_time_ms\": 735,\n    \"contention_retries\": 786,\n    \"storage_bytes_read\": 5044,\n    \"storage_bytes_write\": 8044,\n    \"rate_limits_hit\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"schema_version\": 2643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "09adafa3-26bc-472d-b65e-cde8a525a2be",
+          "name": "Import a GraphQL schema",
+          "request": {
+            "name": "Import a GraphQL schema",
+            "description": {
+              "content": "Imports a GraphQL schema definition into the authenticated Fauna database. Fauna automatically creates collections, indexes, and resolvers based on the schema types and relationships. Use mode parameter to control whether to merge with or replace the existing schema.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "import"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "merge",
+                  "description": "Schema import mode. Use merge to add to the existing schema or replace to overwrite it entirely. Override allows updating existing types."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "schema",
+                  "type": "file",
+                  "description": "GraphQL schema file to import."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "81131adf-5fb1-4bee-8ed6-e88b77a8c1b5",
+              "name": "Schema imported successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "import"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mode",
+                      "value": "merge"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "GraphQL schema file to import.",
+                        "type": "text/plain"
+                      },
+                      "key": "schema",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fec7896-7b41-4294-b0eb-af0b520502f8",
+              "name": "Invalid GraphQL schema",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "import"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mode",
+                      "value": "merge"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "GraphQL schema file to import.",
+                        "type": "text/plain"
+                      },
+                      "key": "schema",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 7165,\n          \"column\": 8292\n        },\n        {\n          \"line\": 7043,\n          \"column\": 8142\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": true\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 8047,\n          \"column\": 8615\n        },\n        {\n          \"line\": 1452,\n          \"column\": 4690\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": 9175,\n        \"key_1\": false\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddc5a176-794a-40d1-86d3-4088e52d53da",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "import"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mode",
+                      "value": "merge"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "GraphQL schema file to import.",
+                        "type": "text/plain"
+                      },
+                      "key": "schema",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 7165,\n          \"column\": 8292\n        },\n        {\n          \"line\": 7043,\n          \"column\": 8142\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": true\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 8047,\n          \"column\": 8615\n        },\n        {\n          \"line\": 1452,\n          \"column\": 4690\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": 9175,\n        \"key_1\": false\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://db.fauna.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8bb2a95b-0520-464a-825f-d4a5a4637aca",
+    "name": "Fauna Core HTTP EventFeeds Schema API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints. It allows developers to execute Fauna Query Language (FQL) queries, manage databases, perform CRUD operations on documents, manage schema as FSL files, and consume change data capture events via event feeds. The API uses token-based authentication and supports features such as transactions, indexes, and set operations. It serves as the foundation upon which Fauna's client drivers and SDKs are built.\n\nContact Support:\n Name: Fauna Support",
+      "type": "text/plain"
+    }
+  }
+}

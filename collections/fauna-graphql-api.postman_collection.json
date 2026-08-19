@@ -1,7 +1,7 @@
 {
   "item": [
     {
-      "id": "3b816219-f65a-45e4-999f-521ea82c36de",
+      "id": "2c71499d-07e1-4f0d-862a-febdc3ebbd18",
       "name": "GraphQL",
       "description": {
         "content": "Execute GraphQL queries and mutations against a Fauna database.",
@@ -9,7 +9,7 @@
       },
       "item": [
         {
-          "id": "c09f09ef-1628-4d96-afaf-a07f22cc92d3",
+          "id": "2274fc12-cd6f-4973-ab4e-64dcd00f9ad6",
           "name": "Execute a GraphQL query or mutation",
           "request": {
             "name": "Execute a GraphQL query or mutation",
@@ -41,7 +41,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 5486,\n    \"key_1\": false\n  },\n  \"operationName\": \"<string>\"\n}",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 5491.849217066768\n  },\n  \"operationName\": \"<string>\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -51,7 +51,7 @@
           },
           "response": [
             {
-              "id": "b4449bfe-a631-4c29-bb73-36d0b2e04524",
+              "id": "3e20dd32-4468-41ec-aaef-bee0d3f3eb21",
               "name": "GraphQL query executed successfully",
               "originalRequest": {
                 "url": {
@@ -81,7 +81,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": true\n  },\n  \"operationName\": \"<string>\"\n}",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 6779.601369488953,\n    \"key_1\": false,\n    \"key_2\": false,\n    \"key_3\": 3731.4796130152404\n  },\n  \"operationName\": \"<string>\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -97,12 +97,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"data\": {\n    \"key_0\": 8275.432506582927\n  },\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 3630,\n          \"column\": 9795\n        },\n        {\n          \"line\": 3190,\n          \"column\": 7758\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": \"string\",\n        \"key_1\": 582,\n        \"key_2\": 544.9262835761004\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 3473,\n          \"column\": 8675\n        },\n        {\n          \"line\": 1567,\n          \"column\": 5533\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": false\n      }\n    }\n  ]\n}",
+              "body": "{\n  \"data\": {\n    \"key_0\": true,\n    \"key_1\": 5575.614271538559\n  },\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 7700,\n          \"column\": 337\n        },\n        {\n          \"line\": 4756,\n          \"column\": 7236\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": \"string\"\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 4954,\n          \"column\": 1438\n        },\n        {\n          \"line\": 2588,\n          \"column\": 647\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": 4416,\n        \"key_1\": true\n      }\n    }\n  ]\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "456fd1ec-6d7c-465b-a6ac-e3dcfccb9648",
+              "id": "ad4b18c6-fc65-4158-b40c-1c243f605a76",
               "name": "Bad request due to malformed GraphQL query or syntax error",
               "originalRequest": {
                 "url": {
@@ -132,7 +132,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": true\n  },\n  \"operationName\": \"<string>\"\n}",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 6779.601369488953,\n    \"key_1\": false,\n    \"key_2\": false,\n    \"key_3\": 3731.4796130152404\n  },\n  \"operationName\": \"<string>\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -148,12 +148,12 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 8645,\n          \"column\": 8645\n        },\n        {\n          \"line\": 5583,\n          \"column\": 4435\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": 3435.6367172611303\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 385,\n          \"column\": 9595\n        },\n        {\n          \"line\": 2954,\n          \"column\": 1787\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": false,\n        \"key_1\": false\n      }\n    }\n  ]\n}",
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 8011,\n          \"column\": 2537\n        },\n        {\n          \"line\": 7635,\n          \"column\": 4533\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": \"string\",\n        \"key_1\": 4632.237075177905\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 9041,\n          \"column\": 3064\n        },\n        {\n          \"line\": 2391,\n          \"column\": 8583\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": false,\n        \"key_1\": \"string\"\n      }\n    }\n  ]\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "3ea734c2-d76f-4477-9735-455cb7fe27d5",
+              "id": "90e61290-cb23-467c-95ff-4f6eebc23693",
               "name": "Unauthorized due to invalid or missing authentication secret",
               "originalRequest": {
                 "url": {
@@ -183,7 +183,7 @@
                 "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": true\n  },\n  \"operationName\": \"<string>\"\n}",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 6779.601369488953,\n    \"key_1\": false,\n    \"key_2\": false,\n    \"key_3\": 3731.4796130152404\n  },\n  \"operationName\": \"<string>\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -199,257 +199,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 8645,\n          \"column\": 8645\n        },\n        {\n          \"line\": 5583,\n          \"column\": 4435\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": 3435.6367172611303\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 385,\n          \"column\": 9595\n        },\n        {\n          \"line\": 2954,\n          \"column\": 1787\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": false,\n        \"key_1\": false\n      }\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        }
-      ],
-      "event": []
-    },
-    {
-      "id": "5f3a871f-73a8-4460-a969-0e3c84d7a40f",
-      "name": "Schema",
-      "description": {
-        "content": "Import and manage GraphQL schemas. Fauna auto-generates collections, indexes, and resolvers from the uploaded schema.",
-        "type": "text/plain"
-      },
-      "item": [
-        {
-          "id": "9b36dabc-493c-45b3-93ed-2ebd12569980",
-          "name": "Import a GraphQL schema",
-          "request": {
-            "name": "Import a GraphQL schema",
-            "description": {
-              "content": "Imports a GraphQL schema definition into the authenticated Fauna database. Fauna automatically creates collections, indexes, and resolvers based on the schema types and relationships. Use mode parameter to control whether to merge with or replace the existing schema.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "import"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "mode",
-                  "value": "merge",
-                  "description": "Schema import mode. Use merge to add to the existing schema or replace to overwrite it entirely. Override allows updating existing types."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "multipart/form-data"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "schema",
-                  "type": "file",
-                  "description": "GraphQL schema file to import."
-                }
-              ]
-            }
-          },
-          "response": [
-            {
-              "id": "d51be9ed-3895-49cf-a99b-c6014f315569",
-              "name": "Schema imported successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "import"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "mode",
-                      "value": "merge"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "GraphQL schema file to import.",
-                        "type": "text/plain"
-                      },
-                      "key": "schema",
-                      "value": "<binary>",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3ed66ed3-d27d-4376-a70a-a6f50e48dc4b",
-              "name": "Invalid GraphQL schema",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "import"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "mode",
-                      "value": "merge"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "GraphQL schema file to import.",
-                        "type": "text/plain"
-                      },
-                      "key": "schema",
-                      "value": "<binary>",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 8645,\n          \"column\": 8645\n        },\n        {\n          \"line\": 5583,\n          \"column\": 4435\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": 3435.6367172611303\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 385,\n          \"column\": 9595\n        },\n        {\n          \"line\": 2954,\n          \"column\": 1787\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": false,\n        \"key_1\": false\n      }\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "46b3606c-8277-4711-87ca-288203eda9d6",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "import"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "mode",
-                      "value": "merge"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "GraphQL schema file to import.",
-                        "type": "text/plain"
-                      },
-                      "key": "schema",
-                      "value": "<binary>",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 8645,\n          \"column\": 8645\n        },\n        {\n          \"line\": 5583,\n          \"column\": 4435\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": 3435.6367172611303\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 385,\n          \"column\": 9595\n        },\n        {\n          \"line\": 2954,\n          \"column\": 1787\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": false,\n        \"key_1\": false\n      }\n    }\n  ]\n}",
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 8011,\n          \"column\": 2537\n        },\n        {\n          \"line\": 7635,\n          \"column\": 4533\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": \"string\",\n        \"key_1\": 4632.237075177905\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"locations\": [\n        {\n          \"line\": 9041,\n          \"column\": 3064\n        },\n        {\n          \"line\": 2391,\n          \"column\": 8583\n        }\n      ],\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": false,\n        \"key_1\": \"string\"\n      }\n    }\n  ]\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -467,7 +217,7 @@
   "variable": [
     {
       "type": "string",
-      "value": "https://graphql.fauna.com",
+      "value": "https://db.fauna.com",
       "key": "baseUrl"
     }
   ],
@@ -481,11 +231,11 @@
     ]
   },
   "info": {
-    "_postman_id": "e1f4a757-ed2f-41ea-a004-271d30cd43fe",
-    "name": "Fauna GraphQL API",
+    "_postman_id": "39fb4a53-598e-48ca-ba08-253dbeab7001",
+    "name": "Fauna Core HTTP EventFeeds GraphQL API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "The Fauna GraphQL API allows developers to interact with their Fauna databases using standard GraphQL queries and mutations. By uploading a GraphQL schema, Fauna automatically generates the necessary collections, indexes, and resolvers. This API can be used from any programming language or HTTP client without requiring a dedicated Fauna driver. It provides an alternative to FQL for developers who prefer the GraphQL query paradigm and ecosystem tooling.\n\nContact Support:\n Name: Fauna Support",
+      "content": "The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints. It allows developers to execute Fauna Query Language (FQL) queries, manage databases, perform CRUD operations on documents, manage schema as FSL files, and consume change data capture events via event feeds. The API uses token-based authentication and supports features such as transactions, indexes, and set operations. It serves as the foundation upon which Fauna's client drivers and SDKs are built.\n\nContact Support:\n Name: Fauna Support",
       "type": "text/plain"
     }
   }
