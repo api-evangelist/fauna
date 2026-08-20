@@ -22,6 +22,12 @@ apis:
   tags:
   - Change Data Capture
   - Database
+  - Event
+  - Real-Time
+  - Streaming
+  tags_raw:
+  - Change Data Capture
+  - Database
   - Events
   - Real-Time
   - Streaming
@@ -42,6 +48,11 @@ apis:
 - aid: fauna:event-feeds-api
   name: Fauna Event Feeds API
   tags:
+  - Change Data Capture
+  - Database
+  - Event
+  - Polling
+  tags_raw:
   - Change Data Capture
   - Database
   - Events
