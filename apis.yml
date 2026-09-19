@@ -27,7 +27,7 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fauna.png
 url: https://raw.githubusercontent.com/api-evangelist/fauna/refs/heads/main/apis.yml
-modified: '2026-09-16'
+modified: '2026-09-17'
 apis:
 - aid: fauna:event-streaming-api
   name: Fauna Event Streaming API
@@ -47,8 +47,6 @@ apis:
   baseURL: https://db.fauna.com
   humanURL: https://docs.fauna.com/fauna/current/reference/streaming/
   properties:
-  - url: https://docs.fauna.com/fauna/current/reference/streaming/
-    type: Documentation
   - url: asyncapi/fauna-event-streaming-asyncapi.yml
     type: AsyncAPI
   description: >-
@@ -72,9 +70,7 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://db.fauna.com
   humanURL: https://docs.fauna.com/fauna/current/learn/cdc/
-  properties:
-  - url: https://docs.fauna.com/fauna/current/learn/cdc/
-    type: Documentation
+  properties: []
   description: >-
     The Fauna Event Feeds API provides a polling-based approach to change data capture, complementing
     the real-time Event Streaming API. Event feeds allow developers to retrieve batches of change events
@@ -90,11 +86,9 @@ apis:
   - SDK
   - TypeScript
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.example.com
+  baseURL: https://db.fauna.com
   humanURL: https://docs.fauna.com/fauna/current/
-  properties:
-  - url: https://docs.fauna.com/fauna/current/
-    type: Documentation
+  properties: []
   description: >-
     The Fauna JavaScript Driver is the official client SDK for interacting with Fauna from JavaScript
     and TypeScript applications. It provides template-based FQL query interpolation with type safety and
@@ -108,11 +102,9 @@ apis:
   - Python
   - SDK
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.example.com
+  baseURL: https://db.fauna.com
   humanURL: https://docs.fauna.com/fauna/current/
-  properties:
-  - url: https://docs.fauna.com/fauna/current/
-    type: Documentation
+  properties: []
   description: >-
     The Fauna Python Driver is the official client SDK for accessing Fauna from Python applications. It
     provides idiomatic Python interfaces for composing and executing FQL v10 queries, managing authentication
@@ -127,7 +119,7 @@ apis:
   - Driver
   - SDK
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.example.com
+  baseURL: https://db.fauna.com
   humanURL: https://github.com/fauna/fauna-dotnet
   properties:
   - url: https://github.com/fauna/fauna-dotnet
@@ -149,8 +141,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/fauna-eventfeeds-api-openapi.yml
-  - type: Documentation
-    url: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
+  - type: Overlay
+    url: overlays/fauna-eventfeeds-api-overlay.yaml
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 - aid: fauna:fauna-query-api
   name: fauna Query API
   description: Execute Fauna Query Language (FQL) queries against a Fauna database.
@@ -161,8 +154,9 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/fauna-query-api-openapi.yml
-  - type: Documentation
-    url: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
+  - type: Overlay
+    url: overlays/fauna-query-api-overlay.yaml
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 - aid: fauna:fauna-schema-api
   name: fauna Schema API
   description: >-
@@ -175,25 +169,27 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/fauna-schema-api-openapi.yml
-  - type: Documentation
-    url: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
+  - type: Overlay
+    url: overlays/fauna-schema-api-overlay.yaml
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 - aid: fauna:fauna-graph-ql-api
   name: Fauna Graph QL API
   description: Execute GraphQL queries and mutations against a Fauna database.
   humanURL: https://docs.fauna.com/fauna/current/reference/streaming/
   baseURL: https://db.fauna.com
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
     url: openapi/fauna-graph-ql-api-openapi.yml
-  - type: Documentation
-    url: https://docs.fauna.com/fauna/current/
   - type: GraphQL
     url: graphql/fauna-graphql.md
+  - type: Overlay
+    url: overlays/fauna-graph-ql-api-overlay.yaml
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 common:
-- type: Website
-  url: https://fauna.com
 - type: AgenticAccess
   url: agentic-access/fauna-agentic-access.yml
 - type: DomainSecurity
@@ -210,5 +206,67 @@ common:
   url: json-schema/fauna-event-schema.json
 - type: JSONSchema
   url: json-schema/fauna-query-schema.json
-description: Fauna is a distributed document-relational database delivered as a cloud API that combines
-  the relational query power of SQL with the flexibility of documents and global serverless distribution.
+- type: GitHubOrganization
+  url: https://github.com/fauna
+- type: SourceCode
+  url: https://github.com/fauna/faunadb
+- type: Packages
+  url: packages/fauna-packages.yml
+- type: SDKs
+  url: packages/fauna-packages.yml
+- type: CLI
+  url: cli/fauna-cli.yml
+- type: Lifecycle
+  url: lifecycle/fauna-lifecycle.yml
+- type: Conventions
+  url: conventions/fauna-conventions.yml
+- type: ErrorCatalog
+  url: errors/fauna-problem-types.yml
+- type: DataModel
+  url: data-model/fauna-data-model.yml
+- type: Conformance
+  url: conformance/fauna-conformance.yml
+- type: LLMsTxt
+  url: llms/fauna-llms.txt
+- type: Vocabulary
+  url: vocabulary/fauna-vocabulary.yml
+- type: Plans
+  url: plans/fauna-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/fauna-rate-limits.yml
+- type: FinOps
+  url: finops/fauna-finops.yml
+- type: SpectralRules
+  url: rules/fauna-jsonschema-spectral-rules.yml
+- type: JSONStructure
+  url: json-structure/fauna-structure.json
+description: Fauna, Inc. built a distributed document-relational database delivered as a cloud API, combining 
+  the relational query power of SQL with the flexibility of documents, global serverless distribution and 
+  strictly serializable ACID transactions over plain HTTPS. Fauna announced End-of-Service in March 2025 and 
+  shut the hosted service down on 2025-05-30; as of 2026-09-17 every Fauna service host returns NXDOMAIN and 
+  the apex domain forwards to an unrelated company. This profile is maintained as an archival record of the 
+  API surface as it stood at shutdown.
+tags:
+- Database
+- Document Database
+- Serverless
+- Distributed Systems
+- Change Data Capture
+- GraphQL
+- Cloud
+- Developer Tools
+created: '2026-05-04'
+x-status: defunct
+x-enrichment:
+  date: '2026-09-17'
+  status: enriched
+  artifacts_added: 13
+  pass: local-v3
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+x-status-detail: Hosted service decommissioned 2025-05-30. No first-party Fauna host resolves, so no Website 
+  pointer is registered — on purpose. http://fauna.com now forwards to faunarobotics.com, a DIFFERENT company;
+  that redirect is not a successor and must not be read as one. See lifecycle/fauna-lifecycle.yml.
