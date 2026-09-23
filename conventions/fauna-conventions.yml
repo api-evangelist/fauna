@@ -1,0 +1,157 @@
+generated: '2026-09-17'
+method: derived
+source: >-
+  openapi/_original/fauna-core-http-api-openapi.yml and the four refined per-tag specs, plus
+  authentication/fauna-authentication.yml and the first-party driver READMEs at
+  raw.githubusercontent.com/fauna/fauna-js and /fauna-python (the only Fauna-authored prose
+  still reachable — docs.fauna.com is NXDOMAIN, so nothing could be confirmed against the
+  documentation site).
+provider: Fauna
+providerId: fauna
+description: >-
+  Cross-cutting runtime semantics of the Fauna Core HTTP API, derived from the harvested
+  OpenAPI. Recorded for a DECOMMISSIONED service (see lifecycle/fauna-lifecycle.yml): these
+  are the conventions the API had when it was switched off on 2025-05-30, not conventions a
+  consumer can rely on today. Where the spec is silent the entry says so rather than
+  inferring a convention from the vendor's product category.
+auth:
+  style: bearer
+  header: 'Authorization: Bearer <secret>'
+  detail: >-
+    A single http/bearer securityScheme applied globally. The bearer credential is a Fauna
+    "secret" — an admin/server/client key, a user token, or a JWT from a third-party identity
+    provider. No OAuth 2 flow and no scope surface exist, so scopes/ is deliberately absent
+    rather than empty.
+  source: openapi securitySchemes bearerAuth
+idempotency:
+  coverage: none
+  scope: []
+  mechanism: null
+  header: null
+  retention: null
+  detail: >-
+    No idempotency mechanism of any kind appears in the contract. There is no Idempotency-Key
+    header, no client-supplied request identifier, and no documented replay window on any of
+    the nine operations. What the API offers instead is TRANSACTIONALITY, which is a
+    different guarantee and must not be scored as this one: a /query/1 call executes as a
+    single strictly-serialized ACID transaction, so a request either applies whole or not at
+    all — but a RETRY of that request applies it a second time. An agent that times out on a
+    write has no safe way to find out whether the write landed, and nothing in the contract
+    lets it re-send without risking a duplicate.
+  verdict_basis: >-
+    Nine operations across four specs; zero carry an idempotency parameter, header or
+    response field. coverage:none is the machine verdict the band gate reads.
+pagination:
+  style: cursor
+  detail: >-
+    FQL Set results paginate with an opaque `after` cursor returned in the query result and
+    passed back to Set.paginate; event feeds page with a `cursor` plus an optional
+    `start_ts`, and the response carries `has_next`. Pagination lives INSIDE the FQL
+    expression and the JSON body, not in query parameters, so it is invisible to a
+    parameter-level reading of the OpenAPI.
+  request_fields: [cursor, start_ts, page_size]
+  response_fields: [after, cursor, has_next]
+  source: 'openapi EventFeedRequest/EventFeedResponse schemas; fauna-js README pagination section'
+versioning:
+  style: path
+  detail: 'Major version is a path segment (/query/1, /feed/1, /schema/1/...). Frozen at v1.'
+error_envelope:
+  format: vendor-json
+  rfc9457: false
+  shape: '{ error: { code: <string>, message: <string> }, summary?: <string>, stats?: {...} }'
+  detail: >-
+    Errors are a vendor JSON envelope on a non-2xx status, not application/problem+json.
+    `error.code` is a stable machine string (invalid_query, unauthorized, limit_exceeded,
+    contended_transaction, time_out, invalid_request). See errors/fauna-problem-types.yml.
+  source: openapi components.schemas.ErrorResponse
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  headers: []
+  detail: >-
+    The contract declares a 429 response on /query/1 and /feed/1 but names NO rate-limit
+    response headers — no X-RateLimit-*, no RateLimit-*, no Retry-After. A client learns it
+    was throttled only from the status code and the `limit_exceeded` error code, with no
+    published signal for how long to wait. See rate-limits/fauna-rate-limits.yml.
+request_tracing:
+  header: null
+  detail: >-
+    No request-id or correlation header appears in the contract. Responses do carry a
+    `stats` object (compute/read/write ops, query_time_ms, attempts) and a transaction
+    timestamp `txn_ts`, which is observability but not a trace identifier.
+metadata:
+  supported: false
+  detail: No provider-level custom-metadata convention; arbitrary fields live in the user's own documents.
+field_expansion:
+  supported: false
+  detail: >-
+    Response shaping is done in FQL by projection rather than by sparse-fieldset or expand
+    query parameters, so there is no transport-level convention to record.
+dry_run_mode:
+  supported: true
+  coverage: partial
+  detail: >-
+    The schema surface has a genuine rehearsal operation: POST /schema/1/validate
+    (validateSchemaFiles) checks an FSL change set and returns the diff WITHOUT applying it,
+    and POST /schema/1/update accepts a staged mode so a change can be reviewed before it is
+    committed. No equivalent exists for /query/1 — an FQL mutation has no dry-run.
+reversibility:
+  grade: documented
+  coverage: partial
+  detail: >-
+    Graded `documented`, not `verified`, and the distinction is the whole point: the schema
+    surface publishes a real reversal path, but NO Fauna document states a window for it.
+    Because docs.fauna.com is NXDOMAIN there is no longer any page that could state one, so
+    this cannot be upgraded by a later pass — it is a permanent `documented`.
+  write_surfaces:
+  - operation: updateSchemaFiles
+    path: /schema/1/update
+    reversal: abandonStagedSchema
+    reversal_path: /schema/1/staged/abandon
+    window: null
+    window_source: null
+    note: >-
+      A STAGED schema update is fully reversible — abandon discards it and the live schema is
+      untouched. The staging area persists until it is committed or abandoned, but no
+      document states a maximum staging duration, so no window is asserted here.
+  - operation: commitStagedSchema
+    path: /schema/1/staged/commit
+    reversal: null
+    reversal_path: null
+    window: null
+    window_source: null
+    note: >-
+      Committing is the point of no return. There is no uncommit, no rollback and no restore
+      operation in the contract; reverting means pushing the previous FSL as a new update.
+  - operation: executeQuery
+    path: /query/1
+    reversal: null
+    reversal_path: null
+    window: null
+    window_source: null
+    note: >-
+      An FQL write is transactional but not reversible by the API. Undo is whatever the
+      caller writes into its own FQL — Fauna publishes no cancel, void, undo or restore
+      operation, and no soft-delete retention window.
+  - operation: pollEventFeed
+    path: /feed/1
+    reversal: na
+    reversal_path: null
+    window: null
+    window_source: null
+    note: >-
+      Read-only despite being a POST; the request body carries the cursor. Nothing to reverse.
+  - operation: importGraphQLSchema
+    path: /import
+    reversal: null
+    reversal_path: null
+    window: null
+    window_source: null
+    note: >-
+      Present in a previously-refined spec but NOT in openapi/_original/, so its semantics
+      could not be confirmed against a harvested contract. No reversal is asserted.
+cross_references:
+  errors: errors/fauna-problem-types.yml
+  lifecycle: lifecycle/fauna-lifecycle.yml
+  authentication: authentication/fauna-authentication.yml
+  rate_limits: rate-limits/fauna-rate-limits.yml
+  data_model: data-model/fauna-data-model.yml

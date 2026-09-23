@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Fauna Core HTTP EventFeeds API
-  description: The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints. It allows developers to execute Fauna Query Language (FQL) queries, manage databases, perform CRUD operations on documents, manage schema as FSL files, and consume change data capture events via event feeds. The API uses token-based authentication and supports features such as transactions, indexes, and set operations. It serves as the foundation upon which Fauna's client drivers and SDKs are built.
+  title: Fauna Core HTTP Event Feeds API
+  description: The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints.
   version: '1'
   contact:
     name: Fauna Support
@@ -58,27 +58,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    EventStats:
-      type: object
-      description: Aggregated statistics for all events in the page.
-      properties:
-        read_ops:
-          type: integer
-          description: Number of Transactional Read Operations consumed.
-        storage_bytes_read:
-          type: integer
-          description: Number of bytes read from storage.
-        compute_ops:
-          type: integer
-          description: Number of Transactional Compute Operations consumed.
-        processing_time_ms:
-          type: integer
-          description: Processing time in milliseconds.
-        rate_limits_hit:
-          type: array
-          items:
-            type: string
-          description: List of rate limits that were hit.
     Event:
       type: object
       properties:
@@ -101,43 +80,6 @@ components:
           type: object
           additionalProperties: true
           description: The document data associated with the event.
-    EventFeedResponse:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-          description: Array of change events for the current page.
-        cursor:
-          type: string
-          description: Cursor to use for fetching the next page of events.
-        has_next:
-          type: boolean
-          description: Indicates whether more pages of events are available.
-        stats:
-          $ref: '#/components/schemas/EventStats'
-    EventFeedRequest:
-      type: object
-      required:
-      - token
-      properties:
-        token:
-          type: string
-          description: The event source token obtained from an FQL query that returns an event source.
-        cursor:
-          type: string
-          description: Cursor from a previous event feed response for pagination. Mutually exclusive with start_ts.
-        start_ts:
-          type: integer
-          format: int64
-          description: Start timestamp in microseconds since the Unix epoch. Fauna returns events that occurred after this timestamp. Mutually exclusive with cursor.
-        page_size:
-          type: integer
-          minimum: 1
-          maximum: 16000
-          default: 16
-          description: Maximum number of events to return per page. Must be between 1 and 16000 inclusive.
     ErrorResponse:
       type: object
       properties:
@@ -180,6 +122,64 @@ components:
           type: integer
           format: int64
           description: Schema version at the time of the failed request.
+    EventFeedResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+          description: Array of change events for the current page.
+        cursor:
+          type: string
+          description: Cursor to use for fetching the next page of events.
+        has_next:
+          type: boolean
+          description: Indicates whether more pages of events are available.
+        stats:
+          $ref: '#/components/schemas/EventStats'
+    EventStats:
+      type: object
+      description: Aggregated statistics for all events in the page.
+      properties:
+        read_ops:
+          type: integer
+          description: Number of Transactional Read Operations consumed.
+        storage_bytes_read:
+          type: integer
+          description: Number of bytes read from storage.
+        compute_ops:
+          type: integer
+          description: Number of Transactional Compute Operations consumed.
+        processing_time_ms:
+          type: integer
+          description: Processing time in milliseconds.
+        rate_limits_hit:
+          type: array
+          items:
+            type: string
+          description: List of rate limits that were hit.
+    EventFeedRequest:
+      type: object
+      required:
+      - token
+      properties:
+        token:
+          type: string
+          description: The event source token obtained from an FQL query that returns an event source.
+        cursor:
+          type: string
+          description: Cursor from a previous event feed response for pagination. Mutually exclusive with start_ts.
+        start_ts:
+          type: integer
+          format: int64
+          description: Start timestamp in microseconds since the Unix epoch. Fauna returns events that occurred after this timestamp. Mutually exclusive with cursor.
+        page_size:
+          type: integer
+          minimum: 1
+          maximum: 16000
+          default: 16
+          description: Maximum number of events to return per page. Must be between 1 and 16000 inclusive.
     QueryStats:
       type: object
       description: Operational statistics for the query execution.

@@ -1,0 +1,110 @@
+generated: '2026-09-17'
+method: derived
+source: >-
+  $ref graph and id-reference fields of openapi/_original/fauna-core-http-api-openapi.yml
+  plus the four refined per-tag specs. Not enriched from an object reference page —
+  docs.fauna.com is NXDOMAIN.
+provider: Fauna
+providerId: fauna
+description: >-
+  The entity graph of the Fauna Core HTTP API's TRANSPORT contract. This is deliberately a
+  small graph, and the reason is the interesting finding: Fauna is a database, so its real
+  data model is whatever FSL schema the CUSTOMER defines. The public API describes the
+  envelopes that carry queries, events and schema files — not collections, documents,
+  indexes or roles, none of which appear as components.schemas anywhere in the contract. An
+  ERD derived from this spec therefore describes the wire protocol, not the database.
+entities:
+- name: QueryRequest
+  role: request envelope
+  operations: [executeQuery]
+  fields: [query, arguments, typecheck, format]
+- name: QueryResponse
+  role: response envelope
+  operations: [executeQuery]
+  fields: [data, static_type, summary, txn_ts, stats, schema_version]
+- name: QueryStats
+  role: value object
+  detail: Per-request metering — compute/read/write ops, query_time_ms, attempts, retries, storage bytes.
+- name: EventFeedRequest
+  role: request envelope
+  operations: [pollEventFeed]
+  fields: [token, cursor, start_ts, page_size]
+- name: EventFeedResponse
+  role: response envelope
+  operations: [pollEventFeed]
+  fields: [events, cursor, has_next, stats]
+- name: Event
+  role: entity
+  detail: 'One change-data-capture record: type (add|remove|update), data, txn_ts, cursor, stats.'
+- name: EventStats
+  role: value object
+- name: SchemaFile
+  role: entity
+  detail: One FSL source file — filename plus content.
+- name: SchemaFilesResponse
+  role: collection response
+  operations: [getSchemaFiles]
+- name: SchemaUpdateResponse
+  role: response envelope
+  operations: [updateSchemaFiles]
+- name: SchemaValidationResponse
+  role: response envelope
+  operations: [validateSchemaFiles]
+- name: SchemaStatusResponse
+  role: response envelope
+  operations: [getStagedSchemaStatus]
+- name: SchemaCommitResponse
+  role: response envelope
+  operations: [commitStagedSchema]
+- name: SchemaAbandonResponse
+  role: response envelope
+  operations: [abandonStagedSchema]
+- name: ErrorResponse
+  role: error envelope
+  detail: Shared by every 4xx across all four specs. See errors/fauna-problem-types.yml.
+- name: GraphQLRequest
+  role: request envelope
+  operations: [executeGraphQLQuery]
+  provenance_note: >-
+    From the GraphQL spec, which is NOT present in openapi/_original/. Recorded, but its
+    authorship is unconfirmed — see provenance.yml.
+- name: GraphQLResponse
+  role: response envelope
+  operations: [executeGraphQLQuery]
+  provenance_note: Same caveat as GraphQLRequest.
+relationships:
+- {from: QueryResponse, to: QueryStats, type: has_one, via: stats}
+- {from: ErrorResponse, to: QueryStats, type: has_one, via: stats}
+- {from: EventFeedResponse, to: Event, type: has_many, via: events}
+- {from: EventFeedResponse, to: EventStats, type: has_one, via: stats}
+- {from: Event, to: EventStats, type: has_one, via: stats}
+- {from: SchemaFilesResponse, to: SchemaFile, type: has_many, via: files}
+- {from: SchemaUpdateResponse, to: SchemaFile, type: has_many, via: files}
+- {from: SchemaValidationResponse, to: SchemaFile, type: has_many, via: files}
+- {from: GraphQLResponse, to: GraphQLError, type: has_many, via: errors}
+- {from: GraphQLErrorResponse, to: GraphQLError, type: has_many, via: errors}
+identifiers:
+  cursor:
+    shape: opaque string
+    used_by: [EventFeedRequest.cursor, EventFeedResponse.cursor, Event.cursor]
+    detail: The only cross-request identifier in the contract. Opaque; no documented prefix or format.
+  txn_ts:
+    shape: int64 microsecond transaction timestamp
+    used_by: [QueryResponse, ErrorResponse, Event, EventFeedRequest.start_ts]
+    detail: >-
+      Fauna's ordering primitive and the closest thing the API has to a global version. It
+      doubles as a resume point: a feed can be restarted from a start_ts to avoid missing
+      events across a disconnection.
+  document_id:
+    shape: not in the transport contract
+    detail: >-
+      Fauna document ids exist, but they live inside FQL results as user-schema data. No
+      OpenAPI schema declares one, so no id-prefix taxonomy can be derived.
+summary:
+  entity_count: 18
+  relationship_count: 10
+  finding: >-
+    Sixteen of the eighteen entities are request/response envelopes or value objects; only
+    Event and SchemaFile are domain entities. There is no collection, document, index, role
+    or key resource in the public contract, which is the honest shape of a database-as-an-API
+    and not a gap in the harvest.

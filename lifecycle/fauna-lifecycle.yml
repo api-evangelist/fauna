@@ -1,0 +1,127 @@
+generated: '2026-09-17'
+method: probed
+source: >-
+  Live DNS + HTTP probes of every host this record knows, run 2026-09-17, cross-checked
+  against registry release dates (packages/fauna-packages.yml) and the End-of-Service facts
+  already recorded in plans/fauna-plans-pricing.yml and rate-limits/fauna-rate-limits.yml
+  by the 2026-05 pass.
+provider: Fauna
+providerId: fauna
+status: decommissioned
+description: >-
+  Fauna, Inc. announced End-of-Service in March 2025 and shut its hosted database down on
+  2025-05-30. This enrichment pass re-verified that independently rather than taking the
+  earlier artifacts' word for it: every service host the record carries is now NXDOMAIN,
+  the apex answers DNS but refuses HTTPS connections, and plain HTTP on the apex issues a
+  cross-domain 301 to faunarobotics.com — an unrelated robotics company. There is no
+  callable Fauna API left and no Fauna-operated web surface left.
+versioning:
+  scheme: path-segment
+  detail: >-
+    The Core HTTP API versioned in the path (/query/1, /feed/1, /schema/1/...). FQL itself
+    versioned as a major generation — v4 (deprecated) and v10 (current at shutdown) — with
+    a separate driver family per generation.
+  frozen_at: 'FQL v10 / Core HTTP API v1'
+deprecation_policy:
+  published: false
+  detail: >-
+    No deprecation-policy page survives to point at, and no Sunset or Deprecation (RFC 8594)
+    response headers can be observed because no endpoint answers. The FQL v4 drivers were
+    marked deprecated in their own READMEs and on their registry pages, which is the only
+    deprecation signalling that is still reachable.
+status_page:
+  published: false
+  url: null
+  detail: status.fauna.com returns NXDOMAIN (2026-09-17); no replacement status surface exists.
+sla:
+  published: false
+  detail: Historical SLAs were tied to the Business/Enterprise tiers; no SLA document is reachable.
+end_of_service:
+  announced: '2025-03'
+  shutdown: '2025-05-30'
+  evidence:
+  - claim: Every Fauna service host no longer exists in DNS.
+    probe: 'dig A docs.fauna.com / db.fauna.com / graphql.fauna.com / dashboard.fauna.com / support.fauna.com / status.fauna.com'
+    result: NXDOMAIN (no A record) on all six
+    checked: '2026-09-17'
+  - claim: The apex resolves but will not complete a TLS connection.
+    probe: https://fauna.com/
+    result: 'DNS 3.33.139.32; connection timed out after 20s (curl exit 28, HTTP 000)'
+    checked: '2026-09-17'
+  - claim: The apex domain now forwards to a different company.
+    probe: http://fauna.com/
+    result: '301 -> https://faunarobotics.com/ (200, title "Fauna Robotics | Capable, Safe, Fun Robots for Everyone")'
+    checked: '2026-09-17'
+  - claim: No first-party package has shipped since before the shutdown.
+    probe: registry metadata for npm/pypi/maven/nuget/go/rubygems
+    result: 'newest first-party release 2025-02-05 (npm fauna 2.5.0); shutdown 2025-05-30'
+    checked: '2026-09-17'
+retired_surfaces:
+  note: >-
+    Recorded here so the history is not lost when the dead pointers are removed from
+    apis.yml. Each of these was a real Fauna surface; each is now unreachable.
+  surfaces:
+  - url: https://docs.fauna.com/fauna/current/
+    role: Documentation
+    status: NXDOMAIN
+  - url: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
+    role: APIReference
+    status: NXDOMAIN
+  - url: https://docs.fauna.com/fauna/current/reference/streaming/
+    role: Documentation (Event Streaming)
+    status: NXDOMAIN
+  - url: https://docs.fauna.com/fauna/current/learn/cdc/
+    role: Documentation (Event Feeds)
+    status: NXDOMAIN
+  - url: https://db.fauna.com
+    role: API base URL (Core HTTP API)
+    status: NXDOMAIN
+  - url: https://graphql.fauna.com
+    role: API base URL (GraphQL)
+    status: NXDOMAIN
+  - url: https://dashboard.fauna.com
+    role: Console
+    status: NXDOMAIN
+  - url: https://support.fauna.com
+    role: Support (named in the harvested OpenAPI info.contact)
+    status: NXDOMAIN
+  - url: https://fauna.com/pricing
+    role: Pricing
+    status: 'HTTPS 000 (timeout); HTTP 301 -> faunarobotics.com'
+  - url: https://fauna.com/terms
+    role: TermsOfService (named in the harvested OpenAPI info.termsOfService)
+    status: 'HTTPS 000 (timeout); HTTP 301 -> faunarobotics.com'
+surviving_surfaces:
+  note: >-
+    What a member of the public can still reach. These are the only live first-party Fauna
+    artifacts left, and they are all on third-party platforms rather than Fauna hosts.
+  surfaces:
+  - url: https://github.com/fauna
+    role: GitHubOrganization
+    status: 200
+    detail: '"Fauna, Inc.", 26 public repositories, org record last updated 2026-08-26.'
+  - url: https://github.com/fauna/faunadb
+    role: SourceCode (database engine)
+    status: 200
+    detail: >-
+      The FaunaDB server itself, made public 2025-04-29 and last pushed 2025-05-03 — days
+      before the shutdown. 179 stars. It carries NO LICENSE file, so GitHub reports the
+      license as NOASSERTION: the source was released but not, on this evidence, licensed.
+  - url: https://github.com/fauna-labs
+    role: GitHubOrganization (experimental)
+    status: 200
+    detail: '"Fauna Labs", 104 public repositories.'
+  - url: https://www.linkedin.com/company/faunainc
+    role: LinkedIn
+    status: 200
+  - url: https://rubygems.org/gems/fauna
+    role: Packages
+    status: 200
+    detail: All first-party packages remain installable on every registry; see packages/.
+successor:
+  identified: false
+  note: >-
+    fauna.com now forwards to faunarobotics.com, but Fauna Robotics is a DIFFERENT COMPANY
+    that acquired or was assigned the domain — not a rebrand or continuation of Fauna, Inc.
+    the database vendor. No successor is asserted here, and none should be inferred from the
+    redirect: that is an identity decision and it is not one an enrichment pass may make.

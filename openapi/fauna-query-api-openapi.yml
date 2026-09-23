@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Fauna Core HTTP EventFeeds Query API
-  description: The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints. It allows developers to execute Fauna Query Language (FQL) queries, manage databases, perform CRUD operations on documents, manage schema as FSL files, and consume change data capture events via event feeds. The API uses token-based authentication and supports features such as transactions, indexes, and set operations. It serves as the foundation upon which Fauna's client drivers and SDKs are built.
+  title: Fauna Core HTTP Query API
+  description: The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints.
   version: '1'
   contact:
     name: Fauna Support
@@ -86,91 +86,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    XTypecheck:
-      name: X-Typecheck
-      in: header
-      description: If true, enables type checking for the query. Fauna validates the query against the database schema before executing.
-      schema:
-        type: boolean
-    XTraceparent:
-      name: traceparent
-      in: header
-      description: W3C Trace Context traceparent header for distributed tracing.
-      schema:
-        type: string
-    XQueryTags:
-      name: X-Query-Tags
-      in: header
-      description: Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.
-      schema:
-        type: string
-    XLinearized:
-      name: X-Linearized
-      in: header
-      description: If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.
-      schema:
-        type: boolean
-    XQueryTimeout:
-      name: X-Query-Timeout-Ms
-      in: header
-      description: Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.
-      schema:
-        type: integer
-        minimum: 1
-    XLastTxnTs:
-      name: X-Last-Txn-Ts
-      in: header
-      description: Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.
-      schema:
-        type: integer
-        format: int64
-    XFormat:
-      name: X-Format
-      in: header
-      description: Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.
-      schema:
-        type: string
-        enum:
-        - tagged
-        - simple
   schemas:
-    QueryResponse:
-      type: object
-      properties:
-        data:
-          description: The query result data. The structure depends on the query executed and the X-Format header.
-        static_type:
-          type: string
-          description: The static type of the query result as determined by Fauna's type system.
-        txn_ts:
-          type: integer
-          format: int64
-          description: Transaction timestamp in microseconds since the Unix epoch.
-        stats:
-          $ref: '#/components/schemas/QueryStats'
-        schema_version:
-          type: integer
-          format: int64
-          description: The schema version at the time the query was executed.
-        summary:
-          type: string
-          description: Optional summary information about the query execution.
-        query_tags:
-          type: string
-          description: Tags associated with the query for logging and monitoring.
-    QueryRequest:
-      type: object
-      required:
-      - query
-      properties:
-        query:
-          type: string
-          description: The FQL v10 query string to execute.
-        arguments:
-          type: object
-          additionalProperties: true
-          description: Optional named arguments to pass to the query. Arguments are available as variables in the FQL query.
     ErrorResponse:
       type: object
       properties:
@@ -213,6 +129,42 @@ components:
           type: integer
           format: int64
           description: Schema version at the time of the failed request.
+    QueryResponse:
+      type: object
+      properties:
+        data:
+          description: The query result data. The structure depends on the query executed and the X-Format header.
+        static_type:
+          type: string
+          description: The static type of the query result as determined by Fauna's type system.
+        txn_ts:
+          type: integer
+          format: int64
+          description: Transaction timestamp in microseconds since the Unix epoch.
+        stats:
+          $ref: '#/components/schemas/QueryStats'
+        schema_version:
+          type: integer
+          format: int64
+          description: The schema version at the time the query was executed.
+        summary:
+          type: string
+          description: Optional summary information about the query execution.
+        query_tags:
+          type: string
+          description: Tags associated with the query for logging and monitoring.
+    QueryRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The FQL v10 query string to execute.
+        arguments:
+          type: object
+          additionalProperties: true
+          description: Optional named arguments to pass to the query. Arguments are available as variables in the FQL query.
     QueryStats:
       type: object
       description: Operational statistics for the query execution.
@@ -243,6 +195,54 @@ components:
           items:
             type: string
           description: List of rate limits that were hit during query execution.
+  parameters:
+    XFormat:
+      name: X-Format
+      in: header
+      description: Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.
+      schema:
+        type: string
+        enum:
+        - tagged
+        - simple
+    XQueryTimeout:
+      name: X-Query-Timeout-Ms
+      in: header
+      description: Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.
+      schema:
+        type: integer
+        minimum: 1
+    XQueryTags:
+      name: X-Query-Tags
+      in: header
+      description: Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.
+      schema:
+        type: string
+    XLinearized:
+      name: X-Linearized
+      in: header
+      description: If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.
+      schema:
+        type: boolean
+    XLastTxnTs:
+      name: X-Last-Txn-Ts
+      in: header
+      description: Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.
+      schema:
+        type: integer
+        format: int64
+    XTraceparent:
+      name: traceparent
+      in: header
+      description: W3C Trace Context traceparent header for distributed tracing.
+      schema:
+        type: string
+    XTypecheck:
+      name: X-Typecheck
+      in: header
+      description: If true, enables type checking for the query. Fauna validates the query against the database schema before executing.
+      schema:
+        type: boolean
   securitySchemes:
     bearerAuth:
       type: http

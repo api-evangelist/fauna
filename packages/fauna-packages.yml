@@ -1,0 +1,145 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  Registry metadata endpoints queried directly and unauthenticated on 2026-09-17 —
+  registry.npmjs.org, pypi.org/pypi/<pkg>/json, repo1.maven.org maven-metadata.xml,
+  api.nuget.org registration index, proxy.golang.org, rubygems.org/api/v1,
+  crates.io/api/v1 — cross-checked against the api.github.com/orgs/fauna repo list.
+provider: Fauna
+providerId: fauna
+description: >-
+  First-party client drivers and CLI published by Fauna, Inc. Fauna's hosted database was
+  decommissioned on 2025-05-30 (see lifecycle/fauna-lifecycle.yml); the packages remain
+  published on every registry and are still installable, but NOT ONE has shipped a release
+  since 2025-02-05, and every one of them points at https://db.fauna.com — a host that no
+  longer resolves in DNS. Registry currency is recorded below precisely because it is the
+  provider-published, reliably-dated abandonment evidence: the newest first-party artifact
+  in this table predates the shutdown by nearly four months.
+notes: >-
+  Packages are recorded as published facts, not as a recommendation to install. The
+  `fauna-labs` GitHub organization (github.com/fauna-labs, 104 repos) is Fauna's own
+  experimental/community org; the one crate it reserved on crates.io was never released
+  above 0.0.0 and is marked official:false-by-shape below with that stated.
+packages:
+- name: fauna
+  registry: npm
+  url: https://www.npmjs.com/package/fauna
+  official: true
+  language: JavaScript/TypeScript
+  version: 2.5.0
+  published: '2025-02-05'
+  repository: https://github.com/fauna/fauna-js
+  note: >-
+    The current (FQL v10) JavaScript/TypeScript driver. Newest first-party Fauna release on
+    any registry. Its README still documents FAUNA_ENDPOINT=https://db.fauna.com/ and links
+    docs.fauna.com; both hosts are NXDOMAIN as of 2026-09-17.
+- name: faunadb
+  registry: npm
+  url: https://www.npmjs.com/package/faunadb
+  official: true
+  language: JavaScript/TypeScript
+  version: 4.8.2
+  published: '2024-12-18'
+  repository: https://github.com/fauna/faunadb-js
+  note: Legacy FQL v4 JavaScript driver; superseded by `fauna` and marked deprecated by the vendor.
+- name: fauna-shell
+  registry: npm
+  url: https://www.npmjs.com/package/fauna-shell
+  official: true
+  language: JavaScript/TypeScript
+  version: 4.0.0
+  published: '2025-01-21'
+  repository: https://github.com/fauna/fauna-shell
+  note: The first-party CLI / interactive shell. See cli/fauna-cli.yml.
+- name: fauna
+  registry: pypi
+  url: https://pypi.org/project/fauna/
+  official: true
+  language: Python
+  version: 2.4.0
+  published: '2024-12-02'
+  repository: https://github.com/fauna/fauna-python
+  note: Current (FQL v10) Python driver.
+- name: faunadb
+  registry: pypi
+  url: https://pypi.org/project/faunadb/
+  official: true
+  language: Python
+  version: 4.5.2
+  published: '2024-09-17'
+  repository: https://github.com/fauna/faunadb-python
+  note: Legacy FQL v4 Python driver; marked deprecated by the vendor.
+- name: com.fauna:fauna-jvm
+  registry: maven
+  url: https://repo1.maven.org/maven2/com/fauna/fauna-jvm/
+  official: true
+  language: Java/JVM
+  version: 1.0.0
+  published: '2024-11-15'
+  repository: https://github.com/fauna/fauna-jvm
+  note: >-
+    Date read from maven-metadata.xml lastUpdated (20241115190109). Only groupId com.fauna
+    artifact on Maven Central; the legacy Scala/Java v4 driver (fauna/faunadb-jvm) is not
+    published under that coordinate.
+- name: Fauna
+  registry: nuget
+  url: https://www.nuget.org/packages/Fauna
+  official: true
+  language: C#/.NET
+  version: 1.0.1
+  published: '2024-11-15'
+  repository: https://github.com/fauna/fauna-dotnet
+  note: Current (FQL v10) .NET driver. NuGet author field reads "Fauna, Inc."
+- name: FaunaDB.Client
+  registry: nuget
+  url: https://www.nuget.org/packages/FaunaDB.Client
+  official: true
+  language: C#/.NET
+  version: 4.2.0
+  published: '2022-02-08'
+  repository: https://github.com/fauna/faunadb-csharp
+  note: Legacy FQL v4 .NET driver. A 5.0.0-preview exists with no usable publish date.
+- name: github.com/fauna/fauna-go
+  registry: go
+  url: https://pkg.go.dev/github.com/fauna/fauna-go
+  official: true
+  language: Go
+  version: v3.0.2
+  published: '2025-01-10'
+  repository: https://github.com/fauna/fauna-go
+  note: >-
+    Read from proxy.golang.org/@latest. The unversioned module path resolves to v1.1.1
+    (2023-09-12); v3 is the current major and is the version recorded here.
+- name: fauna
+  registry: rubygems
+  url: https://rubygems.org/gems/fauna
+  official: true
+  language: Ruby
+  version: 3.0.0
+  published: '2018-03-20'
+  repository: https://github.com/fauna/faunadb-ruby
+  note: >-
+    RubyGems author field reads "Fauna, Inc.". Untouched for over seven years; it predates
+    FQL v10 entirely and never received a v10 driver.
+- name: fauna
+  registry: crates
+  url: https://crates.io/crates/fauna
+  official: false
+  language: Rust
+  version: 0.0.0
+  published: '2022-07-19'
+  repository: https://github.com/fauna-labs/fauna-rs
+  note: >-
+    Name reservation only — never released above 0.0.0. Owned from the fauna-labs
+    experimental org rather than the product org, so it is recorded official:false: there
+    was never a shipped first-party Rust driver.
+summary:
+  package_count: 11
+  official_count: 10
+  registries: [npm, pypi, maven, nuget, go, rubygems, crates]
+  newest_first_party_release: '2025-02-05'
+  service_shutdown: '2025-05-30'
+  finding: >-
+    Every first-party package predates the 2025-05-30 shutdown; none was updated, deprecated
+    on-registry, or yanked afterwards, so a consumer installing `fauna` today still gets a
+    driver that silently targets a dead host.

@@ -1,0 +1,77 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://raw.githubusercontent.com/fauna/fauna-shell/main/README.md (200) and the command
+  tree at api.github.com/repos/fauna/fauna-shell/contents/src/commands (200), both fetched
+  2026-09-17. The docs.fauna.com CLI reference the README links is NXDOMAIN, so the command
+  surface below is read from the repository's own oclif command files rather than from the
+  documentation site.
+provider: Fauna
+providerId: fauna
+name: Fauna CLI
+binary: fauna
+repository: https://github.com/fauna/fauna-shell
+package: fauna-shell
+version: 4.0.0
+published: '2025-01-21'
+status: unmaintained
+description: >-
+  The first-party Fauna CLI. It is still installable from npm and its repository is still
+  public, but it targets a service that was shut down on 2025-05-30: `fauna login` points at
+  dashboard.fauna.com and every command ultimately calls db.fauna.com, both of which are
+  NXDOMAIN. Recorded as a real published artifact, not as a usable tool.
+install:
+- method: npm
+  command: npm install -g fauna-shell
+- method: homebrew-tap
+  command: 'brew tap fauna/fauna-shell-tap (github.com/fauna/homebrew-fauna-shell-tap, last pushed 2021)'
+  note: The tap repo has not been touched since 2021 and is not referenced by the current README.
+requirements:
+  node: '>=20.18 (v22+ recommended)'
+  account: 'A Fauna account — signup was at https://dashboard.fauna.com/register (now NXDOMAIN).'
+commands:
+- group: auth
+  commands:
+  - {name: login, detail: Authenticate the CLI against a Fauna account.}
+- group: query
+  commands:
+  - {name: query, detail: 'Run an FQL query from a string or a file. `fauna query "Collection.all()" --database us/my_db`.'}
+  - {name: shell, detail: Interactive FQL REPL.}
+- group: database
+  commands:
+  - {name: database create, detail: Create a database.}
+  - {name: database delete, detail: Delete a database.}
+  - {name: database list, detail: List databases.}
+- group: schema
+  commands:
+  - {name: schema pull, detail: Fetch the database's FSL files to disk.}
+  - {name: schema push, detail: Push local FSL as a schema change (stages or applies it).}
+  - {name: schema diff, detail: Show the difference between local FSL and the database schema.}
+  - {name: schema status, detail: Report the state of a staged schema change.}
+  - {name: schema commit, detail: Commit a staged schema change.}
+  - {name: schema abandon, detail: Discard a staged schema change.}
+- group: export
+  commands:
+  - {name: export create, detail: Start a database export.}
+  - {name: export get, detail: Fetch the state of one export.}
+  - {name: export list, detail: List exports.}
+  - {name: export wait, detail: Block until an export completes.}
+- group: local
+  commands:
+  - {name: local, detail: Run a local Fauna container for development.}
+- group: shell-integration
+  commands:
+  - {name: completion, detail: 'Emit bash/zsh completion for appending to a shell profile.'}
+key_flows:
+- name: Schema-as-code round trip
+  steps: [fauna schema pull, edit .fsl files, fauna schema diff, fauna schema push, fauna schema status, fauna schema commit]
+  note: >-
+    This is the CLI expression of the same staged-schema surface the HTTP API exposes at
+    /schema/1/* — and the `abandon` step is the reversal path recorded in
+    conventions/fauna-conventions.yml.
+- name: Local development
+  steps: [fauna local, fauna query --database <local>]
+  note: >-
+    The only flow in this table that can still be run today, because it does not depend on
+    Fauna-operated infrastructure — it runs the database in a container. Whether the
+    container image is still published was NOT verified by this pass.

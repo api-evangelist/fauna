@@ -1,0 +1,110 @@
+# Fauna
+
+> Fauna, Inc. built a distributed document-relational database delivered as a cloud API,
+> combining relational query power with document flexibility, global distribution and ACID
+> transactions over HTTPS. **The service was shut down on 2025-05-30 and no Fauna API is
+> callable.** This file is an archival record maintained by API Evangelist, not a live
+> integration guide.
+
+## Status — read this first
+
+- **Decommissioned.** End-of-Service announced March 2025; hosted service shut down 2025-05-30.
+- **No host resolves.** `db.fauna.com`, `docs.fauna.com`, `graphql.fauna.com`,
+  `dashboard.fauna.com`, `support.fauna.com` and `status.fauna.com` all return NXDOMAIN
+  (checked 2026-09-17).
+- **The apex is gone too.** `https://fauna.com` resolves but times out; `http://fauna.com`
+  issues a 301 to `https://faunarobotics.com`, which belongs to **a different company**
+  (Fauna Robotics, a robotics maker). Do not treat that redirect as a successor, a rebrand,
+  or a migration target.
+- **The packages are still installable and still broken.** Every first-party driver remains
+  published on npm, PyPI, Maven Central, NuGet, pkg.go.dev and RubyGems, none was deprecated
+  or yanked after the shutdown, and all of them default to `https://db.fauna.com`. Installing
+  `fauna` today gets you a driver pointed at a host that does not exist.
+
+## What still exists
+
+- GitHub organization: https://github.com/fauna (26 public repositories)
+- Database engine source: https://github.com/fauna/faunadb — made public 2025-04-29,
+  last pushed 2025-05-03. **No LICENSE file**, so GitHub reports NOASSERTION: released, but
+  not on this evidence licensed.
+- Experimental org: https://github.com/fauna-labs (104 public repositories)
+- LinkedIn: https://www.linkedin.com/company/faunainc
+
+## Historical API surface
+
+Core HTTP API — base `https://db.fauna.com`, bearer-token auth with a Fauna secret.
+
+- `POST /query/1` — `executeQuery`. Run an FQL v10 query. One request = one serializable
+  ACID transaction. Responses: 200, 400, 401, 403, 409 (contention, retryable), 429, 440
+  (query timeout — a non-standard status code).
+- `POST /feed/1` — `pollEventFeed`. Poll-based change data capture; cursor + `start_ts` in,
+  events + `has_next` out. Responses: 200, 400, 401, 429.
+- `GET /schema/1/files` — `getSchemaFiles`. Fetch the database schema as FSL files.
+- `POST /schema/1/update` — `updateSchemaFiles`. Apply or stage an FSL change set.
+- `POST /schema/1/validate` — `validateSchemaFiles`. Rehearse a change without applying it.
+- `GET /schema/1/status` — `getStagedSchemaStatus`. State of a staged schema change.
+- `POST /schema/1/staged/commit` — `commitStagedSchema`. Apply the staged change. **Irreversible.**
+- `POST /schema/1/staged/abandon` — `abandonStagedSchema`. Discard the staged change.
+
+Event Streaming (push CDC) was a separate `/stream/1` surface, described in
+`asyncapi/fauna-event-streaming-asyncapi.yml`. A GraphQL endpoint ran at
+`https://graphql.fauna.com`.
+
+## Runtime semantics an agent would have needed
+
+- **Auth:** `Authorization: Bearer <fauna-secret>`. One scheme, applied globally. No OAuth,
+  no scopes, no OIDC discovery.
+- **Idempotency: none.** Zero of nine operations accept an idempotency key. Transactionality
+  is not idempotency — a retried write applies twice.
+- **Reversibility: partial.** `abandonStagedSchema` genuinely reverses a staged schema
+  update, with no stated window. Committing, and every FQL write, has no reversal operation.
+- **Errors:** vendor JSON envelope (`{error:{code,message},summary,txn_ts,stats}`), NOT
+  RFC 9457. `error.code` was contractually stable and safe to branch on. No 5xx is declared
+  anywhere in the contract.
+- **Rate limits:** 429 on `/query/1` and `/feed/1`, and **no** rate-limit response headers
+  and no `Retry-After` — a throttled client was told to back off and not told for how long.
+- **Pagination:** opaque cursors (`after`, `cursor`) inside the body and inside FQL, not in
+  query parameters.
+
+## First-party packages (all pre-shutdown)
+
+| Package | Registry | Version | Published |
+|---|---|---|---|
+| `fauna` | npm | 2.5.0 | 2025-02-05 |
+| `fauna-shell` | npm | 4.0.0 | 2025-01-21 |
+| `faunadb` | npm | 4.8.2 | 2024-12-18 |
+| `fauna` | PyPI | 2.4.0 | 2024-12-02 |
+| `faunadb` | PyPI | 4.5.2 | 2024-09-17 |
+| `github.com/fauna/fauna-go` | Go | v3.0.2 | 2025-01-10 |
+| `com.fauna:fauna-jvm` | Maven | 1.0.0 | 2024-11-15 |
+| `Fauna` | NuGet | 1.0.1 | 2024-11-15 |
+| `FaunaDB.Client` | NuGet | 4.2.0 | 2022-02-08 |
+| `fauna` | RubyGems | 3.0.0 | 2018-03-20 |
+
+## Artifacts in this repository
+
+- `openapi/_original/fauna-core-http-api-openapi.yml` — harvested contract, byte-identical to source
+- `openapi/` — four refined per-tag specs (query, event feeds, schema, GraphQL)
+- `asyncapi/fauna-event-streaming-asyncapi.yml` — the push CDC surface
+- `packages/fauna-packages.yml` — every first-party package with version and publish date
+- `lifecycle/fauna-lifecycle.yml` — the shutdown record, with the probes that prove it
+- `conventions/fauna-conventions.yml` — auth, idempotency, pagination, reversibility, errors
+- `errors/fauna-problem-types.yml` — 11 problem types derived from the contract
+- `data-model/fauna-data-model.yml` — the transport entity graph
+- `conformance/fauna-conformance.yml` — standards conformance, assessed against the contract
+- `cli/fauna-cli.yml` — the `fauna` CLI command surface
+- `well-known/fauna-well-known.yml` — the discovery probe that found nothing, and why
+- `json-schema/`, `json-structure/`, `json-ld/`, `vocabulary/`, `collections/`, `overlays/`
+
+## What this file will never contain
+
+No MCP server and no Agent Skills are published here. Both were considered and deliberately
+withheld: an MCP manifest or a packaged skill asserts that an agent can act against this
+provider, and no agent can act against a host that does not resolve. There is also no A2A
+agent card, because `/.well-known/agent-card.json` and `/.well-known/agent.json` were probed
+on every host and nothing answered.
+
+---
+Maintained by API Evangelist — https://apievangelist.com · https://apis.io
+Generated 2026-09-17 · method: generated · source: this repository's artifacts and
+live probes run 2026-09-17

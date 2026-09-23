@@ -1,20 +1,30 @@
 {
   "provider": "fauna",
   "sources": [
-    "fauna-eventfeeds-api-openapi.yml",
-    "fauna-graphql-api-openapi.yml",
-    "fauna-query-api-openapi.yml",
+    "_original/fauna-core-http-api-openapi.yml",
+    "fauna-graph-ql-api-openapi.yml",
     "fauna-schema-api-openapi.yml"
   ],
   "outputs": [
     "fauna-eventfeeds-api-openapi.yml",
-    "fauna-graphql-api-openapi.yml",
     "fauna-query-api-openapi.yml",
-    "fauna-schema-api-openapi.yml"
+    "fauna-schema-api-openapi.yml",
+    "fauna-graph-ql-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
-  "notes": [],
-  "skipped": []
+  "warnings": [
+    "fauna-graph-ql-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /graphql post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "fauna-schema-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /import post); its other 6 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "fauna-core-http-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Schema' spans 2 source specs (fauna-core-http-api-openapi.yml, fauna-schema-api-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "fauna-eventfeeds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fauna-query-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

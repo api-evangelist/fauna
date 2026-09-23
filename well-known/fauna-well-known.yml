@@ -1,0 +1,84 @@
+generated: '2026-09-17'
+method: probed
+source: >-
+  Direct unauthenticated GETs of the named /.well-known/ path list on every host this record
+  knows — the registrable domain and www, each apis[].baseURL host, every OpenAPI servers[]
+  host, the docs/console/support hosts, and the GraphQL host named in graphql/fauna-graphql.md.
+  Run 2026-09-17.
+provider: Fauna
+providerId: fauna
+description: >-
+  A recorded ABSENCE, and the reason for it is not that Fauna declined to publish discovery
+  documents — it is that Fauna no longer operates any host. Five of the seven hosts return
+  NXDOMAIN, so no HTTP request was possible at all; the two that resolve (the apex and www)
+  answer DNS but time out on TLS. No /.well-known/ document, OpenAPI probe path, or llms.txt
+  was retrievable anywhere. NO WellKnown, SecurityTxt or APICatalog pointer is emitted from
+  this file, because nothing here is a document the provider serves.
+hosts:
+- host: fauna.com
+  dns: 3.33.139.32
+  reachable: false
+  note: 'TLS connect times out after 20s; plain HTTP 301s cross-domain to faunarobotics.com.'
+  documents:
+  - {path: /.well-known/security.txt, status: 0, file: null}
+  - {path: /.well-known/openid-configuration, status: 0, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 0, file: null}
+  - {path: /.well-known/api-catalog, status: 0, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 0, file: null}
+  - {path: /.well-known/agent-card.json, status: 0, file: null}
+  - {path: /.well-known/agent.json, status: 0, file: null}
+  - {path: /llms.txt, status: 0, file: null}
+  - {path: /openapi.json, status: 0, file: null}
+  - {path: /openapi.yaml, status: 0, file: null}
+  - {path: /swagger.json, status: 0, file: null}
+  - {path: /api-docs, status: 0, file: null}
+- host: www.fauna.com
+  dns: 3.33.139.32
+  reachable: false
+  note: Same host and same behaviour as the apex.
+  documents:
+  - {path: /.well-known/security.txt, status: 0, file: null}
+  - {path: /.well-known/openid-configuration, status: 0, file: null}
+  - {path: /.well-known/oauth-authorization-server, status: 0, file: null}
+  - {path: /.well-known/api-catalog, status: 0, file: null}
+  - {path: /.well-known/ai-plugin.json, status: 0, file: null}
+  - {path: /.well-known/agent-card.json, status: 0, file: null}
+  - {path: /.well-known/agent.json, status: 0, file: null}
+  - {path: /llms.txt, status: 0, file: null}
+  - {path: /openapi.json, status: 0, file: null}
+  - {path: /openapi.yaml, status: 0, file: null}
+  - {path: /swagger.json, status: 0, file: null}
+  - {path: /api-docs, status: 0, file: null}
+- host: db.fauna.com
+  dns: null
+  reachable: false
+  note: 'NXDOMAIN — the API base URL of every Fauna OpenAPI in this repo. No request was possible.'
+  documents: []
+- host: docs.fauna.com
+  dns: null
+  reachable: false
+  note: NXDOMAIN — the documentation host every apis.yml Documentation pointer named.
+  documents: []
+- host: graphql.fauna.com
+  dns: null
+  reachable: false
+  note: NXDOMAIN — the GraphQL endpoint recorded in graphql/fauna-graphql.md.
+  documents: []
+- host: dashboard.fauna.com
+  dns: null
+  reachable: false
+  note: NXDOMAIN — the former console.
+  documents: []
+- host: support.fauna.com
+  dns: null
+  reachable: false
+  note: 'NXDOMAIN — named as info.contact.url in the harvested OpenAPI.'
+  documents: []
+summary:
+  hosts_probed: 7
+  hosts_resolving: 2
+  hosts_reachable: 0
+  documents_found: 0
+  agent_card_found: false
+  llms_txt_found: false
+  openapi_found_at_host_root: false

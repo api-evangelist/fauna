@@ -1,0 +1,104 @@
+generated: '2026-09-17'
+method: derived
+source: >-
+  openapi/_original/fauna-core-http-api-openapi.yml — the 4xx responses declared on the eight
+  harvested operations and components.schemas.ErrorResponse. Titles and remediation are taken
+  VERBATIM from the spec's own response descriptions; nothing was enriched from the
+  documentation site, because docs.fauna.com no longer resolves.
+provider: Fauna
+providerId: fauna
+format: vendor-json
+rfc9457: false
+media_type: application/json
+description: >-
+  Fauna returns a vendor JSON error envelope, not RFC 9457 application/problem+json. The
+  envelope's `error.code` is the stable machine identifier — the spec states outright that
+  "error codes are part of the API contract and are safe to write programmatic logic
+  against", which is a stronger commitment than most vendors make and is the reason this
+  catalog keys on code rather than on status.
+envelope:
+  fields:
+  - {name: error.code, type: string, required: true, detail: 'Machine-readable, contractual, safe to branch on.'}
+  - {name: error.message, type: string, required: true, detail: Human-readable failure description.}
+  - {name: error.constraint_failures, type: array, required: false, detail: 'Per-path detail for check and unique-constraint failures; each entry carries paths[][] and a message.'}
+  - {name: summary, type: string, required: false, detail: 'Detailed error information including the LOCATION of the error inside the submitted query.'}
+  - {name: txn_ts, type: integer, required: false, detail: Transaction timestamp of the failed request.}
+  - {name: stats, type: object, required: false, detail: 'QueryStats for the failed request — compute/read/write ops were still billed.'}
+  - {name: schema_version, type: integer, required: false, detail: Schema version at the time of the failed request.}
+problem_types:
+- status: 400
+  title: Bad request due to malformed query or invalid parameters
+  operations: [executeQuery]
+  retryable: false
+  remediation: Fix the FQL query or request parameters; `summary` locates the fault inside the query text.
+- status: 400
+  title: Bad request due to invalid token or parameters
+  operations: [pollEventFeed]
+  retryable: false
+  remediation: The feed cursor or start_ts is invalid or has aged out; restart the feed from a known-good cursor.
+- status: 400
+  title: Schema validation failed
+  operations: [updateSchemaFiles]
+  retryable: false
+  remediation: Correct the FSL; validate with POST /schema/1/validate before updating.
+- status: 400
+  title: Validation failed
+  operations: [validateSchemaFiles]
+  retryable: false
+  remediation: The submitted FSL does not parse or violates a schema rule.
+- status: 400
+  title: Cannot commit schema that is not ready
+  operations: [commitStagedSchema]
+  retryable: false
+  remediation: Poll GET /schema/1/status until the staged schema reports ready, then commit.
+- status: 401
+  title: Unauthorized due to invalid or missing authentication secret
+  operations: [executeQuery, pollEventFeed, getSchemaFiles, updateSchemaFiles, validateSchemaFiles, getStagedSchemaStatus, commitStagedSchema, abandonStagedSchema]
+  retryable: false
+  remediation: Supply a valid Fauna secret as an Authorization bearer token. Declared on ALL EIGHT operations.
+- status: 403
+  title: Forbidden due to insufficient privileges
+  operations: [executeQuery, getSchemaFiles, updateSchemaFiles, getStagedSchemaStatus]
+  retryable: false
+  remediation: >-
+    The secret authenticated but its role lacks the privilege. Schema operations require an
+    admin-role key; a server or client key is not enough.
+- status: 409
+  title: Conflict due to contention on the requested resource
+  operations: [executeQuery]
+  retryable: true
+  remediation: >-
+    Transaction contention — the canonical retryable Fauna failure. Retry with backoff. NOTE
+    that this is the one place the missing idempotency mechanism bites hardest: a contended
+    WRITE is safe to retry only because it did not apply, and the client cannot distinguish
+    that case from a timeout, where it may have.
+- status: 409
+  title: Schema version conflict
+  operations: [updateSchemaFiles]
+  retryable: false
+  remediation: Re-read the current schema version and resubmit; another writer changed the schema.
+- status: 429
+  title: Rate limit exceeded
+  operations: [executeQuery, pollEventFeed]
+  retryable: true
+  remediation: >-
+    Back off and retry. The contract names NO Retry-After or RateLimit-* header, so the
+    client is given no published signal for how long to wait.
+- status: 440
+  title: Query timeout exceeded
+  operations: [executeQuery]
+  retryable: unknown
+  remediation: >-
+    A NON-STANDARD status code — 440 is not an IANA-registered HTTP status. The query
+    exceeded its time budget; whether any partial effect landed is not stated, and with no
+    idempotency key there is no safe way for a client to find out before retrying.
+summary:
+  problem_type_count: 11
+  statuses: [400, 401, 403, 409, 429, 440]
+  nonstandard_statuses: [440]
+  server_errors_declared: 0
+  gap: >-
+    NO 5xx response is declared on any operation. The contract describes how the service
+    fails when the CALLER is wrong and says nothing about how it fails when the SERVICE is
+    wrong, so a client generated from this spec has no typed handling for a server-side
+    failure at all.

@@ -1,0 +1,47 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Fauna Core HTTP EventFeeds Graph QL API
+  version: 1.0.0
+x-generated: '2026-09-17'
+x-method: generated
+x-source: openapi/fauna-graph-ql-api-openapi.yml
+x-note: Additive only. This overlay never mutates the harvested contract; it records what API Evangelist
+  derived about it — chiefly that the service it describes no longer exists. Apply it to openapi/fauna-graph-ql-api-openapi.yml.
+extends: openapi/fauna-graph-ql-api-openapi.yml
+actions:
+- target: $.info
+  description: Record that the described service was decommissioned. This is the single most important
+    fact about this contract and the original spec, harvested while Fauna was live, cannot carry it.
+  update:
+    x-lifecycle-status: decommissioned
+    x-shutdown-date: '2025-05-30'
+    x-api-evangelist-note: Fauna, Inc. ended service on 2025-05-30. The servers[] host below (db.fauna.com)
+      returns NXDOMAIN as of 2026-09-17. See lifecycle/fauna-lifecycle.yml.
+- target: $.info
+  description: Flag the contact and terms URLs as unreachable rather than deleting them; they are historically
+    accurate and now dead.
+  update:
+    x-contact-status: support.fauna.com NXDOMAIN (2026-09-17)
+    x-terms-status: fauna.com/terms unreachable — HTTPS times out, HTTP 301s cross-domain to faunarobotics.com
+      (2026-09-17)
+- target: $.servers[0]
+  description: Mark the production server as unreachable.
+  update:
+    x-host-status: NXDOMAIN
+    x-checked: '2026-09-17'
+- target: $.components.securitySchemes.bearerAuth
+  description: Record the derived auth profile cross-reference.
+  update:
+    x-artifact: authentication/fauna-authentication.yml
+- target: $.paths['/graphql'].post
+  description: 'Attach API Evangelist runtime semantics to executeGraphQLQuery: the idempotency verdict
+    and the reversibility path derived in conventions/fauna-conventions.yml.'
+  update:
+    x-idempotency:
+      supported: false
+      coverage: none
+      note: No idempotency key, header or replay window exists anywhere in this contract.
+    x-artifacts:
+      conventions: conventions/fauna-conventions.yml
+      errors: errors/fauna-problem-types.yml
+      data-model: data-model/fauna-data-model.yml

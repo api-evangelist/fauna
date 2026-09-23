@@ -1,12 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Fauna Core HTTP EventFeeds Schema API
-  description: The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints. It allows developers to execute Fauna Query Language (FQL) queries, manage databases, perform CRUD operations on documents, manage schema as FSL files, and consume change data capture events via event feeds. The API uses token-based authentication and supports features such as transactions, indexes, and set operations. It serves as the foundation upon which Fauna's client drivers and SDKs are built.
+  title: Fauna Schema API
   version: '1'
   contact:
     name: Fauna Support
     url: https://support.fauna.com
   termsOfService: https://fauna.com/terms
+  description: 'Operations tagged Schema across 2 of this provider''s published API definitions: fauna-core-http-api-openapi.yml, fauna-schema-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://db.fauna.com
   description: Fauna Global Production Server
@@ -55,6 +55,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://db.fauna.com
+      description: Fauna Global Production Server
   /schema/1/update:
     post:
       operationId: updateSchemaFiles
@@ -115,6 +118,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://db.fauna.com
+      description: Fauna Global Production Server
   /schema/1/validate:
     post:
       operationId: validateSchemaFiles
@@ -163,6 +169,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://db.fauna.com
+      description: Fauna Global Production Server
   /schema/1/status:
     get:
       operationId: getStagedSchemaStatus
@@ -196,6 +205,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://db.fauna.com
+      description: Fauna Global Production Server
   /schema/1/staged/commit:
     post:
       operationId: commitStagedSchema
@@ -229,6 +241,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://db.fauna.com
+      description: Fauna Global Production Server
   /schema/1/staged/abandon:
     post:
       operationId: abandonStagedSchema
@@ -256,7 +271,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    servers:
+    - url: https://db.fauna.com
+      description: Fauna Global Production Server
   /import:
+    servers:
+    - url: https://db.fauna.com
+      description: Fauna Global Production Server
     post:
       operationId: importGraphQLSchema
       summary: Import a GraphQL schema
@@ -314,59 +335,19 @@ paths:
                 $ref: '#/components/schemas/GraphQLErrorResponse'
 components:
   schemas:
-    SchemaFile:
-      type: object
-      properties:
-        filename:
-          type: string
-          description: Name of the FSL file including any relative path.
-        content:
-          type: string
-          description: Contents of the FSL schema file.
-    GraphQLErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphQLError'
-          description: Array of errors that prevented query execution.
-    SchemaAbandonResponse:
+    SchemaValidationResponse:
       type: object
       properties:
         version:
           type: integer
           format: int64
-          description: Active schema version after abandoning the staged change.
-    GraphQLError:
-      type: object
-      properties:
-        message:
+          description: Current schema version.
+        diff:
           type: string
-          description: Human-readable error message.
-        locations:
-          type: array
-          items:
-            type: object
-            properties:
-              line:
-                type: integer
-                description: Line number in the query where the error occurred.
-              column:
-                type: integer
-                description: Column number in the query where the error occurred.
-          description: Locations in the query document where the error occurred.
-        path:
-          type: array
-          items:
-            oneOf:
-            - type: string
-            - type: integer
-          description: Path to the field that caused the error in the response data.
-        extensions:
-          type: object
-          additionalProperties: true
-          description: Additional error information specific to Fauna.
+          description: Diff between the proposed and current schema.
+        valid:
+          type: boolean
+          description: Whether the proposed schema is valid.
     ErrorResponse:
       type: object
       properties:
@@ -409,6 +390,16 @@ components:
           type: integer
           format: int64
           description: Schema version at the time of the failed request.
+    SchemaUpdateResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: New schema version timestamp after the update.
+        diff:
+          type: string
+          description: Diff between the previous and updated schema.
     SchemaCommitResponse:
       type: object
       properties:
@@ -416,6 +407,15 @@ components:
           type: integer
           format: int64
           description: New active schema version after committing.
+    SchemaFile:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: Name of the FSL file including any relative path.
+        content:
+          type: string
+          description: Contents of the FSL schema file.
     SchemaFilesResponse:
       type: object
       properties:
@@ -428,29 +428,6 @@ components:
           items:
             $ref: '#/components/schemas/SchemaFile'
           description: Array of FSL schema files.
-    SchemaValidationResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: Current schema version.
-        diff:
-          type: string
-          description: Diff between the proposed and current schema.
-        valid:
-          type: boolean
-          description: Whether the proposed schema is valid.
-    SchemaUpdateResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: New schema version timestamp after the update.
-        diff:
-          type: string
-          description: Diff between the previous and updated schema.
     SchemaStatusResponse:
       type: object
       properties:
@@ -469,6 +446,13 @@ components:
         diff:
           type: string
           description: Diff between the staged and active schema if format was specified.
+    SchemaAbandonResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: Active schema version after abandoning the staged change.
     QueryStats:
       type: object
       description: Operational statistics for the query execution.
@@ -499,6 +483,43 @@ components:
           items:
             type: string
           description: List of rate limits that were hit during query execution.
+    GraphQLErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+          description: Array of errors that prevented query execution.
+    GraphQLError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message.
+        locations:
+          type: array
+          items:
+            type: object
+            properties:
+              line:
+                type: integer
+                description: Line number in the query where the error occurred.
+              column:
+                type: integer
+                description: Column number in the query where the error occurred.
+          description: Locations in the query document where the error occurred.
+        path:
+          type: array
+          items:
+            oneOf:
+            - type: string
+            - type: integer
+          description: Path to the field that caused the error in the response data.
+        extensions:
+          type: object
+          additionalProperties: true
+          description: Additional error information specific to Fauna.
   securitySchemes:
     bearerAuth:
       type: http
@@ -507,3 +528,6 @@ components:
 externalDocs:
   description: Fauna Core HTTP API Documentation
   url: https://docs.fauna.com/fauna/current/reference/http/reference/core-api/
+x-refined-from:
+- fauna-core-http-api-openapi.yml
+- fauna-schema-api-openapi.yml

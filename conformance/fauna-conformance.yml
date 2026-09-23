@@ -1,0 +1,99 @@
+generated: '2026-09-17'
+method: derived
+source: >-
+  openapi/_original/fauna-core-http-api-openapi.yml, the four refined specs,
+  authentication/fauna-authentication.yml, well-known/fauna-well-known.yml (a probe that
+  found nothing on any host) and the surviving first-party surfaces on github.com/fauna. No
+  compliance or certification claim could be SEARCHED, because every Fauna-operated page is
+  gone; entries below are derived from the contract alone and every `conforms: false` says so.
+provider: Fauna
+providerId: fauna
+description: >-
+  Cross-cutting standards conformance for the Fauna Core HTTP API. Assessed against the
+  contract, not against marketing prose — there is no marketing prose left to read. A
+  `false` here is an honest absence of evidence in the contract, not an accusation.
+entries:
+- id: oauth2
+  conforms: false
+  evidence: >-
+    The only securityScheme is http/bearer with an opaque Fauna secret. No oauth2 flow, no
+    token endpoint, and /.well-known/oauth-authorization-server was probed on both resolving
+    hosts and returned no response at all.
+- id: oidc
+  conforms: false
+  evidence: >-
+    No openIdConnect securityScheme. /.well-known/openid-configuration probed on fauna.com
+    and www.fauna.com — no response. Fauna DID accept third-party JWTs as secrets (its own
+    authentication artifact records this), but it published no OIDC discovery of its own.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors are a vendor JSON envelope on application/json, not application/problem+json. See
+    errors/fauna-problem-types.yml.
+- id: rfc8594
+  conforms: false
+  evidence: No Sunset or Deprecation response header is declared on any operation.
+- id: rfc9116
+  conforms: false
+  evidence: '/.well-known/security.txt probed on every resolving host; no document returned.'
+- id: idempotency
+  conforms: false
+  evidence: >-
+    Zero of nine operations carry an idempotency key, header or replay window.
+    conventions/fauna-conventions.yml records the machine verdict idempotency.coverage:none.
+- id: pagination
+  conforms: true
+  evidence: >-
+    Cursor pagination is real and consistent — EventFeedRequest.cursor / start_ts /
+    page_size in, EventFeedResponse.cursor / has_next out, and FQL Set.paginate returns an
+    `after` cursor. Consistent across the event and query surfaces.
+- id: graphql
+  conforms: true
+  evidence: >-
+    A first-party GraphQL surface existed at https://graphql.fauna.com (graphql/fauna-graphql.md),
+    with a schema-import operation. Recorded as conformant to the GraphQL transport
+    convention (POST, {query, variables}, {data, errors}); the SDL itself was never
+    harvested and introspection is now impossible — the host is NXDOMAIN.
+- id: json-schema
+  conforms: true
+  evidence: >-
+    20 JSON Schema documents extracted into json-schema/ from the OpenAPI components, plus a
+    JSON Structure rendering in json-structure/ and a JSON-LD context in json-ld/.
+- id: asyncapi
+  conforms: true
+  evidence: >-
+    asyncapi/fauna-event-streaming-asyncapi.yml describes the /stream/1 change-data-capture
+    surface. Derived rather than provider-published.
+- id: scim
+  conforms: false
+  evidence: No SCIM schema URN and no user/group provisioning surface in the contract.
+- id: odata
+  conforms: false
+  evidence: No $metadata surface and no OData query conventions.
+- id: fhir
+  conforms: false
+  evidence: Not a healthcare API.
+- id: psd2
+  conforms: false
+  evidence: Not a financial API.
+domain_standard:
+  applicable: false
+  detail: >-
+    REWARD-ONLY and honestly not applicable. The general-purpose operational-database market
+    has no interchange standard a vendor could declare in its contract — there is no SCIM,
+    OpenRTB, HL7 or ISO 20022 equivalent for "document-relational database as an API". The
+    nearest neighbours are query languages rather than wire standards, and Fauna's is FQL,
+    which is its own proprietary language. No domain standard is asserted and none should be
+    invented to fill the slot.
+certifications:
+  published: []
+  detail: >-
+    No trust center, no certification page and no compliance document is reachable. Fauna
+    historically advertised SOC 2 Type II and HIPAA/GDPR posture on fauna.com, but that page
+    no longer resolves and this pass will not record a certification it could not fetch. NO
+    Compliance or TrustCenter pointer is emitted. probe-security-programs.py returned
+    vdp=none trust=none on 2026-09-17.
+summary:
+  entry_count: 14
+  conforms_true: 4
+  conforms_false: 10

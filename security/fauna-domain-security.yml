@@ -1,12 +1,12 @@
-generated: '2026-07-11'
+generated: '2026-09-17'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
+- host: fauna.com
+  https: false
 - host: docs.fauna.com
   https: false
 - host: db.fauna.com
-  https: false
-- host: graphql.fauna.com
   https: false
 domains:
 - domain: fauna.com
