@@ -69,14 +69,18 @@ components:
         operationName:
           type: string
           description: The name of the operation to execute if the query document contains multiple operations.
-    GraphQLErrorResponse:
+    GraphQLResponse:
       type: object
       properties:
+        data:
+          type: object
+          additionalProperties: true
+          description: The query result data matching the shape of the GraphQL query.
         errors:
           type: array
           items:
             $ref: '#/components/schemas/GraphQLError'
-          description: Array of errors that prevented query execution.
+          description: Array of errors encountered during query execution. May be present alongside data for partial success.
     GraphQLError:
       type: object
       properties:
@@ -106,18 +110,14 @@ components:
           type: object
           additionalProperties: true
           description: Additional error information specific to Fauna.
-    GraphQLResponse:
+    GraphQLErrorResponse:
       type: object
       properties:
-        data:
-          type: object
-          additionalProperties: true
-          description: The query result data matching the shape of the GraphQL query.
         errors:
           type: array
           items:
             $ref: '#/components/schemas/GraphQLError'
-          description: Array of errors encountered during query execution. May be present alongside data for partial success.
+          description: Array of errors that prevented query execution.
   securitySchemes:
     bearerAuth:
       type: http

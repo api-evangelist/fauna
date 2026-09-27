@@ -1,15 +1,20 @@
 name: Fauna
 aid: fauna
 deliveryModel:
-  model: unknown
-  open_source: false
-  commercial: false
+  model: saas
+  license_evidence:
+    not_product:
+    - fauna/faunadb
+  open_source: unknown
+  commercial: true
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - openapi
-  generated: '2026-08-28'
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 specificationVersion: '0.23'
 accessModel:
@@ -255,6 +260,7 @@ tags:
 - GraphQL
 - Cloud
 - Developer Tools
+- Defunct
 created: '2026-05-04'
 x-status: defunct
 x-enrichment:

@@ -57,29 +57,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    XFormat:
+      name: X-Format
+      in: header
+      description: Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.
+      schema:
+        type: string
+        enum:
+        - tagged
+        - simple
   schemas:
-    Event:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - add
-          - remove
-          - update
-          - status
-          description: The type of change event.
-        txn_ts:
-          type: integer
-          format: int64
-          description: Transaction timestamp of the event in microseconds since the Unix epoch.
-        cursor:
-          type: string
-          description: Cursor for this specific event.
-        data:
-          type: object
-          additionalProperties: true
-          description: The document data associated with the event.
     ErrorResponse:
       type: object
       properties:
@@ -138,6 +126,28 @@ components:
           description: Indicates whether more pages of events are available.
         stats:
           $ref: '#/components/schemas/EventStats'
+    Event:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - add
+          - remove
+          - update
+          - status
+          description: The type of change event.
+        txn_ts:
+          type: integer
+          format: int64
+          description: Transaction timestamp of the event in microseconds since the Unix epoch.
+        cursor:
+          type: string
+          description: Cursor for this specific event.
+        data:
+          type: object
+          additionalProperties: true
+          description: The document data associated with the event.
     EventStats:
       type: object
       description: Aggregated statistics for all events in the page.
@@ -159,27 +169,6 @@ components:
           items:
             type: string
           description: List of rate limits that were hit.
-    EventFeedRequest:
-      type: object
-      required:
-      - token
-      properties:
-        token:
-          type: string
-          description: The event source token obtained from an FQL query that returns an event source.
-        cursor:
-          type: string
-          description: Cursor from a previous event feed response for pagination. Mutually exclusive with start_ts.
-        start_ts:
-          type: integer
-          format: int64
-          description: Start timestamp in microseconds since the Unix epoch. Fauna returns events that occurred after this timestamp. Mutually exclusive with cursor.
-        page_size:
-          type: integer
-          minimum: 1
-          maximum: 16000
-          default: 16
-          description: Maximum number of events to return per page. Must be between 1 and 16000 inclusive.
     QueryStats:
       type: object
       description: Operational statistics for the query execution.
@@ -210,16 +199,27 @@ components:
           items:
             type: string
           description: List of rate limits that were hit during query execution.
-  parameters:
-    XFormat:
-      name: X-Format
-      in: header
-      description: Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.
-      schema:
-        type: string
-        enum:
-        - tagged
-        - simple
+    EventFeedRequest:
+      type: object
+      required:
+      - token
+      properties:
+        token:
+          type: string
+          description: The event source token obtained from an FQL query that returns an event source.
+        cursor:
+          type: string
+          description: Cursor from a previous event feed response for pagination. Mutually exclusive with start_ts.
+        start_ts:
+          type: integer
+          format: int64
+          description: Start timestamp in microseconds since the Unix epoch. Fauna returns events that occurred after this timestamp. Mutually exclusive with cursor.
+        page_size:
+          type: integer
+          minimum: 1
+          maximum: 16000
+          default: 16
+          description: Maximum number of events to return per page. Must be between 1 and 16000 inclusive.
   securitySchemes:
     bearerAuth:
       type: http
