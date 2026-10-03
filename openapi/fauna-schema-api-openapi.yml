@@ -335,16 +335,19 @@ paths:
                 $ref: '#/components/schemas/GraphQLErrorResponse'
 components:
   schemas:
-    SchemaUpdateResponse:
+    SchemaValidationResponse:
       type: object
       properties:
         version:
           type: integer
           format: int64
-          description: New schema version timestamp after the update.
+          description: Current schema version.
         diff:
           type: string
-          description: Diff between the previous and updated schema.
+          description: Diff between the proposed and current schema.
+        valid:
+          type: boolean
+          description: Whether the proposed schema is valid.
     SchemaFilesResponse:
       type: object
       properties:
@@ -357,6 +360,50 @@ components:
           items:
             $ref: '#/components/schemas/SchemaFile'
           description: Array of FSL schema files.
+    SchemaStatusResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: Schema version timestamp.
+        status:
+          type: string
+          enum:
+          - none
+          - pending
+          - ready
+          - failed
+          description: Index build status for the staged schema. Only schemas with a ready status can be committed.
+        diff:
+          type: string
+          description: Diff between the staged and active schema if format was specified.
+    SchemaAbandonResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: Active schema version after abandoning the staged change.
+    SchemaFile:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: Name of the FSL file including any relative path.
+        content:
+          type: string
+          description: Contents of the FSL schema file.
+    SchemaUpdateResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: New schema version timestamp after the update.
+        diff:
+          type: string
+          description: Diff between the previous and updated schema.
     SchemaCommitResponse:
       type: object
       properties:
@@ -364,6 +411,36 @@ components:
           type: integer
           format: int64
           description: New active schema version after committing.
+    QueryStats:
+      type: object
+      description: Operational statistics for the query execution.
+      properties:
+        compute_ops:
+          type: integer
+          description: Number of Transactional Compute Operations consumed.
+        read_ops:
+          type: integer
+          description: Number of Transactional Read Operations consumed.
+        write_ops:
+          type: integer
+          description: Number of Transactional Write Operations consumed.
+        query_time_ms:
+          type: integer
+          description: Query execution time in milliseconds.
+        contention_retries:
+          type: integer
+          description: Number of times the transaction was retried due to contention.
+        storage_bytes_read:
+          type: integer
+          description: Number of bytes read from storage.
+        storage_bytes_write:
+          type: integer
+          description: Number of bytes written to storage.
+        rate_limits_hit:
+          type: array
+          items:
+            type: string
+          description: List of rate limits that were hit during query execution.
     ErrorResponse:
       type: object
       properties:
@@ -406,83 +483,6 @@ components:
           type: integer
           format: int64
           description: Schema version at the time of the failed request.
-    SchemaFile:
-      type: object
-      properties:
-        filename:
-          type: string
-          description: Name of the FSL file including any relative path.
-        content:
-          type: string
-          description: Contents of the FSL schema file.
-    SchemaStatusResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: Schema version timestamp.
-        status:
-          type: string
-          enum:
-          - none
-          - pending
-          - ready
-          - failed
-          description: Index build status for the staged schema. Only schemas with a ready status can be committed.
-        diff:
-          type: string
-          description: Diff between the staged and active schema if format was specified.
-    SchemaValidationResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: Current schema version.
-        diff:
-          type: string
-          description: Diff between the proposed and current schema.
-        valid:
-          type: boolean
-          description: Whether the proposed schema is valid.
-    SchemaAbandonResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: Active schema version after abandoning the staged change.
-    QueryStats:
-      type: object
-      description: Operational statistics for the query execution.
-      properties:
-        compute_ops:
-          type: integer
-          description: Number of Transactional Compute Operations consumed.
-        read_ops:
-          type: integer
-          description: Number of Transactional Read Operations consumed.
-        write_ops:
-          type: integer
-          description: Number of Transactional Write Operations consumed.
-        query_time_ms:
-          type: integer
-          description: Query execution time in milliseconds.
-        contention_retries:
-          type: integer
-          description: Number of times the transaction was retried due to contention.
-        storage_bytes_read:
-          type: integer
-          description: Number of bytes read from storage.
-        storage_bytes_write:
-          type: integer
-          description: Number of bytes written to storage.
-        rate_limits_hit:
-          type: array
-          items:
-            type: string
-          description: List of rate limits that were hit during query execution.
     GraphQLError:
       type: object
       properties:
