@@ -335,6 +335,32 @@ paths:
                 $ref: '#/components/schemas/GraphQLErrorResponse'
 components:
   schemas:
+    SchemaAbandonResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: Active schema version after abandoning the staged change.
+    SchemaUpdateResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: New schema version timestamp after the update.
+        diff:
+          type: string
+          description: Diff between the previous and updated schema.
+    SchemaFile:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: Name of the FSL file including any relative path.
+        content:
+          type: string
+          description: Contents of the FSL schema file.
     SchemaValidationResponse:
       type: object
       properties:
@@ -348,69 +374,6 @@ components:
         valid:
           type: boolean
           description: Whether the proposed schema is valid.
-    SchemaFilesResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: Schema version timestamp.
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/SchemaFile'
-          description: Array of FSL schema files.
-    SchemaStatusResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: Schema version timestamp.
-        status:
-          type: string
-          enum:
-          - none
-          - pending
-          - ready
-          - failed
-          description: Index build status for the staged schema. Only schemas with a ready status can be committed.
-        diff:
-          type: string
-          description: Diff between the staged and active schema if format was specified.
-    SchemaAbandonResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: Active schema version after abandoning the staged change.
-    SchemaFile:
-      type: object
-      properties:
-        filename:
-          type: string
-          description: Name of the FSL file including any relative path.
-        content:
-          type: string
-          description: Contents of the FSL schema file.
-    SchemaUpdateResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: New schema version timestamp after the update.
-        diff:
-          type: string
-          description: Diff between the previous and updated schema.
-    SchemaCommitResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: New active schema version after committing.
     QueryStats:
       type: object
       description: Operational statistics for the query execution.
@@ -441,6 +404,43 @@ components:
           items:
             type: string
           description: List of rate limits that were hit during query execution.
+    SchemaCommitResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: New active schema version after committing.
+    SchemaStatusResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: Schema version timestamp.
+        status:
+          type: string
+          enum:
+          - none
+          - pending
+          - ready
+          - failed
+          description: Index build status for the staged schema. Only schemas with a ready status can be committed.
+        diff:
+          type: string
+          description: Diff between the staged and active schema if format was specified.
+    SchemaFilesResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: Schema version timestamp.
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchemaFile'
+          description: Array of FSL schema files.
     ErrorResponse:
       type: object
       properties:
@@ -483,6 +483,14 @@ components:
           type: integer
           format: int64
           description: Schema version at the time of the failed request.
+    GraphQLErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+          description: Array of errors that prevented query execution.
     GraphQLError:
       type: object
       properties:
@@ -512,14 +520,6 @@ components:
           type: object
           additionalProperties: true
           description: Additional error information specific to Fauna.
-    GraphQLErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphQLError'
-          description: Array of errors that prevented query execution.
   securitySchemes:
     bearerAuth:
       type: http

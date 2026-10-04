@@ -87,6 +87,25 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
+    XQueryTags:
+      name: X-Query-Tags
+      in: header
+      description: Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.
+      schema:
+        type: string
+    XQueryTimeout:
+      name: X-Query-Timeout-Ms
+      in: header
+      description: Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.
+      schema:
+        type: integer
+        minimum: 1
+    XLinearized:
+      name: X-Linearized
+      in: header
+      description: If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.
+      schema:
+        type: boolean
     XLastTxnTs:
       name: X-Last-Txn-Ts
       in: header
@@ -94,18 +113,6 @@ components:
       schema:
         type: integer
         format: int64
-    XLinearized:
-      name: X-Linearized
-      in: header
-      description: If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.
-      schema:
-        type: boolean
-    XTypecheck:
-      name: X-Typecheck
-      in: header
-      description: If true, enables type checking for the query. Fauna validates the query against the database schema before executing.
-      schema:
-        type: boolean
     XTraceparent:
       name: traceparent
       in: header
@@ -121,20 +128,37 @@ components:
         enum:
         - tagged
         - simple
-    XQueryTimeout:
-      name: X-Query-Timeout-Ms
+    XTypecheck:
+      name: X-Typecheck
       in: header
-      description: Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.
+      description: If true, enables type checking for the query. Fauna validates the query against the database schema before executing.
       schema:
-        type: integer
-        minimum: 1
-    XQueryTags:
-      name: X-Query-Tags
-      in: header
-      description: Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.
-      schema:
-        type: string
+        type: boolean
   schemas:
+    QueryResponse:
+      type: object
+      properties:
+        data:
+          description: The query result data. The structure depends on the query executed and the X-Format header.
+        static_type:
+          type: string
+          description: The static type of the query result as determined by Fauna's type system.
+        txn_ts:
+          type: integer
+          format: int64
+          description: Transaction timestamp in microseconds since the Unix epoch.
+        stats:
+          $ref: '#/components/schemas/QueryStats'
+        schema_version:
+          type: integer
+          format: int64
+          description: The schema version at the time the query was executed.
+        summary:
+          type: string
+          description: Optional summary information about the query execution.
+        query_tags:
+          type: string
+          description: Tags associated with the query for logging and monitoring.
     QueryRequest:
       type: object
       required:
@@ -177,30 +201,6 @@ components:
           items:
             type: string
           description: List of rate limits that were hit during query execution.
-    QueryResponse:
-      type: object
-      properties:
-        data:
-          description: The query result data. The structure depends on the query executed and the X-Format header.
-        static_type:
-          type: string
-          description: The static type of the query result as determined by Fauna's type system.
-        txn_ts:
-          type: integer
-          format: int64
-          description: Transaction timestamp in microseconds since the Unix epoch.
-        stats:
-          $ref: '#/components/schemas/QueryStats'
-        schema_version:
-          type: integer
-          format: int64
-          description: The schema version at the time the query was executed.
-        summary:
-          type: string
-          description: Optional summary information about the query execution.
-        query_tags:
-          type: string
-          description: Tags associated with the query for logging and monitoring.
     ErrorResponse:
       type: object
       properties:
