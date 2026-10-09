@@ -140,10 +140,8 @@ apis:
 unitEconomics:
   - name: Cost per 1M TROs (historical)
     metric: tro_cost / (tros / 1000000)
-    target: see fauna.com/pricing snapshot
   - name: Cost per 1M TWOs (historical)
     metric: two_cost / (twos / 1000000)
-    target: see fauna.com/pricing snapshot
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

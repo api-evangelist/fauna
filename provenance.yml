@@ -12,6 +12,9 @@ artifacts:
   authentication/fauna-authentication.yml:
     method: derived
     evidence: declared in the artifact
+  cli/fauna-cli.yml:
+    method: searched
+    evidence: declared in the artifact
   collections/fauna-core-http-api.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -25,11 +28,11 @@ artifacts:
     method: derived
     evidence: openapi/fauna-eventfeeds-api
   collections/fauna-graphql-api.opencollection.json:
-    method: derived
-    evidence: openapi/fauna-graphql-api
+    method: unknown
+    evidence: no authorship recorded
   collections/fauna-graphql-api.postman_collection.json:
-    method: derived
-    evidence: openapi/fauna-graphql-api
+    method: unknown
+    evidence: no authorship recorded
   collections/fauna-query-api.opencollection.json:
     method: derived
     evidence: openapi/fauna-query-api
@@ -42,6 +45,18 @@ artifacts:
   collections/fauna-schema-api.postman_collection.json:
     method: derived
     evidence: openapi/fauna-schema-api
+  conformance/fauna-conformance.yml:
+    method: derived
+    evidence: declared in the artifact
+  conventions/fauna-conventions.yml:
+    method: derived
+    evidence: declared in the artifact
+  data-model/fauna-data-model.yml:
+    method: derived
+    evidence: declared in the artifact
+  errors/fauna-problem-types.yml:
+    method: derived
+    evidence: declared in the artifact
   finops/fauna-finops.yml:
     method: generated
     evidence: declared in the artifact
@@ -117,28 +132,7 @@ artifacts:
   json-structure/fauna-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-06T210741.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-07T135032.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-10T093022.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-10T111628.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-11T211707.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-12T193225.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-17T064519.yml:
+  kin/checks-2026-09-17T211151.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-19T080027.yml:
@@ -252,13 +246,95 @@ artifacts:
   kin/score-2026-09-05T072335.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T144739.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T195450.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T211839.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T011047.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T211804.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T224210.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-07T200636.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-07T213054.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-08T214843.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-08T232836.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-10T204815.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-10T222408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T062655.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T080032.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T204651.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T221936.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-13T214537.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T064754.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T210656.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T225847.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T211329.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T230249.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T210549.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T225339.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T211151.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  lifecycle/fauna-lifecycle.yml:
+    method: unknown
+    evidence: no authorship recorded
+  llms/fauna-llms.txt:
+    method: searched
+    evidence: 'derive-llms-provenance.py: harvested'
   openapi/_original/fauna-core-http-api-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/fauna-eventfeeds-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/fauna-graphql-api-openapi.yml:
+  openapi/fauna-graph-ql-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
   openapi/fauna-query-api-openapi.yml:
@@ -267,6 +343,21 @@ artifacts:
   openapi/fauna-schema-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
+  overlays/fauna-eventfeeds-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/fauna-graph-ql-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/fauna-query-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/fauna-schema-api-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  packages/fauna-packages.yml:
+    method: searched
+    evidence: declared in the artifact
   plans/fauna-plans-pricing.yml:
     method: generated
     evidence: declared in the artifact
@@ -283,5 +374,8 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   vocabulary/fauna-vocabulary.yml:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/fauna-well-known.yml:
     method: unknown
     evidence: no authorship recorded
