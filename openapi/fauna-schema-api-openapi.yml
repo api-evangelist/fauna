@@ -335,13 +335,48 @@ paths:
                 $ref: '#/components/schemas/GraphQLErrorResponse'
 components:
   schemas:
-    SchemaAbandonResponse:
+    ErrorResponse:
       type: object
       properties:
-        version:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Machine-readable error code. Error codes are part of the API contract and are safe to write programmatic logic against.
+            message:
+              type: string
+              description: Human-readable error message describing the failure.
+            constraint_failures:
+              type: array
+              items:
+                type: object
+                properties:
+                  paths:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: string
+                  message:
+                    type: string
+              description: Details about check or unique constraint failures.
+          required:
+          - code
+          - message
+        summary:
+          type: string
+          description: Detailed error information including the location of the error in the query.
+        txn_ts:
           type: integer
           format: int64
-          description: Active schema version after abandoning the staged change.
+          description: Transaction timestamp of the failed request.
+        stats:
+          $ref: '#/components/schemas/QueryStats'
+        schema_version:
+          type: integer
+          format: int64
+          description: Schema version at the time of the failed request.
     SchemaUpdateResponse:
       type: object
       properties:
@@ -352,15 +387,20 @@ components:
         diff:
           type: string
           description: Diff between the previous and updated schema.
-    SchemaFile:
+    SchemaAbandonResponse:
       type: object
       properties:
-        filename:
-          type: string
-          description: Name of the FSL file including any relative path.
-        content:
-          type: string
-          description: Contents of the FSL schema file.
+        version:
+          type: integer
+          format: int64
+          description: Active schema version after abandoning the staged change.
+    SchemaCommitResponse:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: New active schema version after committing.
     SchemaValidationResponse:
       type: object
       properties:
@@ -404,13 +444,6 @@ components:
           items:
             type: string
           description: List of rate limits that were hit during query execution.
-    SchemaCommitResponse:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int64
-          description: New active schema version after committing.
     SchemaStatusResponse:
       type: object
       properties:
@@ -441,56 +474,15 @@ components:
           items:
             $ref: '#/components/schemas/SchemaFile'
           description: Array of FSL schema files.
-    ErrorResponse:
+    SchemaFile:
       type: object
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Machine-readable error code. Error codes are part of the API contract and are safe to write programmatic logic against.
-            message:
-              type: string
-              description: Human-readable error message describing the failure.
-            constraint_failures:
-              type: array
-              items:
-                type: object
-                properties:
-                  paths:
-                    type: array
-                    items:
-                      type: array
-                      items:
-                        type: string
-                  message:
-                    type: string
-              description: Details about check or unique constraint failures.
-          required:
-          - code
-          - message
-        summary:
+        filename:
           type: string
-          description: Detailed error information including the location of the error in the query.
-        txn_ts:
-          type: integer
-          format: int64
-          description: Transaction timestamp of the failed request.
-        stats:
-          $ref: '#/components/schemas/QueryStats'
-        schema_version:
-          type: integer
-          format: int64
-          description: Schema version at the time of the failed request.
-    GraphQLErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/GraphQLError'
-          description: Array of errors that prevented query execution.
+          description: Name of the FSL file including any relative path.
+        content:
+          type: string
+          description: Contents of the FSL schema file.
     GraphQLError:
       type: object
       properties:
@@ -520,6 +512,14 @@ components:
           type: object
           additionalProperties: true
           description: Additional error information specific to Fauna.
+    GraphQLErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+          description: Array of errors that prevented query execution.
   securitySchemes:
     bearerAuth:
       type: http

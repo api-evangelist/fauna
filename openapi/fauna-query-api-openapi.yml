@@ -86,54 +86,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    XQueryTags:
-      name: X-Query-Tags
-      in: header
-      description: Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.
-      schema:
-        type: string
-    XQueryTimeout:
-      name: X-Query-Timeout-Ms
-      in: header
-      description: Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.
-      schema:
-        type: integer
-        minimum: 1
-    XLinearized:
-      name: X-Linearized
-      in: header
-      description: If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.
-      schema:
-        type: boolean
-    XLastTxnTs:
-      name: X-Last-Txn-Ts
-      in: header
-      description: Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.
-      schema:
-        type: integer
-        format: int64
-    XTraceparent:
-      name: traceparent
-      in: header
-      description: W3C Trace Context traceparent header for distributed tracing.
-      schema:
-        type: string
-    XFormat:
-      name: X-Format
-      in: header
-      description: Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.
-      schema:
-        type: string
-        enum:
-        - tagged
-        - simple
-    XTypecheck:
-      name: X-Typecheck
-      in: header
-      description: If true, enables type checking for the query. Fauna validates the query against the database schema before executing.
-      schema:
-        type: boolean
   schemas:
     QueryResponse:
       type: object
@@ -159,48 +111,6 @@ components:
         query_tags:
           type: string
           description: Tags associated with the query for logging and monitoring.
-    QueryRequest:
-      type: object
-      required:
-      - query
-      properties:
-        query:
-          type: string
-          description: The FQL v10 query string to execute.
-        arguments:
-          type: object
-          additionalProperties: true
-          description: Optional named arguments to pass to the query. Arguments are available as variables in the FQL query.
-    QueryStats:
-      type: object
-      description: Operational statistics for the query execution.
-      properties:
-        compute_ops:
-          type: integer
-          description: Number of Transactional Compute Operations consumed.
-        read_ops:
-          type: integer
-          description: Number of Transactional Read Operations consumed.
-        write_ops:
-          type: integer
-          description: Number of Transactional Write Operations consumed.
-        query_time_ms:
-          type: integer
-          description: Query execution time in milliseconds.
-        contention_retries:
-          type: integer
-          description: Number of times the transaction was retried due to contention.
-        storage_bytes_read:
-          type: integer
-          description: Number of bytes read from storage.
-        storage_bytes_write:
-          type: integer
-          description: Number of bytes written to storage.
-        rate_limits_hit:
-          type: array
-          items:
-            type: string
-          description: List of rate limits that were hit during query execution.
     ErrorResponse:
       type: object
       properties:
@@ -243,6 +153,96 @@ components:
           type: integer
           format: int64
           description: Schema version at the time of the failed request.
+    QueryRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The FQL v10 query string to execute.
+        arguments:
+          type: object
+          additionalProperties: true
+          description: Optional named arguments to pass to the query. Arguments are available as variables in the FQL query.
+    QueryStats:
+      type: object
+      description: Operational statistics for the query execution.
+      properties:
+        compute_ops:
+          type: integer
+          description: Number of Transactional Compute Operations consumed.
+        read_ops:
+          type: integer
+          description: Number of Transactional Read Operations consumed.
+        write_ops:
+          type: integer
+          description: Number of Transactional Write Operations consumed.
+        query_time_ms:
+          type: integer
+          description: Query execution time in milliseconds.
+        contention_retries:
+          type: integer
+          description: Number of times the transaction was retried due to contention.
+        storage_bytes_read:
+          type: integer
+          description: Number of bytes read from storage.
+        storage_bytes_write:
+          type: integer
+          description: Number of bytes written to storage.
+        rate_limits_hit:
+          type: array
+          items:
+            type: string
+          description: List of rate limits that were hit during query execution.
+  parameters:
+    XTypecheck:
+      name: X-Typecheck
+      in: header
+      description: If true, enables type checking for the query. Fauna validates the query against the database schema before executing.
+      schema:
+        type: boolean
+    XFormat:
+      name: X-Format
+      in: header
+      description: Specifies the data format used to encode FQL values in query results and arguments. Supported values are tagged and simple.
+      schema:
+        type: string
+        enum:
+        - tagged
+        - simple
+    XTraceparent:
+      name: traceparent
+      in: header
+      description: W3C Trace Context traceparent header for distributed tracing.
+      schema:
+        type: string
+    XLastTxnTs:
+      name: X-Last-Txn-Ts
+      in: header
+      description: Last known transaction timestamp in microseconds since the Unix epoch. Used for snapshot isolation to ensure reads are at least as recent as this timestamp.
+      schema:
+        type: integer
+        format: int64
+    XLinearized:
+      name: X-Linearized
+      in: header
+      description: If true, enforces strict serializability by ensuring reads reflect all prior committed transactions.
+      schema:
+        type: boolean
+    XQueryTags:
+      name: X-Query-Tags
+      in: header
+      description: Arbitrary tags to associate with the query for logging and monitoring. Format is key=value pairs separated by commas.
+      schema:
+        type: string
+    XQueryTimeout:
+      name: X-Query-Timeout-Ms
+      in: header
+      description: Query timeout in milliseconds. If the query exceeds this time, Fauna returns a 440 timeout error.
+      schema:
+        type: integer
+        minimum: 1
   securitySchemes:
     bearerAuth:
       type: http
