@@ -1,4 +1,4 @@
-# fauna (fauna)
+# Fauna
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,175 +64,169 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Fauna is a distributed document-relational database delivered as a cloud API that combines the relational query power of SQL with the flexibility of documents and global serverless distribution.
+> **No longer operating.** This company or product has shut down, been discontinued, or been deprecated. This profile is kept as a historical record and is not maintained or rated.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/fauna/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/fauna/refs/heads/main/apis.yml)
+Fauna, Inc. built a distributed document-relational database delivered as a cloud API, combining the relational query power of SQL with the flexibility of documents, global serverless distribution and strictly serializable ACID transactions over plain HTTPS. Fauna announced End-of-Service in March 2025 and shut the hosted service down on 2025-05-30; as of 2026-09-17 every Fauna service host returns NXDOMAIN and the apex domain forwards to an unrelated company. This profile is maintained as an archival record of the API surface as it stood at shutdown.
 
-## Timestamps
+**Areas:** Database · Document Database · Serverless · Distributed Systems · Change Data Capture · GraphQL · Cloud · Developer Tools · Defunct
 
-- **Modified:** 2026-05-19
+## Fauna on APIs.io (historical record)
 
-## APIs
+Everything profiled for Fauna is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/fauna/](https://apis.io/providers/fauna/)** — or go straight to one of the APIs or properties below.
 
-### Fauna Core HTTP API
+### APIs (9)
 
-The Fauna Core HTTP API provides direct access to the Fauna serverless document database through HTTPS endpoints. It allows developers to execute Fauna Query Language (FQL) queries, manage databases, and perform CRUD operations on documents. The API uses token-based authentication and supports features such as transactions, indexes, and set operations. It serves as the foundation upon which Fauna's client drivers and SDKs are built.
+- [Fauna Event Streaming API](https://apis.io/apis/fauna/event-streaming-api/) — The Fauna Event Streaming API enables real-time change data capture by maintaining an open connection to the Fauna database and pushing events to clients as…
+- [Fauna Event Feeds API](https://apis.io/apis/fauna/event-feeds-api/) — The Fauna Event Feeds API provides a polling-based approach to change data capture, complementing the real-time Event Streaming API. Event feeds allow…
+- [Fauna JavaScript Driver](https://apis.io/apis/fauna/javascript-driver/) — The Fauna JavaScript Driver is the official client SDK for interacting with Fauna from JavaScript and TypeScript applications. It provides template-based…
+- [Fauna Python Driver](https://apis.io/apis/fauna/python-driver/) — The Fauna Python Driver is the official client SDK for accessing Fauna from Python applications. It provides idiomatic Python interfaces for composing and…
+- [Fauna .NET Driver](https://apis.io/apis/fauna/dotnet-driver/) — The Fauna .NET Driver is the official client SDK for interacting with Fauna from C# and .NET applications. It is designed for use with FQL v10 and provides…
+- [fauna EventFeeds API](https://apis.io/apis/fauna/fauna-eventfeeds-api/) — Poll-based change data capture using event feeds. Retrieve batches of change events at your own pace for scheduled synchronization and batch processing…
+- [fauna Query API](https://apis.io/apis/fauna/fauna-query-api/) — Execute Fauna Query Language (FQL) queries against a Fauna database.
+- [fauna Schema API](https://apis.io/apis/fauna/fauna-schema-api/) — Fetch, update, validate, and manage a database's schema as FSL files. Supports staged schema changes with status checking, committing, and abandoning.
+- [Fauna Graph QL API](https://apis.io/apis/fauna/fauna-graph-ql-api/) — Execute GraphQL queries and mutations against a Fauna database.
 
-- **Human URL:** [https://docs.fauna.com/fauna/current/reference/http/reference/core-api/](https://docs.fauna.com/fauna/current/reference/http/reference/core-api/)
-- **Base URL:** `https://db.fauna.com`
+### Published properties
 
-#### Tags
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- Database
-- Document Database
-- NoSQL
-- Queries
-- Serverless
+#### AsyncAPI (1)
 
-#### Properties
+Event-driven and webhook contracts.
 
-- [Documentation](https://docs.fauna.com/fauna/current/reference/http/reference/core-api/)
-- [OpenAPI](openapi/fauna-core-http-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fauna-core-http-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-core-http-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Fauna Event Streaming](https://apis.io/asyncapis/fauna/fauna-event-streaming-asyncapi/)
 
-### Fauna Event Streaming API
+#### Event channels (1)
 
-The Fauna Event Streaming API enables real-time change data capture by maintaining an open connection to the Fauna database and pushing events to clients as they occur. Developers can subscribe to document or set changes and receive add, remove, and update events in real time. The API supports reconnection with a start timestamp to avoid missing events during disconnections. It is accessible via the /stream/1 HTTP endpoint with token-based authentication.
+Individual events and webhooks the provider emits.
 
-- **Human URL:** [https://docs.fauna.com/fauna/current/reference/streaming/](https://docs.fauna.com/fauna/current/reference/streaming/)
-- **Base URL:** `https://db.fauna.com`
+- [/stream/1](https://apis.io/channels/fauna/stream-1/)
 
-#### Tags
+#### GraphQL (1)
 
-- Change Data Capture
-- Database
-- Events
-- Real-Time
-- Streaming
+GraphQL schemas.
 
-#### Properties
+- [fauna GraphQL API](https://apis.io/graphqls/fauna/fauna-graphql/)
 
-- [Documentation](https://docs.fauna.com/fauna/current/reference/streaming/)
-- [AsyncAPI](asyncapi/fauna-event-streaming-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [Postman Collection](collections/fauna-core-http-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-core-http-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fauna-graphql-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-graphql-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Agentic access (1)
 
-### Fauna Event Feeds API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The Fauna Event Feeds API provides a polling-based approach to change data capture, complementing the real-time Event Streaming API. Event feeds allow developers to retrieve batches of change events at their own pace rather than maintaining a persistent connection. This is useful for scheduled synchronization tasks, batch processing workflows, and scenarios where a pull-based model is preferred over push-based streaming. Event feeds track the same add, remove, and update events as streams.
+- [Fauna Agentic Access](https://apis.io/agentic-access/fauna/fauna-agentic-access/)
 
-- **Human URL:** [https://docs.fauna.com/fauna/current/learn/cdc/](https://docs.fauna.com/fauna/current/learn/cdc/)
-- **Base URL:** `https://db.fauna.com`
+#### JSON Schema (21)
 
-#### Tags
+The data models the API reads and writes.
 
-- Change Data Capture
-- Database
-- Events
-- Polling
+- [Fauna Document](https://apis.io/schemas/fauna/fauna-document/)
+- [ErrorResponse](https://apis.io/schemas/fauna/fauna-errorresponse/)
+- [Fauna Event](https://apis.io/schemas/fauna/fauna-event/)
+- [EventFeedRequest](https://apis.io/schemas/fauna/fauna-eventfeedrequest/)
+- [EventFeedResponse](https://apis.io/schemas/fauna/fauna-eventfeedresponse/)
+- [EventStats](https://apis.io/schemas/fauna/fauna-eventstats/)
+- [GraphQLError](https://apis.io/schemas/fauna/fauna-graphqlerror/)
+- [GraphQLErrorResponse](https://apis.io/schemas/fauna/fauna-graphqlerrorresponse/)
+- [GraphQLRequest](https://apis.io/schemas/fauna/fauna-graphqlrequest/)
+- [GraphQLResponse](https://apis.io/schemas/fauna/fauna-graphqlresponse/)
+- [Fauna Query](https://apis.io/schemas/fauna/fauna-query/)
+- [QueryRequest](https://apis.io/schemas/fauna/fauna-queryrequest/)
+- [QueryResponse](https://apis.io/schemas/fauna/fauna-queryresponse/)
+- [QueryStats](https://apis.io/schemas/fauna/fauna-querystats/)
+- [SchemaAbandonResponse](https://apis.io/schemas/fauna/fauna-schemaabandonresponse/)
+- [SchemaCommitResponse](https://apis.io/schemas/fauna/fauna-schemacommitresponse/)
+- [SchemaFile](https://apis.io/schemas/fauna/fauna-schemafile/)
+- [SchemaFilesResponse](https://apis.io/schemas/fauna/fauna-schemafilesresponse/)
+- [SchemaStatusResponse](https://apis.io/schemas/fauna/fauna-schemastatusresponse/)
+- [SchemaUpdateResponse](https://apis.io/schemas/fauna/fauna-schemaupdateresponse/)
+- [SchemaValidationResponse](https://apis.io/schemas/fauna/fauna-schemavalidationresponse/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [Documentation](https://docs.fauna.com/fauna/current/learn/cdc/)
-- [Postman Collection](collections/fauna-core-http-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-core-http-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fauna-graphql-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-graphql-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-### Fauna GraphQL API
+- [Fauna Structure](https://apis.io/json-structure/fauna/fauna-structure/)
 
-The Fauna GraphQL API allows developers to interact with their Fauna databases using standard GraphQL queries and mutations. By uploading a GraphQL schema, Fauna automatically generates the necessary collections, indexes, and resolvers. This API can be used from any programming language or HTTP client without requiring a dedicated Fauna driver. It provides an alternative to FQL for developers who prefer the GraphQL query paradigm and ecosystem tooling.
+#### JSON-LD (1)
 
-- **Human URL:** [https://docs.fauna.com/fauna/current/](https://docs.fauna.com/fauna/current/)
-- **Base URL:** `https://graphql.fauna.com`
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Fauna Context](https://apis.io/jsonld/fauna/fauna-context/)
 
-- Database
-- GraphQL
-- Query Language
-- Serverless
+#### Vocabulary (1)
 
-#### Properties
+The provider's domain terms, defined.
 
-- [Documentation](https://docs.fauna.com/fauna/current/)
-- [OpenAPI](openapi/fauna-graphql-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fauna-graphql-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-graphql-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Fauna Domain Vocabulary](https://apis.io/vocabularies/fauna/fauna-vocabulary/)
 
-### Fauna JavaScript Driver
+#### Collections (5)
 
-The Fauna JavaScript Driver is the official client SDK for interacting with Fauna from JavaScript and TypeScript applications. It provides template-based FQL query interpolation with type safety and a secure wire protocol that prevents injection vulnerabilities. The driver supports both Node.js server environments and browser-based applications, and includes built-in support for event streaming with automatic reconnection handling.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://docs.fauna.com/fauna/current/](https://docs.fauna.com/fauna/current/)
-- **Base URL:** `https://api.example.com`
+- [Fauna Core HTTP API](https://apis.io/collections/fauna/open-fauna-core-http-api/)
+- [Fauna Core HTTP EventFeeds API](https://apis.io/collections/fauna/open-fauna-eventfeeds-api/)
+- [Fauna Core HTTP EventFeeds GraphQL API](https://apis.io/collections/fauna/open-fauna-graphql-api/)
+- [Fauna Core HTTP EventFeeds Query API](https://apis.io/collections/fauna/open-fauna-query-api/)
+- [Fauna Core HTTP EventFeeds Schema API](https://apis.io/collections/fauna/open-fauna-schema-api/)
 
-#### Tags
+#### Overlays (4)
 
-- Driver
-- JavaScript
-- Node.js
-- SDK
-- TypeScript
+OpenAPI overlays, including conversational phrasing for each operation.
 
-#### Properties
+- [Fauna Eventfeeds Api Overlay](https://apis.io/overlays/fauna/fauna-eventfeeds-api-overlay/)
+- [Fauna Graph Ql Api Overlay](https://apis.io/overlays/fauna/fauna-graph-ql-api-overlay/)
+- [Fauna Query Api Overlay](https://apis.io/overlays/fauna/fauna-query-api-overlay/)
+- [Fauna Schema Api Overlay](https://apis.io/overlays/fauna/fauna-schema-api-overlay/)
 
-- [Documentation](https://docs.fauna.com/fauna/current/)
-- [Postman Collection](collections/fauna-core-http-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-core-http-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fauna-graphql-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-graphql-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Governance rules (2)
 
-### Fauna Python Driver
+Spectral rulesets for the provider's contracts.
 
-The Fauna Python Driver is the official client SDK for accessing Fauna from Python applications. It provides idiomatic Python interfaces for composing and executing FQL v10 queries, managing authentication tokens, and handling pagination. The driver includes support for event streaming and event feeds, allowing Python developers to build real-time and batch-oriented data processing pipelines against Fauna databases.
+- [Fauna — asyncapi rules](https://apis.io/rules/fauna/fauna-asyncapi-spectral-rules/)
+- [Fauna — jsonschema rules](https://apis.io/rules/fauna/fauna-jsonschema-spectral-rules/)
 
-- **Human URL:** [https://docs.fauna.com/fauna/current/](https://docs.fauna.com/fauna/current/)
-- **Base URL:** `https://api.example.com`
+#### Security (2)
 
-#### Tags
+Authentication, trust centre, and vulnerability disclosure.
 
-- Driver
-- Python
-- SDK
+- [Fauna Authentication](https://apis.io/security/fauna/fauna-authentication/)
+- [Fauna Domain Security](https://apis.io/security/fauna/fauna-domain-security/)
 
-#### Properties
+#### Plans and pricing (1)
 
-- [Documentation](https://docs.fauna.com/fauna/current/)
-- [Postman Collection](collections/fauna-core-http-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-core-http-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fauna-graphql-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-graphql-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published plans, tiers and prices.
 
-### Fauna .NET Driver
+- [Fauna Plans Pricing](https://apis.io/plans/fauna/fauna-plans-pricing/)
 
-The Fauna .NET Driver is the official client SDK for interacting with Fauna from C# and .NET applications. It is designed for use with FQL v10 and provides strongly-typed query construction and response handling. The driver enables .NET developers to perform document operations, run queries, and manage database resources using familiar C# patterns and conventions.
+#### Rate limits (1)
 
-- **Human URL:** [https://github.com/fauna/fauna-dotnet](https://github.com/fauna/fauna-dotnet)
-- **Base URL:** `https://api.example.com`
+Published request limits.
 
-#### Tags
+- [Fauna Rate Limits](https://apis.io/rate-limits/fauna/fauna-rate-limits/)
 
-- .NET
-- C#
-- Driver
-- SDK
+#### FinOps (1)
 
-#### Properties
+What the API costs to run, by operation.
 
-- [Documentation](https://github.com/fauna/fauna-dotnet)
-- [Postman Collection](collections/fauna-core-http-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-core-http-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fauna-graphql-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fauna-graphql-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Fauna Finops](https://apis.io/finops/fauna/fauna-finops/)
 
-## Common Properties
+## Where to find this API
 
-- [LinkedIn](https://www.linkedin.com/company/faunainc)
-- [JSON-LD](json-ld/fauna-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/fauna-document-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/fauna-event-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/fauna-query-schema.json) — [JSON Schema](https://json-schema.org/specification)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [GitHub](https://github.com/fauna)
+
+## API Evangelist rating
+
+**Not rated** — this company is recorded as no longer operating, so no score is published. If it is in fact operating, say so on this repository and it will be re-profiled.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Fauna: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/fauna/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
