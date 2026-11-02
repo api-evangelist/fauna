@@ -1,0 +1,226 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Fauna
+providerId: fauna
+created: '2026-05-04'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+method: generated
+modified: '2026-05-05'
+reconciled: true
+tags:
+  - Database
+  - Document Database
+  - Distributed
+  - Serverless
+  - End of Service
+description: 'Fauna announced End-of-Service in March 2025 and fully shut down its hosted service on May
+  30, 2025. The commercial Fauna database is no longer available for new signups, and existing tenants
+  were migrated off or sunsetted. Historical pricing was usage-based across four tiers (Free, Pro / Pay-As-You-Go,
+  Team, Business + Enterprise) metered on Transactional Read Operations (TROs), Transactional Write Operations
+  (TWOs), Transactional Compute Operations (TCOs), storage GB, and outbound transfer GB. Plans below
+  reflect the historical pricing pattern; the service is no longer transactable.'
+notes: Fauna End-of-Service announced March 2025; service decommissioned May 30, 2025. This artifact preserves
+  the historical pricing shape for archival purposes. Consumers should plan migration to alternatives
+  (FaunaDB-derived FQL distributions, MongoDB Atlas, DynamoDB, etc.) — see https://fauna.com/blog for
+  Meta's migration guidance.
+sources:
+  - https://fauna.com/blog/announcing-fauna-end-of-service
+  - https://fauna.com/pricing
+plans:
+  - id: fauna-free-historical
+    name: Free (Historical)
+    type: freemium
+    description: 'Historical free tier: included 100K TROs/day, 50K TWOs/day, 50K TCOs/day, 5GB storage,
+      50MB transfer/day. Discontinued.'
+    entries:
+      - label: Daily TROs
+        description: Transactional Read Operations included free.
+        name: tros
+        type: quota
+        metric: operation
+        limit: 100000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Daily TWOs
+        description: Transactional Write Operations included free.
+        name: twos
+        type: quota
+        metric: operation
+        limit: 50000
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Storage
+        description: Storage included free.
+        name: storage
+        type: quota
+        metric: GB
+        limit: 5
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Fauna Core HTTP API
+      - name: Fauna GraphQL API
+      - name: Community Support
+      - name: 'status: discontinued'
+  - id: fauna-payg-historical
+    name: Pro / Pay-As-You-Go (Historical)
+    type: usage-based
+    description: Historical metered pricing — see fauna.com/pricing snapshots. Discontinued.
+    entries:
+      - label: TRO overage
+        description: Per-million Transactional Read Operations beyond included.
+        name: tro_overage
+        type: metered
+        metric: operation
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1000000
+        price: see https://fauna.com/pricing (historical)
+        userMultiplied: false
+      - label: TWO overage
+        description: Per-million Transactional Write Operations beyond included.
+        name: two_overage
+        type: metered
+        metric: operation
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1000000
+        price: see https://fauna.com/pricing (historical)
+        userMultiplied: false
+      - label: Storage
+        description: Per-GB-month of stored data.
+        name: storage
+        type: metered
+        metric: GB-month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: see https://fauna.com/pricing (historical)
+        userMultiplied: false
+      - label: Egress
+        description: Per-GB outbound transfer.
+        name: egress
+        type: metered
+        metric: GB
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: see https://fauna.com/pricing (historical)
+        userMultiplied: false
+    elements:
+      - name: Fauna Core HTTP API
+      - name: Fauna Event Streaming API
+      - name: Fauna Event Feeds API
+      - name: Fauna GraphQL API
+      - name: Email Support
+      - name: 'status: discontinued'
+  - id: fauna-business-historical
+    name: Business / Team (Historical)
+    type: subscription
+    description: Historical paid tiers with monthly platform fee plus usage. Discontinued.
+    entries:
+      - label: Monthly platform fee
+        description: Recurring platform fee in addition to usage.
+        name: platform_fee
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: see https://fauna.com/pricing (historical)
+        userMultiplied: false
+    elements:
+      - name: Higher included usage
+      - name: Priority support
+      - name: 'status: discontinued'
+  - id: fauna-enterprise-historical
+    name: Enterprise (Historical)
+    type: enterprise
+    description: Historical enterprise tier with negotiated pricing, SLA, dedicated regions, audit logs.
+      Discontinued.
+    entries:
+      - label: Custom contract
+        description: Per-contract negotiated pricing.
+        name: enterprise_contract
+        type: subscription
+        metric: contract
+        limit: -1
+        timeFrame: year
+        geo: configurable
+        unit: 1
+        price: contact sales (historical)
+        userMultiplied: false
+    elements:
+      - name: Dedicated regions
+      - name: Audit logs
+      - name: 24/7 support
+      - name: Contractual SLA
+      - name: 'status: discontinued'
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - free
+  - metered
+  - subscription
+  units:
+  - data
+  - negotiated
+  - period
+  - request
+  plans:
+  - name: Free (Historical)
+    access: freemium
+    model: free
+    model_how: derived
+    units:
+    - data
+    - request
+    periods:
+    - day
+    - month
+  - name: Pro / Pay-As-You-Go (Historical)
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - data
+    - request
+    periods:
+    - month
+    - per-use
+  - name: Business / Team (Historical)
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - period
+    periods:
+    - month
+  - name: Enterprise (Historical)
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - year
