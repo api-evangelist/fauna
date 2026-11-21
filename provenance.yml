@@ -77,6 +77,9 @@ artifacts:
   heartbeat/2026-11-13.yml:
     method: unknown
     evidence: no authorship recorded
+  heartbeat/2026-11-20.yml:
+    method: unknown
+    evidence: no authorship recorded
   json-ld/fauna-context.jsonld:
     method: unknown
     evidence: no authorship recorded
@@ -149,7 +152,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-06T143934.yml:
+  kin/checks-2026-11-13T214628.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-25T210408.yml:
@@ -206,6 +209,9 @@ artifacts:
   kin/score-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-13T214628.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/fauna-lifecycle.yml:
     method: unknown
     evidence: no authorship recorded
@@ -258,9 +264,6 @@ artifacts:
   security/fauna-domain-security.yml:
     method: unknown
     evidence: no authorship recorded
-  sla/fauna-sla.yml:
-    method: generated
-    evidence: declared in the artifact
   vocabulary/fauna-vocabulary.yml:
     method: unknown
     evidence: no authorship recorded
